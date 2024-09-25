@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Lexend, Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -11,6 +12,20 @@ const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
   weight: "100 900",
+});
+
+const lexend = Lexend({
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "500", "600", "700", "400", "800"],
+  variable: "--font-lexend",
+});
+
+const bricolage = Bricolage_Grotesque({
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "500", "600", "700", "400", "800"],
+  variable: "--font-bricolage",
 });
 
 export const metadata: Metadata = {
@@ -26,7 +41,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${bricolage.variable} ${lexend.variable} antialiased`}
       >
         {children}
       </body>
