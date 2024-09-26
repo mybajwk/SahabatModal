@@ -1,4 +1,5 @@
 import Navbar from '../components/ui/Navbar';
+import GetStartedButton from '../components/ui/get-started-button';
 
 export default function Home() {
   return (
@@ -13,16 +14,15 @@ export default function Home() {
           backgroundRepeat: 'no-repeat', // No repeating of the image
         }}
       >
-        <div className="container mx-auto px-4 py-20">
+        <div className="container mx-auto px-4 py-20" style={{ paddingTop: '20rem', marginLeft: '7rem' }}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             {/* Left Text Content */}
             <div className="space-y-6">
-              <h1 className="text-5xl font-bold leading-tight">
+              <h1 className="text-7xl font-bold leading-tight mb-6">
                 Beri Solusi Melalui Parsial Investasi dan Inkubasi bagi UMKM dan Startup.
               </h1>
-              <button className="mt-6 bg-gradient-to-r from-blue-400 to-purple-500 text-white px-8 py-3 rounded-full text-xl">
-                Get Started
-              </button>
+              {/* Get Started Button */}
+              <GetStartedButton />
             </div>
           </div>
         </div>
