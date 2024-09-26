@@ -56,7 +56,7 @@ const InspiringSection = () => {
           </div>
   
           {/* View All Button */}
-          <div className="mt-6">
+          <div className="mt-6 -mb-20">
           <a href="#viewAll">
             <img
               src="/button gradient-2.png" // Ensure the image is placed in the public folder or correct path
