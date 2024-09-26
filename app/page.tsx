@@ -2,6 +2,7 @@ import Navbar from '../components/ui/Navbar';
 import GetStartedButton from '../components/ui/get-started-button';
 import StartButton from '../components/ui/start-button';
 import StartButton2 from '../components/ui/start-button-2';
+import InspiringSection from '../components/ui/inspiring-section';
 
 export default function Home() {
   return (
@@ -129,8 +130,6 @@ export default function Home() {
         </h2>
       </div>
       <StartButton2 />
-
-
       </section>
       <section className="bg-white py-0">
         <div className="w-screen overflow-hidden">
@@ -144,6 +143,18 @@ export default function Home() {
           />
         </div>
       </section>
+      <section
+        className="bg-blue-900 text-white py-20" // Remove extra padding
+        style={{
+          backgroundImage: "url('/faq.png')",
+          backgroundSize: 'cover', // Change to 'contain' so the image fits within the section without cropping
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          minHeight: '70vh', // Adjust height to ensure the section has enough height without whitespace
+        }}
+      >
+      </section>
+      <InspiringSection />
     </>
   );
 }
