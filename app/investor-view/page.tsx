@@ -1,11 +1,20 @@
-import React from "react";
+"use client";
 
-function page() {
+import SearchBar from "@/components/ui/searchbar";
+import React, { useEffect, useState } from "react";
+
+function Page() {
+  const [query, setQuery] = useState<string>("");
+
+  useEffect(() => {
+    console.log(query);
+  }, [query]);
+
   return (
-    <div className="">
-      <div className="w-[80vw] bg-white h-8 rounded-xl flex items-center"></div>
+    <div className="flex flex-col items-center py-[100px] font-lexend">
+      <SearchBar onSearchChange={setQuery} />
     </div>
   );
 }
 
-export default page;
+export default Page;
