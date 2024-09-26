@@ -35,7 +35,7 @@ const paginationVariants = cva(
       variant: "primary",
       control: "text",
     },
-  }
+  },
 );
 
 interface PaginationProps extends VariantProps<typeof paginationVariants> {
@@ -180,7 +180,7 @@ const PaginationItem: FC<PaginationItemProps> = ({
               normalizedPage === page
                 ? "bg-[#F09B21] text-white hover:bg-[#F09B21]/90"
                 : "bg-transparent text-white hover:bg-[#F2F2F2]/20",
-          })
+          }),
         )}
       >
         {page}
@@ -196,7 +196,7 @@ const PaginationItem: FC<PaginationItemProps> = ({
           paginationVariants({
             variant: variant,
             className: "group bg-transparent text-white hover:bg-[#F2F2F2]/20",
-          })
+          }),
         )}
       >
         <ChevronsRight className="hidden size-4 group-hover:block md:size-5" />
@@ -213,7 +213,7 @@ const PaginationItem: FC<PaginationItemProps> = ({
           paginationVariants({
             variant: variant,
             className: "group bg-transparent text-white hover:bg-[#F2F2F2]/20",
-          })
+          }),
         )}
       >
         <ChevronsLeft className="hidden size-4 group-hover:block md:size-5" />
@@ -240,7 +240,7 @@ const PaginationItem: FC<PaginationItemProps> = ({
               variant: variant,
               className:
                 "bg-transparent text-white hover:bg-[#F2F2F2]/20 disabled:cursor-not-allowed disabled:text-white/60",
-            })
+            }),
           )}
         >
           <ChevronLeftIcon className="size-4 md:size-5" />
@@ -257,7 +257,7 @@ const PaginationItem: FC<PaginationItemProps> = ({
               variant: variant,
               className:
                 "mr-1 flex flex-row items-center gap-[2px] border-none bg-transparent px-2 font-[500] text-white hover:text-white/70 disabled:cursor-not-allowed disabled:text-white/60 md:mr-2",
-            })
+            }),
           )}
         >
           {/*<ChevronLeftIcon className="size-4 md:size-5" />*/}
@@ -288,7 +288,7 @@ const PaginationItem: FC<PaginationItemProps> = ({
               variant: variant,
               className:
                 "disabled:[#101E57]/60 bg-transparent text-white hover:bg-[#F2F2F2]/20 disabled:cursor-not-allowed",
-            })
+            }),
           )}
         >
           <ChevronRightIcon className="size-4 md:size-5" />
@@ -305,7 +305,7 @@ const PaginationItem: FC<PaginationItemProps> = ({
               variant: variant,
               className:
                 "mr-1 flex flex-row items-center gap-[2px] border-none bg-transparent px-2 font-[500] text-white hover:text-white/70 disabled:cursor-not-allowed disabled:text-white/60 md:mr-2",
-            })
+            }),
           )}
         >
           Next
@@ -391,7 +391,7 @@ const PaginationItems: FC<PaginationItemsProps> = ({
       const rightItemsCount = 3 + 2;
       const rightRange = _.range(
         totalPages - rightItemsCount + 1,
-        totalPages + 1
+        totalPages + 1,
       );
       numArr = [1, " ...", ...rightRange];
     } else {
