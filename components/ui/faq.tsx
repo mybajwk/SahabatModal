@@ -27,8 +27,6 @@ const FAQItem = ({ question, answer }: { question: string, answer: string }) => 
   );
 };
 
-
-
 const FAQSection = () => {
   const faqs = [
     { question: "Apa itu Sahabat Modal?", answer: "Sahabat Modal adalah platform yang memberikan solusi bagi UMKM dan startup melalui investasi parsial dan inkubasi." },
