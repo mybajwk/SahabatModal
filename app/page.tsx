@@ -4,6 +4,7 @@ import StartButton from '../components/ui/start-button';
 import StartButton2 from '../components/ui/start-button-2';
 import InspiringSection from '../components/ui/inspiring-section';
 import Footer from '../components/ui/footer';
+import FAQSection from '@/components/ui/faq';
 
 
 export default function Home() {
@@ -146,7 +147,7 @@ export default function Home() {
           />
         </div>
       </section>
-      <section
+      {/* <section
         className="bg-blue-900 text-white py-20" // Remove extra padding
         style={{
           backgroundImage: "url('/faq.png')",
@@ -156,7 +157,8 @@ export default function Home() {
           minHeight: '70vh', // Adjust height to ensure the section has enough height without whitespace
         }}
       >
-      </section>
+      </section> */}
+      <FAQSection />
       <InspiringSection />
       <Footer />
     </>
