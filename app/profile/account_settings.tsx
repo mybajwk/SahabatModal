@@ -80,8 +80,8 @@ function AccountSettings() {
       </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <div className="flex flex-col items-center">
-            <div className="flex flex-col items-center space-y-3 p-2">
+          <div className="flex flex-col md:flex-row-reverse items-center">
+            <div className="flex flex-col items-center space-y-3 p-2 md:w-1/2 md:p-8">
               <FormField
                 control={form.control}
                 name="image"
