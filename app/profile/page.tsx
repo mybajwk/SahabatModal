@@ -1,5 +1,6 @@
 import React from "react";
 import AccountSettings from "./account_settings";
+import BillingAdddress from "./billing_address";
 
 function ProfilePage() {
   return (
@@ -7,8 +8,9 @@ function ProfilePage() {
       <h1 className="font-lexend text-lg font-semibold drop-shadow-text-white">
         Profil
       </h1>
-      <div className="relative bg-white p-6 rounded-lg w-[85vw]">
+      <div className="relative bg-white p-6 lg:py-14 lg:px-24 space-y-4 rounded-t-lg w-[85vw] max-w-[800px]">
         <AccountSettings />
+        <BillingAdddress />
       </div>
     </div>
   );

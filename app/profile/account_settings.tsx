@@ -74,7 +74,7 @@ function AccountSettings() {
   return (
     <div className="bg-[#FAFAFA] font-poppins flex flex-col border border-[#E6E6E6] rounded-md">
       <div className="w-full text-center">
-        <h2 className="text-[#1A1A1A] text-sm font-semibold border-b border-[#E6E6E6] px-3 py-4">
+        <h2 className="text-[#1A1A1A] text-sm font-semibold border-b border-[#E6E6E6] px-3 py-4 md:text-start">
           Account Settings
         </h2>
       </div>
@@ -204,7 +204,7 @@ function AccountSettings() {
               </div>
               <Button
                 type="submit"
-                className="bg-[#00B207] text-[#FFFFFF] text-xs rounded-full w-2/3 place-self-center font-semibold"
+                className="bg-[#00B207] text-[#FFFFFF] text-xs rounded-full w-2/3 place-self-center font-semibold max-w-[200px] md:place-self-start"
               >
                 Save Changes
               </Button>
