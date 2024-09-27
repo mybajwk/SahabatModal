@@ -63,6 +63,7 @@ const config: Config = {
       fontFamily: {
         lexend: ["var(--font-lexend)"],
         bricolage: ["var(--font-bricolage)"],
+        poppins: ["var(--font-poppins)"],
       },
       backgroundImage: {
         "blue-gradient-radial": "radial-gradient(circle, #3E3183, #3B47BC)",
@@ -70,6 +71,8 @@ const config: Config = {
           "radial-gradient(61.94% 48.96% at 49.96% 96.22%, #04C782 0%, #18D3A7 100%)",
         "conic-blue":
           "conic-gradient(from 177deg at 39.85% 40.01%, #00326C 262.9855942726135deg, #0B162D 319.3100953102112deg)",
+        "conic-purple":
+          "conic-gradient(from 114deg at 19.44% 28.89%, #110F22 0deg, #443D88 360deg)",
       },
       boxShadow: {
         "custom-inset":
