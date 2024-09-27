@@ -76,7 +76,6 @@ function BillingAddress() {
   useEffect(() => {
     async function fetchCountries() {
       const result = await GetCountries();
-      console.log(result);
       setCountriesList(result);
     }
     fetchCountries();

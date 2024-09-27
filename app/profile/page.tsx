@@ -1,6 +1,7 @@
 import React from "react";
 import AccountSettings from "./account_settings";
 import BillingAdddress from "./billing_address";
+import ChangePassword from "./change_password";
 
 function ProfilePage() {
   return (
@@ -11,6 +12,7 @@ function ProfilePage() {
       <div className="relative bg-white p-6 lg:py-14 lg:px-24 space-y-4 rounded-t-lg w-[85vw] max-w-[800px]">
         <AccountSettings />
         <BillingAdddress />
+        <ChangePassword />
       </div>
     </div>
   );
