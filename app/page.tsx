@@ -73,7 +73,7 @@ export default function Home() {
       <section
         className="min-h-screen bg-cover bg-center text-white"
         style={{
-          backgroundImage: "url('/benefit.png')", // Ensure correct path for background image
+          backgroundImage: "url('/BG-2.png')", // Ensure correct path for background image
           backgroundSize: 'cover', // Cover the section, ensure the background stretches
           backgroundPosition: 'top', // Center the image
           backgroundRepeat: 'no-repeat', // Prevent background from repeating
@@ -83,7 +83,7 @@ export default function Home() {
         <div className="container mx-auto py-20">
           {/* Title with Glow Effect */}
           <h2
-            className="text-7xl font-bold mt-80 -mb-10 -ml-20 text-left"
+            className="text-7xl font-bold mt-60 -mb-10 -ml-20 text-left"
             style={{
               fontFamily: 'Lexend, sans-serif',
               textShadow: '0 0 15px rgba(255, 255, 255, 0.8)', // Glow effect
@@ -95,7 +95,7 @@ export default function Home() {
         <div className="container mx-auto py-20">
 
           <h2
-            className="text-7xl font-bold -mt-20 -mb-10 -ml-20 text-left"
+            className="text-7xl font-bold -mt-20 -ml-20 text-left"
             style={{
               fontFamily: 'Lexend, sans-serif',
               textShadow: '0 0 15px rgba(255, 255, 255, 0.8)', // Glow effect
@@ -105,15 +105,15 @@ export default function Home() {
           </h2>
         </div>
 
-        <h1 className="text-10xl font-bold mb-12"></h1>
         <StartButton />
         <div className="container mx-auto py-20">
         {/* Title with Glow Effect */}
         <h2
-          className="text-7xl font-bold mt-96 -mb-10 -mr-40 text-right"
+          className="text-7xl font-bold mt-92 -mb-10 -mr-40 text-right"
           style={{
             fontFamily: 'Lexend, sans-serif',
             textShadow: '0 0 15px rgba(255, 255, 255, 0.8)', // Glow effect
+            marginTop: '23rem'
           }}
         >
           Apa Benefit Yang
@@ -126,6 +126,7 @@ export default function Home() {
           style={{
             fontFamily: 'Lexend, sans-serif',
             textShadow: '0 0 15px rgba(255, 255, 255, 0.8)', // Glow effect
+            
           }}
         >
           Didapat Oleh Investor?

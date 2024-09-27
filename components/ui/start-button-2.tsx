@@ -9,7 +9,7 @@ const StartButton2 = () => {
           background: 'linear-gradient(180deg, #2ED3B7 0%, #00B894 100%)', // Gradient background
           boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', // Add shadow for depth
           border: '3px solid #00F0D5', // Border around the button
-          marginBottom: '10rem',
+          marginBottom: '12rem',
         }}
       >
         START
