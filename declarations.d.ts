@@ -8,3 +8,28 @@ declare module "react-country-state-city" {
   export const CountrySelect: any;
   export const StateSelect: any;
 }
+
+declare module "*.png" {
+  const value: string;
+  export default value;
+}
+
+declare module "*.jpeg" {
+  const value: string;
+  export default value;
+}
+
+declare module "*.jpg" {
+  const value: string;
+  export default value;
+}
+
+declare module "*.gif" {
+  const value: string;
+  export default value;
+}
+
+declare module "*.svg" {
+  const content: any;
+  export default content;
+}
