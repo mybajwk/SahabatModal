@@ -71,6 +71,11 @@ export default function Login() {
               onFocus={(e) => e.target.style.color = '#0010A4'}
               onBlur={(e) => e.target.style.color = username ? '#0010A4' : 'initial'} 
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              style={{
+                borderRadius: '5px',
+                border: '1.5px solid #C9C9C9',
+                background: 'var(--Miscellaneous-Floating-Tab---Pill-Fill, #FFF)',
+              }}
             />
           </div>
           <div className="mb-4">
@@ -85,6 +90,11 @@ export default function Login() {
               onFocus={(e) => e.target.style.color = '#0010A4'}
               onBlur={(e) => e.target.style.color = username ? '#0010A4' : 'initial'} 
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              style={{
+                borderRadius: '5px',
+                border: '1.5px solid #C9C9C9',
+                background: 'var(--Miscellaneous-Floating-Tab---Pill-Fill, #FFF)',
+              }}
             />
           </div>
           <button
@@ -94,10 +104,10 @@ export default function Login() {
               borderRadius: '269.667px',
               background: 'radial-gradient(61.94% 48.96% at 49.96% 96.22%, #3B47BC 0%, #374583 100%)',
               boxShadow: '0px 1.079px 67.417px 0px #D9E6FE, 0px 0px 0px 11.865px rgba(255, 255, 255, 0.07), 0px -1.079px 0px 2.697px rgba(0, 0, 0, 0.20) inset, 0px 1.079px 0px 2.697px rgba(255, 255, 255, 0.40) inset',
-              color: 'white',
+              color: 'white', 
             }}
           >
-            Continue
+            LOGIN
           </button>
           <div className="text-center mt-4">
             <p className="text-gray-500">
