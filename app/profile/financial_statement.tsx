@@ -1,5 +1,6 @@
 import React from "react";
 import FinancialCard from "./financial_card";
+import FinancialUpload from "./financial_upload";
 
 interface FinancialReportData {
   title: string;
@@ -39,6 +40,7 @@ function FinancialStatement() {
               description={report.description}
             />
           ))}
+          <FinancialUpload newNumber={financialData.length + 1} />
         </div>
       </div>
     </div>
