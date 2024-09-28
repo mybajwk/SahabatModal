@@ -19,9 +19,10 @@ model UserAccount {
   email        String         @unique
   password     String
   phone_number String         @unique
+  username     String         @unique
   name         String
   role         Int
-  image        String
+  image        String?
   mentor       Mentoring[]    @relation("MentorRelation")
   mentee       Mentoring[]    @relation("MenteeRelation")
   Business     Business[]
@@ -38,7 +39,7 @@ model Mentoring {
   mentor_id        String
   mentee_id        String
   business_id      String?
-  Description      String
+  Description      String?
   mentoring_status Int
   content          String[]
   mentor           UserAccount @relation("MentorRelation", fields: [mentor_id], references: [id])
@@ -49,7 +50,7 @@ model Business {
   id           String       @id @default(uuid())
   created_at   DateTime     @default(now())
   name         String
-  image        String
+  image        String?
   description  String?
   business_age String
   owner_id     String       @unique
@@ -62,13 +63,13 @@ model Crowdfunding {
   seeker_id        String
   name             String
   address_line     String
-  address_url      String
+  address_url      String?
   media            String
   target_amount    BigInt
   start_date       DateTime
   end_date         DateTime
   amount           BigInt
-  Description      String
+  Description      String?
   status           Int
   owner            UserAccount?       @relation(fields: [seeker_id], references: [id])
   CrowdfundingItem CrowdfundingItem[]
@@ -93,7 +94,7 @@ model CrowdfundingFaq {
   created_at      DateTime     @default(now())
   crowdfunding_id String
   Question        String
-  Answer          String
+  Answer          String?
   crowdfunding    Crowdfunding @relation(fields: [crowdfunding_id], references: [id])
 }
 
