@@ -111,7 +111,7 @@ function AccountSettings() {
               />
               <Button
                 onClick={handleChooseClick}
-                className="rounded-full text-[#00B207] bg-white text-xs border-[#00B207] border-2"
+                className="rounded-full text-[#18D3A7] bg-white text-xs border-[#18D3A7] border-2"
               >
                 Choose Image
               </Button>
@@ -204,7 +204,7 @@ function AccountSettings() {
               </div>
               <Button
                 type="submit"
-                className="bg-[#00B207] text-[#FFFFFF] text-xs rounded-full w-2/3 place-self-center font-semibold max-w-[200px] md:place-self-start"
+                className="bg-[#18D3A7] text-[#FFFFFF] text-xs rounded-full w-2/3 place-self-center font-semibold max-w-[200px] md:place-self-start"
               >
                 Save Changes
               </Button>

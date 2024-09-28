@@ -51,6 +51,7 @@ function ChangePassword() {
   });
 
   const togglePasswordVisibility = (field: string) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     setShowPassword((prev: any) => ({
       ...prev,
       [field]: !prev[field],
@@ -195,7 +196,7 @@ function ChangePassword() {
 
               <Button
                 type="submit"
-                className="bg-[#00B207] text-[#FFFFFF] text-xs rounded-full w-2/3 place-self-center font-semibold max-w-[200px] md:place-self-start"
+                className="bg-[#18D3A7] text-[#FFFFFF] text-xs rounded-full w-2/3 place-self-center font-semibold max-w-[200px] md:place-self-start"
               >
                 Save Changes
               </Button>
