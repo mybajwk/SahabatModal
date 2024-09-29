@@ -7,9 +7,10 @@ import FundingFormNavbar from "@/components/pages/funding-form-navbar";
 import Image from "next/image";
 import FundingBasicPage from "@/components/pages/funding-basic";
 import FundingRewardPage from "@/components/pages/funding-reward";
+import FundingDescPage from "@/components/pages/funding-deskripsi";
 
 const FormFundingPage = () => {
-  const [currentPage, setCurrentPage] = useState("reward");
+  const [currentPage, setCurrentPage] = useState("desc");
 
   useEffect(() => {
     console.log(currentPage);
@@ -55,6 +56,7 @@ const FormFundingPage = () => {
               <FundingBasicPage setCurrentPage={setCurrentPage} />
             )}
             {currentPage === "reward" && <FundingRewardPage />}
+            {currentPage === "desc" && <FundingDescPage />}
           </div>
         </div>
       )}

@@ -38,9 +38,9 @@ const FundingFormNavbar: React.FC<FundingFormNavbarProps> = ({
       <p
         className={cn(
           "py-3 px-3 cursor-pointer",
-          currentPage === "deskripsi" && "border-b-[3px] border-black"
+          currentPage === "desc" && "border-b-[3px] border-black"
         )}
-        onClick={() => setCurrentPage("deskripsi")}
+        onClick={() => setCurrentPage("desc")}
       >
         Deskripsi
       </p>
