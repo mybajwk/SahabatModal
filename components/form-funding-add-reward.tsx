@@ -115,9 +115,7 @@ const FormFundingAddReward: React.FC<FormFundingAddRewardProps> = ({
                     defaultValue={field.value}
                   >
                     <FormControl>
-                      <SelectTrigger
-                        className="w-full font-lexend border-[#9EA2AD] px-5 text-base text-[#9EA2AD] bg-transparent"
-                      >
+                      <SelectTrigger className="w-full font-lexend border-[#9EA2AD] px-5 text-base text-[#9EA2AD] bg-transparent">
                         <SelectValue placeholder="Jenis Item" />
                       </SelectTrigger>
                     </FormControl>

@@ -94,9 +94,7 @@ export default function TextEditor({
 
   return (
     <div className="w-full rounded-lg border text-black border-[#9EA2AD] text-base font-lexend ring-0">
-      <ScrollArea
-        className="w-full bg-transparent p-4"
-      >
+      <ScrollArea className="w-full bg-transparent p-4">
         <EditorContent editor={editor} />
       </ScrollArea>
       <div className="flex flex-wrap items-center gap-6 border-t border-[#9EA2AD] bg-transparent p-2 px-4">

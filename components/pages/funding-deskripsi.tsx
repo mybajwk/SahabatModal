@@ -23,7 +23,7 @@ export const FundingDescSchema = z.object({
     z.object({
       question: z.string().min(1, "Pertanyaan wajib diisi"),
       answer: z.string().min(1, "Jawaban wajib diisi"),
-    })
+    }),
   ),
 });
 const FundingDescPage = () => {

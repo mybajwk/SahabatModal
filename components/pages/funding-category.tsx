@@ -55,9 +55,7 @@ const FundingCategoryPage: React.FC<FundingCategoryPageProps> = ({
                   defaultValue={field.value}
                 >
                   <FormControl>
-                    <SelectTrigger
-                      className="w-[600px] font-lexend border-[#9EA2AD] py-7 px-5 text-[24px] text-[#9EA2AD] bg-white"
-                    >
+                    <SelectTrigger className="w-[600px] font-lexend border-[#9EA2AD] py-7 px-5 text-[24px] text-[#9EA2AD] bg-white">
                       <SelectValue placeholder="Pilih kategori" />
                     </SelectTrigger>
                   </FormControl>
