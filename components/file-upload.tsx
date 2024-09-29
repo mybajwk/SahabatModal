@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import { Input } from "./ui/input";
 import { FileRejection, useDropzone } from "react-dropzone";
 import { Upload } from "lucide-react";
@@ -75,11 +75,11 @@ const FileUpload: React.FC<FileUploadProps> = ({ file, setFile }) => {
         >
           <Upload className="size-9 text-black" />
           {error.length > 0 &&
-            error.map((e) => (
-              <p className="text-[#DC2522] font-lexend text-sm">{e}</p>
+            error.map((e, i) => (
+              <p key={i} className="text-[#DC2522] font-lexend text-sm">{e}</p>
             ))}
           {file && (
-            <>
+            <Fragment>
               {file instanceof File ? (
                 <p className="text-black font-lexend text-sm">{file.name}</p>
               ) : (
@@ -92,7 +92,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ file, setFile }) => {
                   {file}
                 </Link>
               )}
-            </>
+            </Fragment>
           )}
         </div>
       </div>

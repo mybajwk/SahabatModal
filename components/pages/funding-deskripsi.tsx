@@ -97,7 +97,10 @@ const FundingDescPage = () => {
             </div>
             <div className="flex flex-1 flex-col gap-4">
               {fields.map((f, i) => (
-                <div className="border-[1.5px] flex-1 flex flex-col gap-3 border-[#C9C9C9] rounded-sm p-12">
+                <div
+                  key={f.id}
+                  className="border-[1.5px] flex-1 flex flex-col gap-3 border-[#C9C9C9] rounded-sm p-12"
+                >
                   <FormField
                     control={form.control}
                     name={`faq.${i}.question`}

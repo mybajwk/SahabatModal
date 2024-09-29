@@ -48,7 +48,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${bricolage.variable} ${lexend.variable} antialiased overflow-x-hidden overflow-y-auto`}
+        className={`${geistSans.variable} ${geistMono.variable} ${bricolage.variable} ${lexend.variable} ${poppins.variable} antialiased overflow-x-hidden overflow-y-auto`}
       >
         {children}
       </body>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button } from "../ui/button";
-import { Plus, Trash2, X } from "lucide-react";
+import { Plus, Trash2 } from "lucide-react";
 import FormFundingAddReward, {
   FormFundingRewardSchema,
 } from "../form-funding-add-reward";
@@ -88,7 +88,7 @@ const FundingRewardPage = () => {
               ))}
               {rewards.length > 0 && (
                 <div className="w-full flex justify-center items-center">
-                  <Button className="font-lexend text-[24px] px-12 hover:bg-black/70 py-5 text-white bg-black flex flex-row items-center justify-center gap-3">
+                  <Button onClick={onSubmit} className="font-lexend text-[24px] px-12 hover:bg-black/70 py-5 text-white bg-black flex flex-row items-center justify-center gap-3">
                     Save
                   </Button>
                 </div>

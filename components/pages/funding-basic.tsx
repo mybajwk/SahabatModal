@@ -18,7 +18,6 @@ import { Button } from "../ui/button";
 
 interface FundingBasicPageProps {
   setCurrentPage: Dispatch<SetStateAction<string>>;
-  
 }
 
 const allowedFileType = ["image/jpg", "image/png", "image/jpeg", "video/mp4"];
@@ -45,9 +44,7 @@ export const FormFundingBasicSchema = z.object({
   endDate: z.coerce.date(),
 });
 
-const FundingBasicPage: React.FC<FundingBasicPageProps> = ({
-  setCurrentPage,
-}) => {
+const FundingBasicPage: React.FC<FundingBasicPageProps> = ({}) => {
   const form = useForm<z.infer<typeof FormFundingBasicSchema>>({
     resolver: zodResolver(FormFundingBasicSchema),
     defaultValues: {
@@ -303,7 +300,6 @@ const FundingBasicPage: React.FC<FundingBasicPageProps> = ({
               </div>
             </div>
           </div>
-
           <div className="flex pb-10 justify-center items-center w-full">
             <Button className="rounded-full px-20 text-[30px] py-8 text-white font-lexend bg-green-gradient shadow-custom-shadow-green-button">
               Submit
