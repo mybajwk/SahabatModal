@@ -29,13 +29,13 @@ export async function GET(req: NextRequest) {
     });
     return new NextResponse(
       JSON.stringify({ data: user, message: "success get profile" }),
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("Session Retrieval Error:", error);
     return NextResponse.json(
       { message: "Internal server error", error },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

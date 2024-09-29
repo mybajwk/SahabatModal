@@ -5,7 +5,7 @@ export async function POST(req: NextRequest) {
   if (req.method != "POST") {
     return NextResponse.json(
       { message: "Method Not Allowed" },
-      { status: 405 }
+      { status: 405 },
     );
   }
 
@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
     if (!file) {
       return NextResponse.json(
         { message: "No file provided" },
-        { status: 405 }
+        { status: 405 },
       );
     }
 
@@ -27,12 +27,12 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(
       { message: "media uploaded successfully", uploadedFile },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error: unknown) {
     return NextResponse.json(
       { message: "Internal server error", error },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
