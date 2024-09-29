@@ -24,8 +24,7 @@ export async function GET(req: NextRequest) {
         name: true,
         role: true,
         image: true,
-        Business: true, // Assuming the relation field in your Prisma schema is named 'Business'
-        // Other fields can also be selected as needed, excluding the password
+        Business: true,
       },
     });
     return new NextResponse(

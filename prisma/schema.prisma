@@ -25,7 +25,7 @@ model UserAccount {
   image        String?
   mentor       Mentoring[]    @relation("MentorRelation")
   mentee       Mentoring[]    @relation("MenteeRelation")
-  Business     Business[]
+  Business     Business?
   Crowdfunding Crowdfunding[]
 }
 
