@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { Lexend, Bricolage_Grotesque } from "next/font/google";
+import { Lexend, Bricolage_Grotesque, Poppins } from "next/font/google";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -26,6 +26,13 @@ const bricolage = Bricolage_Grotesque({
   display: "swap",
   weight: ["400", "500", "600", "700", "400", "800"],
   variable: "--font-bricolage",
+});
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  variable: "--font-poppins",
 });
 
 export const metadata: Metadata = {
