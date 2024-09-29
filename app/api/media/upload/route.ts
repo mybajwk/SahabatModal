@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createReadStream } from "fs";
 import { put } from "@vercel/blob";
 
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest) {
   if (req.method != "POST") {
     return NextResponse.json(
       { message: "Method Not Allowed" },

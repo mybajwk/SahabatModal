@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import client from "@/app/libs/prismadb";
-import bcrypt from "bcryptjs";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest) {
   if (req.method !== "POST") {
     return NextResponse.json(
       { message: "Method Not Allowed" },

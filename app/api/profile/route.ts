@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
   try {
     const user = await client.userAccount.findUnique({
       where: {
-        id: token?.id,
+        id: token?.id?.toString() || "",
       },
       select: {
         id: true,
@@ -33,11 +33,8 @@ export async function GET(req: NextRequest) {
     );
   } catch (error) {
     console.error("Session Retrieval Error:", error);
-    return new NextResponse(
-      JSON.stringify({
-        message: "Internal Server Error",
-        error: error.message,
-      }),
+    return NextResponse.json(
+      { message: "Internal server error", error },
       { status: 500 }
     );
   }
