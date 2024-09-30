@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'; 
+import Image from 'next/image';
 import { useState, useEffect  } from 'react'
 import { motion } from 'framer-motion'
 import { z } from 'zod'
@@ -543,7 +544,7 @@ export default function FormRegister() {
                         className='flex items-center justify-center w-full h-30 p-4 border rounded-md cursor-pointer bg-gray-100 hover:bg-gray-200'
                         style={{ border: '2px dashed #C9C9C9' }}
                         >
-                        <img src='/upload.png' alt='Upload' className='mr-2 w-6 h-6' />
+                        <Image src='/upload.png' alt='Upload' className='mr-2 w-6 h-6' />
                         <span className='text-gray-700'>Upload File</span>
                         </label>
 

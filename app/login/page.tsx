@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from 'next/image';
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -43,13 +44,13 @@ export default function Login() {
           overflow: 'hidden'
         }}
       >
-        <img 
+        <Image
           src="/logo.png" 
           alt="SahabatModal Logo" 
           className="absolute z-20 top-0 left-0 m-4"
           style={{ width: '82.68px', height: 'auto' }}
         />
-        <img 
+        <Image
           src="ellipse-login.svg" 
           alt="Ellipse" 
           className="absolute z-10"

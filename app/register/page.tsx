@@ -23,13 +23,13 @@ export default function Register() {
             height={41} // Set a fixed height or use a specific number
             className="absolute z-20 top-0 left-0 m-4"
         />
-          <img
+          <Image
             src="ellipse-login.svg"
             alt="Ellipse"
             className="absolute z-10"
             style={{ top: '150px', right: '0', width: '453px', height: 'auto' }}
           />
-          <img
+          <Image
             src="ellipse-login.svg"
             alt="Ellipse"
             className="absolute z-30"
