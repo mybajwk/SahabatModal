@@ -33,7 +33,7 @@ function FAQ() {
 
   return (
     <div className="p-6 w-full font-lexend flex flex-col space-y-4 items-center">
-      <h1 className="font-bold text-white drop-shadow-text-white">
+      <h1 className="font-bold text-white drop-shadow-text-white md:text-2xl md:mb-4">
         Frequently Asked Question
       </h1>
       {faqData.map((item, index) => (

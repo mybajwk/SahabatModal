@@ -2,7 +2,7 @@
 
 import SearchBar from "@/components/ui/searchbar";
 import React, { useEffect, useState } from "react";
-import MouCard from "../components/investor/mou-card";
+import MouCard from "./mou-card";
 import bubbleBgHorizontal from "../assets/horizontal-bubble.png";
 import bubbleBgVertical from "../assets/vertical-bubble.png";
 import barista from "../assets/barista.png";
