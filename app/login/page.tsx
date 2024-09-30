@@ -5,9 +5,30 @@ import React, { useState } from "react";
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false); 
 
-  const handleLogin = () => {
-    console.log("Logging in", username, password);
+  const handleLogin = async () => {
+    setLoading(true);
+    setError("");
+    try {
+      const response = await fetch("/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Login failed");
+      }
+
+      const data = await response.json();
+      console.log("Login successful", data);
+    } finally {
+      setLoading(false); 
+    }
   };
 
   return (
@@ -46,19 +67,30 @@ export default function Login() {
       >
         <div className="w-3/4">
           <div 
-            className="absolute top-20 right-20 flex flex-col justify-center items-center mb-4" 
+            className="absolute top-12 right-20 flex flex-col justify-center items-center mb-4"
             style={{
-              width: '60px',
+              width: '60px', 
               height: '60px',
-              padding: '26px 16px',
               borderRadius: '50%',
-              border: '2.633px solid',
-              borderImage: 'linear-gradient(135deg, #F103CF, #74A3FF) 1',
+              background: 'linear-gradient(135deg, #F103CF, #74A3FF)',  
+              padding: '4px' 
             }}
           >
-            <p className="text-gray-500" >1/1</p>
+            <div
+              style={{
+                width: '100%',  
+                height: '100%',
+                borderRadius: '50%',
+                backgroundColor: 'white', 
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <p className="text-black">1/1</p>
+            </div>
           </div>
-          <h2 className="text-4xl font-semibold mb-8 text-center  text-black" style={{ fontFamily: 'Bricolage Grotesque, sans-serif' }}>LOGIN</h2>
+          <h2 className="text-4xl font-semibold mb-8 text-center text-black" style={{ fontFamily: 'Bricolage Grotesque, sans-serif' }}>LOGIN</h2>
           <div className="mb-4">
             <label className="block mb-2" style={{ color: '#0010A4' }}>
               Username<span style={{ color: 'red' }}> *</span>
@@ -75,6 +107,7 @@ export default function Login() {
                 borderRadius: '5px',
                 border: '1.5px solid #C9C9C9',
                 background: 'var(--Miscellaneous-Floating-Tab---Pill-Fill, #FFF)',
+                color: 'black', 
               }}
             />
           </div>
@@ -94,21 +127,24 @@ export default function Login() {
                 borderRadius: '5px',
                 border: '1.5px solid #C9C9C9',
                 background: 'var(--Miscellaneous-Floating-Tab---Pill-Fill, #FFF)',
+                color: 'black', 
               }}
             />
           </div>
           <button
             onClick={handleLogin}
-            className="w-full py-2 transition duration-200"
+            className={`w-full py-2 transition duration-200 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
             style={{
               borderRadius: '269.667px',
               background: 'radial-gradient(61.94% 48.96% at 49.96% 96.22%, #3B47BC 0%, #374583 100%)',
               boxShadow: '0px 1.079px 67.417px 0px #D9E6FE, 0px 0px 0px 11.865px rgba(255, 255, 255, 0.07), 0px -1.079px 0px 2.697px rgba(0, 0, 0, 0.20) inset, 0px 1.079px 0px 2.697px rgba(255, 255, 255, 0.40) inset',
               color: 'white', 
             }}
+            disabled={loading} // Disable button while loading
           >
-            LOGIN
+            {loading ? "Loading..." : "LOGIN"}
           </button>
+          {error && <p className="text-red-500 text-center mt-4">{error}</p>} {/* Display error message */}
           <div className="text-center mt-4">
             <p className="text-gray-500">
               belum memiliki akun?{" "}

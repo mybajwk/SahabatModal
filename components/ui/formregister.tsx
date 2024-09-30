@@ -1,12 +1,24 @@
 'use client'
 
-import { useState } from 'react'
+import React from 'react'; 
+import { useState, useEffect  } from 'react'
 import { motion } from 'framer-motion'
-
 import { z } from 'zod'
-import { FormDataSchema } from '@/lib/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, SubmitHandler } from 'react-hook-form'
+
+export const FormDataSchema = z.object({
+  username: z.string().min(1, 'Username is required'),
+  password: z.string().min(1, 'Password is required'),
+  email: z.string().min(1, 'Email is required').email('Invalid email address'),
+  name: z.string().min(1, 'Name is required'),
+  phone_number: z.string().min(1, 'Phone number is required'),
+  role: z.enum(['seeker', 'investor'], { required_error: 'Role is required' }),
+  companyname: z.string().nullable(),
+  companyowner: z.string().nullable(),
+  business_age: z.number().nullable(),
+  report: z.instanceof(File).nullable(),
+});
 
 type Inputs = z.infer<typeof FormDataSchema>
 
@@ -14,12 +26,12 @@ const steps = [
   {
     id: 'Step 1',
     name: 'General Information',
-    fields: ['username', 'password', 'name','email','phone', 'role']
+    fields: ['username', 'password', 'name', 'email', 'phone_number', 'role']
   },
   {
     id: 'Step 2',
     name: 'Company Information',
-    fields: ['companyname', 'companyowner', 'duration', 'report']
+    fields: ['companyname', 'companyowner', 'business_age', 'report']
   },
   { id: 'Step 3', name: 'Term of Use' }
 ]
@@ -28,6 +40,7 @@ export default function FormRegister() {
   const [previousStep, setPreviousStep] = useState(0)
   const [currentStep, setCurrentStep] = useState(0)
   const delta = currentStep - previousStep
+  const [isBusiness, setIsBusiness] = useState(false);
 
   const {
     register,
@@ -35,32 +48,106 @@ export default function FormRegister() {
     watch,
     reset,
     trigger,
+    setValue,
     formState: { errors }
   } = useForm<Inputs>({
     resolver: zodResolver(FormDataSchema)
   })
 
+  const selectedRole = watch('role');
 
-  const processForm: SubmitHandler<Inputs> = data => {
-    console.log(data)
-    reset()
-  }
+  useEffect(() => {
+    setIsBusiness(selectedRole === 'seeker');
+    if (isBusiness) {
+      setValue('companyname', '');
+      setValue('companyowner', '');
+      setValue('business_age', 0);
+      setValue('report', null); 
+    } else {
+      setValue('companyname', null);
+      setValue('companyowner', null);
+      setValue('business_age', null);
+      setValue('report', null);
+    }
+  }, [isBusiness, setValue]);
 
-    const handleRegister = () => {
-      console.log("Register in");
+  useEffect(() => {
+    setIsBusiness(selectedRole === 'seeker');
+  }, [selectedRole]);
+
+  const processForm: SubmitHandler<Inputs> = async data => { 
+    const registerEndpoint = 'api/registration';
+    const businessEndpoint = 'api/registration/business';
+    const generalData = {
+      username: data.username,
+      password: data.password,
+      email: data.email,
+      name: data.name,
+      phone_number: data.phone_number,
+      role: data.role,
+    };
+  
+    const businessData = {
+      companyname: data.companyname,
+      companyowner: data.companyowner,
+      business_age: data.business_age,
+      report: data.report,
     };
 
-  type FieldName = keyof Inputs
+    try {
+      const registerResponse = await fetch(registerEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(generalData),
+      });
+  
+      if (!registerResponse.ok) {
+        throw new Error('Network response for registration was not ok');
+      }
+  
+      const registerResult = await registerResponse.json();
+      console.log('Registration Success:', registerResult);
 
-  const next = async () => {
-    const fields = steps[currentStep].fields
-    const output = await trigger(fields as FieldName[], { shouldFocus: true })
-
-    if (!output) return
-
+      if (isBusiness && (businessData.companyname || businessData.companyowner || businessData.business_age || businessData.report)) {
+        const formData = new FormData();
+  
+        const businessResponse = await fetch(businessEndpoint, {
+          method: 'POST',
+          body: formData, 
+        });
+  
+        if (!businessResponse.ok) {
+          throw new Error('Network response for business data was not ok');
+        }
+  
+        const businessResult = await businessResponse.json();
+        console.log('Business Registration Success:', businessResult);
+      }
+  
+      reset(); 
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+  
+  const handleRegister = async () => {
+    console.log("Register button clicked."); // Log when the button is clicked
+  
+    try {
+      // Call handleSubmit and wait for its result
+      await handleSubmit(processForm)();
+      console.log("Form submitted successfully."); // Log if form submission is initiated
+    } catch (error) {
+      console.error("Error during registration:", error); // Log any errors
+    }
+  };
+  
+  const next = () => {
     if (currentStep < steps.length - 1) {
-      if (currentStep === steps.length - 2) {
-        await handleSubmit(processForm)()
+      if(!isBusiness){
+        setCurrentStep(step => step + 1)
       }
       setPreviousStep(currentStep)
       setCurrentStep(step => step + 1)
@@ -71,9 +158,11 @@ export default function FormRegister() {
     if (currentStep > 0) {
       setPreviousStep(currentStep)
       setCurrentStep(step => step - 1)
+      if(!isBusiness){
+        setCurrentStep(step => step - 1)
+      }
     }
   }
-
   return (
     <section className='absolute inset-0 flex flex-col justify-between p-24'>
       {/* steps */}
@@ -117,7 +206,7 @@ export default function FormRegister() {
           <motion.div
             initial={{ x: delta >= 0 ? '50%' : '-50%', opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.3, ease: 'easeInOut' }}
+            transition={{ business_age: 0.3, ease: 'easeInOut' }}
           >
             <h2 className='text-base font-semibold leading-7 text-gray-900'>
               General Information
@@ -145,6 +234,7 @@ export default function FormRegister() {
                         borderRadius: '5px',
                         border: '1.5px solid #C9C9C9',
                         background: 'var(--Miscellaneous-Floating-Tab---Pill-Fill, #FFF)',
+                        color: '#000',
                     }}
                     />
                     {errors.username?.message && (
@@ -175,6 +265,7 @@ export default function FormRegister() {
                         borderRadius: '5px',
                         border: '1.5px solid #C9C9C9',
                         background: 'var(--Miscellaneous-Floating-Tab---Pill-Fill, #FFF)',
+                        color: '#000',
                     }}
                     />
                     {errors.password?.message && (
@@ -205,6 +296,7 @@ export default function FormRegister() {
                         borderRadius: '5px',
                         border: '1.5px solid #C9C9C9',
                         background: 'var(--Miscellaneous-Floating-Tab---Pill-Fill, #FFF)',
+                        color: '#000',
                     }}
                     />
                     {errors.password?.message && (
@@ -235,6 +327,7 @@ export default function FormRegister() {
                         borderRadius: '5px',
                         border: '1.5px solid #C9C9C9',
                         background: 'var(--Miscellaneous-Floating-Tab---Pill-Fill, #FFF)',
+                        color: '#000',
                     }}
                     />
                     {errors.name?.message && (
@@ -264,6 +357,7 @@ export default function FormRegister() {
                     borderRadius: '5px',
                     border: '1.5px solid #C9C9C9',
                     background: 'var(--Miscellaneous-Floating-Tab---Pill-Fill, #FFF)',
+                    color: '#000',
                 }}
                 />
                 {errors.name?.message && (
@@ -274,29 +368,30 @@ export default function FormRegister() {
             </div>
             <div className="sm:col-span-10 mb-4">
                 <label 
-                    htmlFor='phone'
+                    htmlFor='phone_number'
                     className="block mb-1" 
                     style={{ color: '#0010A4' }}
                 >
-                    Phone
+                    Phone Number
                     <span style={{ color: 'red' }}>*</span>
                 </label>
                 <input
                     type="tel"  
                     placeholder="Masukkan Nomor Telepon Anda.." 
-                    id='phone'
-                    {...register('phone')}
+                    id='phone_number'
+                    {...register('phone_number')}
                     autoComplete='tel'  
                     className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400"
                     style={{
                     borderRadius: '5px',
                     border: '1.5px solid #C9C9C9',
                     background: 'var(--Miscellaneous-Floating-Tab---Pill-Fill, #FFF)',
+                    color: '#000',
                     }}
                 />
-                {errors.phone?.message && (
+                {errors.phone_number?.message && (
                     <p className='mt-2 text-sm text-red-400'>
-                    {errors.phone.message}
+                    {errors.phone_number.message}
                     </p>
                 )}
             </div>
@@ -317,6 +412,7 @@ export default function FormRegister() {
                     borderRadius: '5px',
                     border: '1.5px solid #C9C9C9',
                     background: 'var(--Miscellaneous-Floating-Tab---Pill-Fill, #FFF)',
+                    color: '#000',
                     }}
                 >
                     <option value="">-- Pilih Role --</option> {/* Opsi default */}
@@ -332,12 +428,11 @@ export default function FormRegister() {
         </div>
         </motion.div>
     )}
-
-        {currentStep === 1 && (
+        {currentStep === 1 &&(
           <motion.div
             initial={{ x: delta >= 0 ? '50%' : '-50%', opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.3, ease: 'easeInOut' }}
+            transition={{ business_age: 0.3, ease: 'easeInOut' }}
           >
             <h2 className='text-base font-semibold leading-7 text-gray-900'>
               Company Details
@@ -366,6 +461,7 @@ export default function FormRegister() {
                         borderRadius: '5px',
                         border: '1.5px solid #C9C9C9',
                         background: 'var(--Miscellaneous-Floating-Tab---Pill-Fill, #FFF)',
+                        color: '#000',
                     }}
                     />
                     {errors.companyname?.message && (
@@ -393,6 +489,7 @@ export default function FormRegister() {
                         borderRadius: '5px',
                         border: '1.5px solid #C9C9C9',
                         background: 'var(--Miscellaneous-Floating-Tab---Pill-Fill, #FFF)',
+                        color: '#000',
                     }}
                     />
                     {errors.companyowner?.message && (
@@ -403,7 +500,7 @@ export default function FormRegister() {
               </div>
               <div className='sm:col-span-10'>
                   <label 
-                      htmlFor='duration'
+                      htmlFor='business_age'
                       className="block mb-0" 
                       style={{ color: '#0010A4' }}>
                       Lama Usaha
@@ -412,22 +509,23 @@ export default function FormRegister() {
                   <div className='mt-2'>
                     <input
                       type='number'
-                      id='duration'
-                      {...register('duration', { 
+                      id='business_age'
+                      {...register('business_age', { 
                           valueAsNumber: true, 
                           setValueAs: (value) => value.toString() 
                       })}
-                      autoComplete='duration-level2'
+                      autoComplete='business_age-level2'
                       className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400"
                       style={{
                           borderRadius: '5px',
                           border: '1.5px solid #C9C9C9',
                           background: 'var(--Miscellaneous-Floating-Tab---Pill-Fill, #FFF)',
+                          color: '#000',
                       }}
                     />
-                      {errors.duration?.message && (
+                      {errors.business_age?.message && (
                       <p className='mt-2 text-sm text-red-400'>
-                          {errors.duration.message}
+                          {errors.business_age.message}
                       </p>
                       )}
                   </div>
@@ -451,18 +549,21 @@ export default function FormRegister() {
                         </label>
 
                         <input
-                        type='file'
-                        id='report'
-                        {...register('report', { 
-                            required: 'Report must be a file', 
-                            validate: {
-                            // fileSize: (files) => files[0]?.size <= 2 * 1024 * 1024 || 'File size must be less than 2MB',
-                            // fileType: (files) => 
-                            //     ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/msword'].includes(files[0]?.type) || 'Only PDF and Word files are allowed',
-                            },
-                        })}
-                        className='hidden'
-                        accept=".pdf, .doc, .docx"
+                          type='file'
+                          id='report'
+                          onChange={(e) => {
+                            const file = e.target.files?.[0]; 
+                            if (file) {
+                              register('report').onChange({
+                                target: {
+                                  name: 'report',
+                                  value: file,
+                                },
+                              });
+                            }
+                          }}
+                          className='hidden'
+                          accept=".pdf, .doc, .docx"
                         />
                         {errors.report?.message && (
                         <p className='mt-2 text-sm text-red-400'>
@@ -474,24 +575,31 @@ export default function FormRegister() {
             </div>
           </motion.div>
         )}
+        
 
         {currentStep === 2 && (
           <>
             <h2 className='text-base font-semibold leading-7 text-gray-900'>
               Terms Of Use
             </h2>
-            <p className='mt-1 text-sm leading-6 text-gray-600'>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur, libero sed luctus vestibulum, turpis metus dignissim eros, sit amet molestie libero nisl id ligula. Nulla vel sapien purus. Curabitur nec quam velit. Etiam sed ex sapien. Proin dictum, eros quis posuere porttitor, dui odio dapibus mauris, vitae fringilla eros felis non libero. Fusce sit amet mi a augue lobortis pharetra. Nulla facilisi. Donec vitae malesuada nisl, ac lacinia justo. Suspendisse sit amet nunc arcu. Mauris at dui in libero lacinia consequat a vel elit.
-
-            Aenean nec nibh eget libero sodales vehicula at eget enim. Fusce bibendum purus sit amet magna malesuada, ac faucibus erat vulputate. Aenean vehicula justo nec est fermentum mollis. Sed ac turpis at metus consectetur aliquam. Mauris et velit ac lacus laoreet varius. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Curabitur blandit orci quis erat viverra facilisis. Duis nec elit et arcu gravida cursus. Integer pretium eros eget erat tincidunt ultricies.
-
-            Curabitur eget justo ac eros luctus scelerisque. Phasellus quis ligula nulla. Integer feugiat odio sit amet metus fringilla, a suscipit mi elementum. Nunc aliquet, justo eget interdum viverra, erat mauris sollicitudin lorem, sit amet efficitur lectus orci non orci. Ut id interdum sem. Mauris ultricies malesuada libero, nec tempor ex scelerisque quis. Cras tincidunt consequat nisi, id pellentesque nulla placerat in. Donec sit amet sem non dui convallis tincidunt. Nunc vehicula dolor vitae interdum sodales. Integer pretium, nulla sit amet fermentum laoreet, sapien felis aliquet purus, et aliquet tortor sapien in erat.
-
-            Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Duis mollis odio a dolor hendrerit, non pellentesque nisi dapibus. Ut facilisis ligula sit amet convallis consequat. Nulla dictum urna vitae arcu rutrum, vel viverra neque iaculis. Maecenas consectetur nulla orci, vitae efficitur est fermentum a. Donec lacinia magna sed metus blandit, a consectetur mauris posuere. Integer non metus in leo vulputate convallis. Suspendisse in orci dapibus, ullamcorper velit vel, consectetur orci. Etiam fringilla eros non enim sodales efficitur. Etiam pharetra dui ut orci consectetur fringilla.
-            </p>
+            <div className='mt-1 text-sm leading-6 text-gray-600 h-96 overflow-y-auto mb-8'>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur, libero sed luctus vestibulum, turpis metus dignissim eros, sit amet molestie libero nisl id ligula. Nulla vel sapien purus. Curabitur nec quam velit. Etiam sed ex sapien. Proin dictum, eros quis posuere porttitor, dui odio dapibus mauris, vitae fringilla eros felis non libero. Fusce sit amet mi a augue lobortis pharetra. Nulla facilisi. Donec vitae malesuada nisl, ac lacinia justo. Suspendisse sit amet nunc arcu. Mauris at dui in libero lacinia consequat a vel elit.
+              </p>
+              <p>
+                Aenean nec nibh eget libero sodales vehicula at eget enim. Fusce bibendum purus sit amet magna malesuada, ac faucibus erat vulputate. Aenean vehicula justo nec est fermentum mollis. Sed ac turpis at metus consectetur aliquam. Mauris et velit ac lacus laoreet varius. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Curabitur blandit orci quis erat viverra facilisis. Duis nec elit et arcu gravida cursus. Integer pretium eros eget erat tincidunt ultricies.
+              </p>
+              <p>
+                Curabitur eget justo ac eros luctus scelerisque. Phasellus quis ligula nulla. Integer feugiat odio sit amet metus fringilla, a suscipit mi elementum. Nunc aliquet, justo eget interdum viverra, erat mauris sollicitudin lorem, sit amet efficitur lectus orci non orci. Ut id interdum sem. Mauris ultricies malesuada libero, nec tempor ex scelerisque quis. Cras tincidunt consequat nisi, id pellentesque nulla placerat in. Donec sit amet sem non dui convallis tincidunt. Nunc vehicula dolor vitae interdum sodales. Integer pretium, nulla sit amet fermentum laoreet, sapien felis aliquet purus, et aliquet tortor sapien in erat.
+              </p>
+              <p>
+                Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Duis mollis odio a dolor hendrerit, non pellentesque nisi dapibus. Ut facilisis ligula sit amet convallis consequat. Nulla dictum urna vitae arcu rutrum, vel viverra neque iaculis. Maecenas consectetur nulla orci, vitae efficitur est fermentum a. Donec lacinia magna sed metus blandit, a consectetur mauris posuere. Integer non metus in leo vulputate convallis. Suspendisse in orci dapibus, ullamcorper velit vel, consectetur orci. Etiam fringilla eros non enim sodales efficitur. Etiam pharetra dui ut orci consectetur fringilla.
+              </p>
+            </div>
             <button
               onClick={handleRegister}
-              className="w-full py-2 transition duration-200"
+              type='button'
+              className="w-full mt-2 py-2 transition business_age-200"
               style={{
                 borderRadius: '269.667px',
                 background: 'radial-gradient(61.94% 48.96% at 49.96% 96.22%, #3B47BC 0%, #374583 100%)',
@@ -558,12 +666,14 @@ export default function FormRegister() {
           </button>
         </div>
         <div className='items-center'>
-          <p className="text-gray-500 items-center mt-3">
-                  sudah memiliki akun?{" "}
-                  <a href="#" style={{ color: '#DC2522', textDecoration: 'underline' }}>
-                    login here
-                  </a>
-                </p>
+          {currentStep !== steps.length - 1 && (
+            <p className="text-gray-500 items-center mt-3">
+              sudah memiliki akun?{" "}
+              <a href="#" style={{ color: '#DC2522', textDecoration: 'underline' }}>
+                login here
+              </a>
+            </p>
+          )}
         </div>
       </div>
     </section>
