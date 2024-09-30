@@ -1,4 +1,5 @@
 import FormRegister from '@/components/ui/formregister'
+import Image from 'next/image';
 
 export default function Register() {
   return (
@@ -15,12 +16,13 @@ export default function Register() {
             overflow: 'hidden',
           }}
         >
-          <img
-            src="/logo.png"
-            alt="SahabatModal Logo"
+        <Image 
+            src="/logo.png" 
+            alt="SahabatModal Logo" 
+            width={82.68} 
+            height={41} // Set a fixed height or use a specific number
             className="absolute z-20 top-0 left-0 m-4"
-            style={{ width: '82.68px', height: 'auto' }}
-          />
+        />
           <img
             src="ellipse-login.svg"
             alt="Ellipse"

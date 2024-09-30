@@ -47,7 +47,6 @@ export default function FormRegister() {
     handleSubmit,
     watch,
     reset,
-    trigger,
     setValue,
     formState: { errors }
   } = useForm<Inputs>({
