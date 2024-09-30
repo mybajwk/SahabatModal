@@ -4,6 +4,7 @@ import StartButton from '../components/ui/start-button';
 import StartButton2 from '../components/ui/start-button-2';
 import InspiringSection from '../components/ui/inspiring-section';
 import Footer from '../components/ui/footer';
+import Image from 'next/image';
 
 
 export default function Home() {
@@ -35,7 +36,7 @@ export default function Home() {
       {/* Adjust the section to remove unnecessary padding/margins */}
       <section className="bg-white py-0">
         <div className="w-screen overflow-hidden">
-          <img
+          <Image
             src="/iklan.png"
             alt="Iklan Promo"
             className="w-screen h-auto"
@@ -135,7 +136,7 @@ export default function Home() {
       </section>
       <section className="bg-white py-0">
         <div className="w-screen overflow-hidden">
-          <img
+          <Image
             src="/forum.png"
             alt="Forum"
             className="w-screen h-auto"

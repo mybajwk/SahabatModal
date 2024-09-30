@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
         {/* Left Section with Logo and Jargon */}
         <div className="left-section">
           <div className="logo-section">
-            <img src="/logo2.png" alt="Sahabat Modal Logo" className="footer-logo" />
+            {/* <img src="/logo2.png" alt="Sahabat Modal Logo" className="footer-logo" /> */}
             <p className="jargon-text">#LangkahPertamamu</p>
           </div>
         </div>
@@ -30,19 +30,19 @@ const Footer: React.FC = () => {
       <div className="footer-bottom">
         <div className="social-icons">
           <a href="https://facebook.com" aria-label="Facebook">
-            <img src="/icons/facebook.png" alt="Facebook" className="social-icon" />
+            {/* <img src="/icons/facebook.png" alt="Facebook" className="social-icon" /> */}
           </a>
           <a href="https://instagram.com" aria-label="Instagram">
-            <img src="/icons/instagram.png" alt="Instagram" className="social-icon" />
+            {/* <img src="/icons/instagram.png" alt="Instagram" className="social-icon" /> */}
           </a>
           <a href="https://x.com" aria-label="X (Twitter)">
-            <img src="/icons/twitter.png" alt="Twitter" className="social-icon" />
+            {/* <img src="/icons/twitter.png" alt="Twitter" className="social-icon" /> */}
           </a>
           <a href="https://linkedin.com" aria-label="LinkedIn">
-            <img src="/icons/linkedin.png" alt="LinkedIn" className="social-icon" />
+            {/* <img src="/icons/linkedin.png" alt="LinkedIn" className="social-icon" /> */}
           </a>
           <a href="https://youtube.com" aria-label="YouTube">
-            <img src="/icons/youtube.png" alt="YouTube" className="social-icon" />
+            {/* <img src="/icons/youtube.png" alt="YouTube" className="social-icon" /> */}
           </a>
         </div>
         <p>© 2024 Sahabat Modal. All Rights Reserved</p>

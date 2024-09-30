@@ -48,13 +48,16 @@ export default function Login() {
           src="/logo.png" 
           alt="SahabatModal Logo" 
           className="absolute z-20 top-0 left-0 m-4"
-          style={{ width: '82.68px', height: 'auto' }}
+          width={82.68} 
+          height={41} // Set a fixed height or use a specific number
         />
         <Image
           src="ellipse-login.svg" 
           alt="Ellipse" 
           className="absolute z-10"
-          style={{ top: '150px', right: '0', width: '453px', height: 'auto' }} 
+          style={{ top: '150px', right: '0'}} 
+          width={675} 
+          height={500}
         />
         <div className="text-center p-10">
           <h1 className="text-3xl font-bold mb-4">Koneksi, Inkubasi, Ekspansi</h1>

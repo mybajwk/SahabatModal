@@ -11,7 +11,7 @@ const Navbar = () => {
     >
       {/* Left: Logo */}
       <div className="flex items-center space-x-4">
-        <img src="/logo.png" alt="Sahabat Modal Logo" className="w-20 h-auto" />
+        {/* <img src="/logo.png" alt="Sahabat Modal Logo" className="w-20 h-auto" /> */}
       </div>
 
       {/* Center: Navigation Links */}

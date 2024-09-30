@@ -27,13 +27,17 @@ export default function Register() {
             src="ellipse-login.svg"
             alt="Ellipse"
             className="absolute z-10"
-            style={{ top: '150px', right: '0', width: '453px', height: 'auto' }}
+            width={675} 
+            height={500}
+            // style={{ top: '150px', right: '0', width: '453px', height: 'auto' }}
           />
           <Image
             src="ellipse-login.svg"
             alt="Ellipse"
             className="absolute z-30"
-            style={{ top: '0px', left: '50px', width: '675px', height: 'auto' }}
+            width={675} 
+            height={500}
+            // height={41} // Set a fixed height or use a specific number
           />
           <div
             className="text-center p-10 flex-grow flex flex-col justify-center"
