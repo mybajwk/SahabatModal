@@ -67,8 +67,12 @@ const config: Config = {
       },
       backgroundImage: {
         "blue-gradient-radial": "radial-gradient(circle, #3E3183, #3B47BC)",
+        "purple-gradient-radial":
+          "radial-gradient(61.94% 48.96% at 49.96% 96.22%, #3B47BC 0%, #374583 100%)",
         "green-gradient":
           "radial-gradient(61.94% 48.96% at 49.96% 96.22%, #04C782 0%, #18D3A7 100%)",
+        "green-gradient2":
+          "linear-gradient(90deg, rgba(4, 199, 130, 0.30) 0%, #18D3A7 43.72%)",
         "purple-gradient-radial":
           "radial-gradient(61.94% 48.96% at 49.96% 96.22%, #3B47BC 0%, #374583 100%)",
         "conic-blue":
