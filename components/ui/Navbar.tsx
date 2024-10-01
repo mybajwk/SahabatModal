@@ -1,5 +1,5 @@
-import React from 'react';
-import { FaSignInAlt } from 'react-icons/fa'; // Icon for the button
+import React from "react";
+import { FaSignInAlt } from "react-icons/fa"; // Icon for the button
 
 const Navbar = () => {
   return (
@@ -16,9 +16,15 @@ const Navbar = () => {
 
       {/* Center: Navigation Links */}
       <nav className="hidden md:flex space-x-8">
-        <a href="#home" className="text-white hover:text-gray-900 text-lg">Home</a>
-        <a href="#artikel" className="text-white hover:text-gray-900 text-lg">Artikel</a>
-        <a href="#forum" className="text-white hover:text-gray-900 text-lg">Forum</a>
+        <a href="#home" className="text-white hover:text-gray-900 text-lg">
+          Home
+        </a>
+        <a href="#artikel" className="text-white hover:text-gray-900 text-lg">
+          Artikel
+        </a>
+        <a href="#forum" className="text-white hover:text-gray-900 text-lg">
+          Forum
+        </a>
       </nav>
 
       {/* Right: Login Button */}
@@ -26,7 +32,7 @@ const Navbar = () => {
         href="#login"
         className="flex items-center justify-center space-x-2 text-white py-2 px-4 rounded-full shadow-lg hover:shadow-xl transition duration-300"
         style={{
-          background: 'radial-gradient(circle, #3B47BC 100%, #374583 100%)', // Previous radial gradient for button
+          background: "radial-gradient(circle, #3B47BC 100%, #374583 100%)", // Previous radial gradient for button
         }}
       >
         <span className="font-medium">Login</span>

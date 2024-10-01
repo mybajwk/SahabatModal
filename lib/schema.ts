@@ -10,5 +10,5 @@
 //   companyname: z.string().min(1, 'Company Name is required'),
 //   companyowner: z.string().min(1, 'Owner is required'),
 //   duration: z.number().min(1, 'Duration is required and must be a number'),
-//   report: z.instanceof(File, { message: 'Report must be a file' }), 
+//   report: z.instanceof(File, { message: 'Report must be a file' }),
 // });
