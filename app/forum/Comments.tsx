@@ -1,6 +1,5 @@
 import React from "react";
 
-import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { IoIosSend } from "react-icons/io";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
