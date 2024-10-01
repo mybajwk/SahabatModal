@@ -14,6 +14,23 @@ CREATE TABLE "UserAccount" (
 );
 
 -- CreateTable
+CREATE TABLE "UserBillingAddress" (
+    "id" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "user_id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "company_name" TEXT NOT NULL,
+    "address_line" TEXT NOT NULL,
+    "country" TEXT NOT NULL,
+    "state_province" TEXT NOT NULL,
+    "zip_code" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "phone_number" TEXT NOT NULL,
+
+    CONSTRAINT "UserBillingAddress_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "Mentoring" (
     "id" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -107,7 +124,8 @@ CREATE TABLE "Forum" (
     "id" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "creator_id" TEXT NOT NULL,
-    "image" TEXT NOT NULL,
+    "image" TEXT,
+    "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "coin" BIGINT NOT NULL,
     "tag" TEXT[],
@@ -137,7 +155,13 @@ CREATE UNIQUE INDEX "UserAccount_phone_number_key" ON "UserAccount"("phone_numbe
 CREATE UNIQUE INDEX "UserAccount_username_key" ON "UserAccount"("username");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "UserBillingAddress_user_id_key" ON "UserBillingAddress"("user_id");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Business_owner_id_key" ON "Business"("owner_id");
+
+-- AddForeignKey
+ALTER TABLE "UserBillingAddress" ADD CONSTRAINT "UserBillingAddress_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "UserAccount"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Mentoring" ADD CONSTRAINT "Mentoring_mentor_id_fkey" FOREIGN KEY ("mentor_id") REFERENCES "UserAccount"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -159,6 +183,12 @@ ALTER TABLE "CrowdfundingFaq" ADD CONSTRAINT "CrowdfundingFaq_crowdfunding_id_fk
 
 -- AddForeignKey
 ALTER TABLE "FundingData" ADD CONSTRAINT "FundingData_crowdfunding_item_id_fkey" FOREIGN KEY ("crowdfunding_item_id") REFERENCES "Crowdfunding"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Forum" ADD CONSTRAINT "Forum_creator_id_fkey" FOREIGN KEY ("creator_id") REFERENCES "UserAccount"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "ForumComment" ADD CONSTRAINT "ForumComment_creator_id_fkey" FOREIGN KEY ("creator_id") REFERENCES "UserAccount"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "ForumComment" ADD CONSTRAINT "ForumComment_forum_id_fkey" FOREIGN KEY ("forum_id") REFERENCES "Forum"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

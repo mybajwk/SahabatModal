@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
   try {
-    const user = await client.userAccount.findUnique({
+    const billingAddress = await client.userBillingAddress.findUnique({
       where: {
         id: token?.id?.toString() || "",
       },
@@ -20,15 +20,19 @@ export async function GET(req: NextRequest) {
         created_at: true,
         email: true,
         phone_number: true,
-        username: true,
         name: true,
-        role: true,
-        image: true,
-        Business: true,
+        address_line: true,
+        company_name: true,
+        country: true,
+        state_province: true,
+        zip_code: true,
       },
     });
     return new NextResponse(
-      JSON.stringify({ data: user, message: "success get profile" }),
+      JSON.stringify({
+        data: billingAddress,
+        message: "success get profile billing address",
+      }),
       { status: 200 }
     );
   } catch (error) {
@@ -48,9 +52,27 @@ export async function POST(req: NextRequest) {
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
   const body = await req.json();
-  const { name, email, phone_number, image } = body;
+  const {
+    name,
+    email,
+    phone_number,
+    company_name,
+    address_line,
+    country,
+    state_province,
+    zip_code,
+  } = body;
 
-  if (!name || !email || !phone_number || !image) {
+  if (
+    !name ||
+    !email ||
+    !phone_number ||
+    !company_name ||
+    !address_line ||
+    !country ||
+    !state_province ||
+    !zip_code
+  ) {
     return NextResponse.json(
       { message: "Missing required fields" },
       { status: 400 }
@@ -58,19 +80,35 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const user = await client.userAccount.update({
+    const billingAddress = await client.userBillingAddress.upsert({
       where: {
-        id: token?.id?.toString() || "",
+        user_id: token?.id?.toString() || "",
       },
-      data: {
+      update: {
         name: name,
-        image: image,
         email: email,
         phone_number: phone_number,
+        address_line: address_line,
+        company_name: company_name,
+        country: country,
+        state_province: state_province,
+        zip_code: zip_code,
+      },
+      create: {
+        user_id: token?.id?.toString() || "",
+        name: name,
+        email: email,
+        phone_number: phone_number,
+        address_line: address_line,
+        company_name: company_name,
+        country: country,
+        state_province: state_province,
+        zip_code: zip_code,
       },
     });
+
     return new NextResponse(
-      JSON.stringify({ data: null, message: "success update profile" }),
+      JSON.stringify({ data: null, message: "success update billing address" }),
       { status: 200 }
     );
   } catch (error) {
