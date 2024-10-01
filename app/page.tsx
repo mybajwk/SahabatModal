@@ -1,104 +1,166 @@
+import Navbar from "../components/ui/Navbar";
+import GetStartedButton from "../components/ui/get-started-button";
+import StartButton from "../components/ui/start-button";
+import StartButton2 from "../components/ui/start-button-2";
+import InspiringSection from "../components/ui/inspiring-section";
+import Footer from "../components/ui/footer";
 import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <h1 className="text-xl">Test ascent</h1>
-        <h1 className="font-bricolage text-xl">Test ascent</h1>
-        <h1 className="font-lexend text-xl">Test ascent</h1>
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <>
+      <Navbar />
+      <section
+        className="min-h-screen bg-cover bg-center text-white"
+        style={{
+          backgroundImage: "url('/BG.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
+        <div
+          className="container mx-auto px-4 py-20"
+          style={{ paddingTop: "20rem", marginLeft: "7rem" }}
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div className="space-y-6">
+              {/* Apply Lexend font to this heading */}
+              <h1
+                className="text-7xl font-bold leading-tight mb-6"
+                style={{ fontFamily: "Lexend, sans-serif" }}
+              >
+                Beri Solusi Melalui Parsial Investasi dan Inkubasi bagi UMKM dan
+                Startup.
+              </h1>
+              <GetStartedButton />
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+      </section>
+
+      {/* Adjust the section to remove unnecessary padding/margins */}
+      <section className="bg-white py-0">
+        <div className="w-screen overflow-hidden">
           <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+            src="/iklan.png"
+            alt="Iklan Promo"
+            className="w-screen h-auto"
+            style={{
+              objectFit: "cover",
+            }}
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        </div>
+      </section>
+
+      <section
+        className="bg-blue-900 text-white py-20" // Remove extra padding
+        style={{
+          backgroundImage: "url('/cara_kerja.png')",
+          backgroundSize: "cover", // Change to 'contain' so the image fits within the section without cropping
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          minHeight: "70vh", // Adjust height to ensure the section has enough height without whitespace
+        }}
+      >
+        <div className="container mx-auto text-center">
+          {/* Title */}
+          <h2
+            className="text-7xl font-bold mt-3 mb-12 text-left -ml-20" // Align text to the left
+            style={{
+              fontFamily: "Lexend, sans-serif",
+              textShadow: "0 0 15px rgba(255, 255, 255, 0.8)", // Glow effect using text-shadow
+            }}
+          >
+            Bagaimana Cara Kerjanya?
+          </h2>
+        </div>
+      </section>
+      <section
+        className="min-h-screen bg-cover bg-center text-white"
+        style={{
+          backgroundImage: "url('/benefit.png')", // Ensure correct path for background image
+          backgroundSize: "cover", // Cover the section, ensure the background stretches
+          backgroundPosition: "top", // Center the image
+          backgroundRepeat: "no-repeat", // Prevent background from repeating
+          backgroundAttachment: "scroll", // Background scrolls with the content
+        }}
+      >
+        <div className="container mx-auto py-20">
+          {/* Title with Glow Effect */}
+          <h2
+            className="text-7xl font-bold mt-80 -mb-10 -ml-20 text-left"
+            style={{
+              fontFamily: "Lexend, sans-serif",
+              textShadow: "0 0 15px rgba(255, 255, 255, 0.8)", // Glow effect
+            }}
+          >
+            Apa Benefit Yang
+          </h2>
+        </div>
+        <div className="container mx-auto py-20">
+          <h2
+            className="text-7xl font-bold -mt-20 -mb-10 -ml-20 text-left"
+            style={{
+              fontFamily: "Lexend, sans-serif",
+              textShadow: "0 0 15px rgba(255, 255, 255, 0.8)", // Glow effect
+            }}
+          >
+            Didapat Oleh Seeker?
+          </h2>
+        </div>
+
+        <h1 className="text-10xl font-bold mb-12"></h1>
+        <StartButton />
+        <div className="container mx-auto py-20">
+          {/* Title with Glow Effect */}
+          <h2
+            className="text-7xl font-bold mt-96 -mb-10 -mr-40 text-right"
+            style={{
+              fontFamily: "Lexend, sans-serif",
+              textShadow: "0 0 15px rgba(255, 255, 255, 0.8)", // Glow effect
+            }}
+          >
+            Apa Benefit Yang
+          </h2>
+        </div>
+        <div className="container mx-auto py-20">
+          <h2
+            className="text-7xl font-bold -mt-20 -mb-10 -mr-40 text-right"
+            style={{
+              fontFamily: "Lexend, sans-serif",
+              textShadow: "0 0 15px rgba(255, 255, 255, 0.8)", // Glow effect
+            }}
+          >
+            Didapat Oleh Investor?
+          </h2>
+        </div>
+        <StartButton2 />
+      </section>
+      <section className="bg-white py-0">
+        <div className="w-screen overflow-hidden">
           <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
+            src="/forum.png"
+            alt="Forum"
+            className="w-screen h-auto"
+            style={{
+              objectFit: "cover",
+            }}
           />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        </div>
+      </section>
+      <section
+        className="bg-blue-900 text-white py-20" // Remove extra padding
+        style={{
+          backgroundImage: "url('/faq.png')",
+          backgroundSize: "cover", // Change to 'contain' so the image fits within the section without cropping
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          minHeight: "70vh", // Adjust height to ensure the section has enough height without whitespace
+        }}
+      ></section>
+      <InspiringSection />
+      <Footer />
+    </>
   );
 }
