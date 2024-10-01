@@ -40,6 +40,8 @@ export default function Home() {
             src="/iklan.png"
             alt="Iklan Promo"
             className="w-screen h-auto"
+            width={500}
+            height={500}
             style={{
               objectFit: "cover",
             }}
@@ -135,6 +137,8 @@ export default function Home() {
             src="/forum.png"
             alt="Forum"
             className="w-screen h-auto"
+            width={500}
+            height={500}
             style={{
               objectFit: "cover",
             }}
