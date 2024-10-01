@@ -40,18 +40,20 @@ export default function Home() {
       </section>
 
       {/* Adjust the section to remove unnecessary padding/margins */}
-      <section className="bg-white py-0">
+      {/* <section className="bg-white py-0">
         <div className="w-screen overflow-hidden">
           <Image
             src="/iklan.png"
             alt="Iklan Promo"
             className="w-screen h-auto"
+            width={500}
+            height={500}
             style={{
               objectFit: "cover",
             }}
           />
         </div>
-      </section>
+      </section> */}
 
       <section
         className="bg-blue-900 text-white py-20" // Remove extra padding
@@ -143,6 +145,8 @@ export default function Home() {
             src="/forum.png"
             alt="Forum"
             className="w-screen h-auto"
+            width={500}
+            height={500}
             style={{
               objectFit: "cover",
             }}
