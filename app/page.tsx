@@ -9,7 +9,6 @@ import Image from "next/image";
 export default function Home() {
   return (
     <>
-      <Navbar />
       <section
         className="min-h-screen bg-cover bg-center text-white"
         style={{
@@ -42,14 +41,14 @@ export default function Home() {
       {/* Adjust the section to remove unnecessary padding/margins */}
       <section className="bg-white py-0">
         <div className="w-screen overflow-hidden">
-          <Image
+          {/* <Image
             src="/iklan.png"
             alt="Iklan Promo"
             className="w-screen h-auto"
             style={{
               objectFit: "cover",
             }}
-          />
+          /> */}
         </div>
       </section>
 
@@ -139,14 +138,14 @@ export default function Home() {
       </section>
       <section className="bg-white py-0">
         <div className="w-screen overflow-hidden">
-          <Image
+          {/* <Image
             src="/forum.png"
             alt="Forum"
             className="w-screen h-auto"
             style={{
               objectFit: "cover",
             }}
-          />
+          /> */}
         </div>
       </section>
       <section
@@ -160,7 +159,6 @@ export default function Home() {
         }}
       ></section>
       <InspiringSection />
-      <Footer />
     </>
   );
 }
