@@ -35,7 +35,7 @@ export default function Login() {
   return (
     <div className="flex h-screen">
       <div 
-        className="relative flex items-center justify-center text-white" 
+        className="relative hidden md:flex items-center justify-center text-white md:w-1/2 lg:w-2/5"
         style={{
           width: '675px',
           opacity: 0.75, 
@@ -66,13 +66,15 @@ export default function Login() {
         </div>
       </div>
       <div 
-        className="flex items-center justify-center bg-white" 
+        className="flex items-center justify-center bg-white w-full md:w-1/2 lg:w-3/5"
         style={{ width: '837px'}}
       >
         <div className="w-3/4">
           <div 
-            className="absolute top-12 right-20 flex flex-col justify-center items-center mb-4"
+            className="relative hidden md:flex items-center  justify-center text-white md:w-1/2 lg:w-2/5 top-10 "
             style={{
+              position: 'absolute',
+              right: '80px',        
               width: '60px', 
               height: '60px',
               borderRadius: '50%',
@@ -91,7 +93,7 @@ export default function Login() {
                 alignItems: 'center',
               }}
             >
-              <p className="text-black">1/1</p>
+              <p className="text-black" >1/1</p>
             </div>
           </div>
           <h2 className="text-4xl font-semibold mb-8 text-center text-black" style={{ fontFamily: 'Bricolage Grotesque, sans-serif' }}>LOGIN</h2>
