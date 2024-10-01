@@ -34,7 +34,7 @@ export default function Login() {
 
   return (
     <div className="flex h-screen">
-      <div 
+      <div
         className="relative hidden md:flex items-center justify-center text-white md:w-1/2 lg:w-2/5"
         style={{
           width: "675px",
@@ -75,21 +75,21 @@ export default function Login() {
           </h2>
         </div>
       </div>
-      <div 
+      <div
         className="flex items-center justify-center bg-white w-full md:w-1/2 lg:w-3/5"
-        style={{ width: '837px'}}
+        style={{ width: "837px" }}
       >
         <div className="w-3/4">
-          <div 
+          <div
             className="relative hidden md:flex items-center  justify-center text-white md:w-1/2 lg:w-2/5 top-10 "
             style={{
-              position: 'absolute',
-              right: '80px',        
-              width: '60px', 
-              height: '60px',
-              borderRadius: '50%',
-              background: 'linear-gradient(135deg, #F103CF, #74A3FF)',  
-              padding: '4px' 
+              position: "absolute",
+              right: "80px",
+              width: "60px",
+              height: "60px",
+              borderRadius: "50%",
+              background: "linear-gradient(135deg, #F103CF, #74A3FF)",
+              padding: "4px",
             }}
           >
             <div
@@ -103,7 +103,7 @@ export default function Login() {
                 alignItems: "center",
               }}
             >
-              <p className="text-black" >1/1</p>
+              <p className="text-black">1/1</p>
             </div>
           </div>
           <h2
@@ -179,7 +179,7 @@ export default function Login() {
             <p className="text-gray-500">
               belum memiliki akun?{" "}
               <a
-                href="#"
+                href="register"
                 style={{ color: "#DC2522", textDecoration: "underline" }}
               >
                 Register here

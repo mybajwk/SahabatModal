@@ -16,7 +16,7 @@ const Footer: React.FC = () => {
         {/* Right Section with Navigation */}
         <div className="right-section">
           <nav className="footer-nav">
-            <a href="/home">Home</a>
+            <a href="/">Home</a>
             <a href="/forum">Forum</a>
             <a href="/artikel">Artikel</a>
           </nav>

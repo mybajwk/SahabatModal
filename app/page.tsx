@@ -1,15 +1,11 @@
-import Navbar from "../components/ui/Navbar";
 import GetStartedButton from "../components/ui/get-started-button";
 import StartButton from "../components/ui/start-button";
 import StartButton2 from "../components/ui/start-button-2";
 import InspiringSection from "../components/ui/inspiring-section";
-import Footer from "../components/ui/footer";
-import Image from "next/image";
 
 export default function Home() {
   return (
     <>
-      <Navbar />
       <section
         className="min-h-screen bg-cover bg-center text-white"
         style={{
@@ -25,7 +21,6 @@ export default function Home() {
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div className="space-y-6">
-              {/* Apply Lexend font to this heading */}
               <h1
                 className="text-7xl font-bold leading-tight mb-6"
                 style={{ fontFamily: "Lexend, sans-serif" }}
@@ -39,10 +34,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Adjust the section to remove unnecessary padding/margins */}
-      {/* <section className="bg-white py-0">
+      <section className="bg-white py-0">
         <div className="w-screen overflow-hidden">
-          <Image
+          {/* <Image
             src="/iklan.png"
             alt="Iklan Promo"
             className="w-screen h-auto"
@@ -51,27 +45,26 @@ export default function Home() {
             style={{
               objectFit: "cover",
             }}
-          />
+          /> */}
         </div>
-      </section> */}
+      </section>
 
       <section
-        className="bg-blue-900 text-white py-20" // Remove extra padding
+        className="bg-blue-900 text-white py-20"
         style={{
           backgroundImage: "url('/cara_kerja.png')",
-          backgroundSize: "cover", // Change to 'contain' so the image fits within the section without cropping
+          backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
-          minHeight: "70vh", // Adjust height to ensure the section has enough height without whitespace
+          minHeight: "70vh",
         }}
       >
         <div className="container mx-auto text-center">
-          {/* Title */}
           <h2
-            className="text-7xl font-bold mt-3 mb-12 text-left -ml-20" // Align text to the left
+            className="text-7xl font-bold mt-3 mb-12 text-left -ml-20"
             style={{
               fontFamily: "Lexend, sans-serif",
-              textShadow: "0 0 15px rgba(255, 255, 255, 0.8)", // Glow effect using text-shadow
+              textShadow: "0 0 15px rgba(255, 255, 255, 0.8)",
             }}
           >
             Bagaimana Cara Kerjanya?
@@ -89,7 +82,6 @@ export default function Home() {
         }}
       >
         <div className="container mx-auto py-20">
-          {/* Title with Glow Effect */}
           <h2
             className="text-7xl font-bold mt-80 -mb-10 -ml-20 text-left"
             style={{
@@ -141,7 +133,7 @@ export default function Home() {
       </section>
       <section className="bg-white py-0">
         <div className="w-screen overflow-hidden">
-          <Image
+          {/* <Image
             src="/forum.png"
             alt="Forum"
             className="w-screen h-auto"
@@ -150,7 +142,7 @@ export default function Home() {
             style={{
               objectFit: "cover",
             }}
-          />
+          /> */}
         </div>
       </section>
       <section
@@ -164,7 +156,6 @@ export default function Home() {
         }}
       ></section>
       <InspiringSection />
-      <Footer />
     </>
   );
 }

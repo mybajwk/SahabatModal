@@ -16,20 +16,20 @@ const Navbar = () => {
 
       {/* Center: Navigation Links */}
       <nav className="hidden md:flex space-x-8">
-        <a href="#home" className="text-white hover:text-gray-900 text-lg">
+        <a href="/" className="text-white hover:text-gray-900 text-lg">
           Home
         </a>
         <a href="#artikel" className="text-white hover:text-gray-900 text-lg">
           Artikel
         </a>
-        <a href="#forum" className="text-white hover:text-gray-900 text-lg">
+        <a href="/forum" className="text-white hover:text-gray-900 text-lg">
           Forum
         </a>
       </nav>
 
       {/* Right: Login Button */}
       <a
-        href="#login"
+        href="/login"
         className="flex items-center justify-center space-x-2 text-white py-2 px-4 rounded-full shadow-lg hover:shadow-xl transition duration-300"
         style={{
           background: "radial-gradient(circle, #3B47BC 100%, #374583 100%)", // Previous radial gradient for button
