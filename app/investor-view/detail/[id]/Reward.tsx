@@ -64,7 +64,7 @@ function Reward() {
   const [selectedItem, setSelectedItem] = useState(dummyData[0]);
 
   return (
-    <div className="flex font-lexend flex-col md:flex-row space-y-8 p-6 w-full">
+    <div className="flex font-lexend flex-col md:flex-row md:space-y-0 space-y-8 p-6 w-full md:justify-between">
       <div className="flex flex-col space-y-2 md:w-1/2">
         <h1 className="drop-shadow-text-white font-bold text-center md:text-start md:text-2xl mb-4">
           Reward yang Tersedia
@@ -80,7 +80,7 @@ function Reward() {
           />
         ))}
       </div>
-      <div className="flex flex-col space-y-3 md:w-full">
+      <div className="flex flex-col space-y-3 md:w-[40%]">
         {selectedItem?.rewards.map((reward, index) => (
           <RewardCard
             key={index}
