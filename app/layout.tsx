@@ -4,6 +4,7 @@ import { Lexend, Bricolage_Grotesque, Poppins } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/footer";
+import SessionAuthProvider from "@/provider/SessionAuthProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -52,9 +53,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${bricolage.variable} ${lexend.variable} ${poppins.variable} antialiased overflow-x-hidden overflow-y-auto`}
       >
-        <Navbar />
-        {children}
-        <Footer />
+        <SessionAuthProvider>
+          <Navbar />
+          {children}
+          <Footer />
+        </SessionAuthProvider>
       </body>
     </html>
   );

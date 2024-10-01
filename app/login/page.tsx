@@ -2,6 +2,8 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -9,27 +11,24 @@ export default function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const router = useRouter();
+
   const handleLogin = async () => {
     setLoading(true);
-    setError("");
-    try {
-      const response = await fetch("/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, password }),
-      });
+    console.log(username, password);
+    const res = await signIn("credentials", {
+      email: username,
+      password: password,
+      redirect: false,
+      callbackUrl: "/",
+    });
 
-      if (!response.ok) {
-        throw new Error("Login failed");
-      }
-
-      const data = await response.json();
-      console.log("Login successful", data);
-    } finally {
-      setLoading(false);
+    if (res?.error) {
+      return;
     }
+
+    router.refresh();
+    router.push("/forum");
   };
 
   return (

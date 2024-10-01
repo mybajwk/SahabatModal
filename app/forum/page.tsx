@@ -1,9 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import FeedCard from "./FeedCard";
 import { FaPlus } from "react-icons/fa";
+import { useSession } from "next-auth/react";
+import prisma from "@/app/libs/prismadb";
+import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import {
   Dialog,
   DialogContent,
@@ -168,6 +172,9 @@ const formSchema = z.object({
 });
 
 function ForumPage() {
+  const { data: session, status } = useSession();
+
+  console.log("session", session);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -176,6 +183,18 @@ function ForumPage() {
       tags: "",
     },
   });
+
+  if (status === "loading") {
+    return <div>Loading...</div>; // You can replace this with a spinner or loading animation
+  }
+
+  const router = useRouter();
+
+  if (!session) {
+    router.refresh();
+    router.push("/login");
+    return null;
+  }
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
