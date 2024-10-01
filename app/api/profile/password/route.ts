@@ -4,7 +4,7 @@ import { getToken } from "next-auth/jwt";
 import bcrypt from "bcryptjs";
 
 export async function POST(req: NextRequest) {
-  if (req.method !== "GET") {
+  if (req.method !== "POST") {
     return new NextResponse(JSON.stringify({ message: "Method Not Allowed" }), {
       status: 405,
     });

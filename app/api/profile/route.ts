@@ -40,7 +40,7 @@ export async function GET(req: NextRequest) {
   }
 }
 export async function POST(req: NextRequest) {
-  if (req.method !== "GET") {
+  if (req.method !== "POST") {
     return new NextResponse(JSON.stringify({ message: "Method Not Allowed" }), {
       status: 405,
     });

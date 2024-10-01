@@ -49,7 +49,7 @@ export async function GET(req: NextRequest) {
       })),
     }));
     return new NextResponse(
-      JSON.stringify({ data: formattedForums, message: "success get profile" }),
+      JSON.stringify({ data: formattedForums, message: "success get forum" }),
       { status: 200 }
     );
   } catch (error) {
@@ -61,7 +61,7 @@ export async function GET(req: NextRequest) {
   }
 }
 export async function POST(req: NextRequest) {
-  if (req.method !== "GET") {
+  if (req.method !== "POST") {
     return new NextResponse(JSON.stringify({ message: "Method Not Allowed" }), {
       status: 405,
     });
@@ -69,11 +69,11 @@ export async function POST(req: NextRequest) {
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
   const body = await req.json();
-  const { image, title, description, tag } = body as {
+  const { image, title, description, tags } = body as {
     image: string | null;
     title: string;
     description: string;
-    tag: string[];
+    tags: string[];
   };
 
   if (!description || !title) {
@@ -84,12 +84,13 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const user = await client.forum.create({
+    const forum = await client.forum.create({
       data: {
         image: image,
         title: title,
         description: description,
         creator_id: token?.id?.toString() || "",
+        tag: tags,
         coin: 0,
       },
     });
