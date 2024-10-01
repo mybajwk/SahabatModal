@@ -34,7 +34,7 @@ function OrderSummary() {
   const [paymentMethod, setPaymentMethod] = useState("");
 
   const handlePaymentMethodChange = (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     setPaymentMethod(event.target.value);
   };
