@@ -59,7 +59,7 @@ const PengajuanFunding: React.FC<PengajuanMentoring> = ({}) => {
       }
 
     //   // Redirect to dashboardpengusaha after successful submission
-    //   router.push("/dashboardpengusaha");
+      router.push("/dashboardpengusaha");
     } catch (error) {
       console.error("Error submitting mentoring request:", error);
     } finally {
@@ -68,19 +68,19 @@ const PengajuanFunding: React.FC<PengajuanMentoring> = ({}) => {
     console.log(data);
   };
   const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    const calculateProgress = () => {
-      let filledFields = 0;
-      const totalFields = 3; 
-      if (form.watch("topik")) filledFields += 1;
-      if (form.watch("deskripsi")) filledFields += 1;
-      if (form.watch("dateTime")) filledFields += 1;
+//   useEffect(() => {
+//     const calculateProgress = () => {
+//       let filledFields = 0;
+//       const totalFields = 3; 
+//       if (form.watch("topik")) filledFields += 1;
+//       if (form.watch("deskripsi")) filledFields += 1;
+//       if (form.watch("dateTime")) filledFields += 1;
 
-      setProgress((filledFields / totalFields) * 100);
-    };
+//       setProgress((filledFields / totalFields) * 100);
+//     };
 
-    calculateProgress();
-  }, [form.watch("topik"), form.watch("deskripsi"), form.watch("dateTime")]);
+//     calculateProgress();
+//   }, [form.watch("topik"), form.watch("deskripsi"), form.watch("dateTime")]);
 
   const router = useRouter();
 
@@ -159,14 +159,14 @@ const PengajuanFunding: React.FC<PengajuanMentoring> = ({}) => {
           {/* Form Section */}
           <div className="flex-1 flex flex-col gap-5 justify-center items-center">
             {/* Progress Bar */}
-            <div className="w-full bg-gray-200 rounded-full h-3">
+            {/* <div className="w-full bg-gray-200 rounded-full h-3">
               <div className="h-full rounded-full" style={{ width: `${progress}%`, backgroundColor: '#00326C' }} />
             </div>
             <div className="text-sm font-medium text-gray-700 mt-2">
                 {progress <= 33 && <p>Step 1: Input Mentoring Topic</p>}
                 {progress > 33 && progress <= 66 && <p>Step 2: Input Description</p>}
                 {progress > 66 && <p>Step 3: Select Date and Time</p>}
-            </div>
+            </div> */}
             <div className="flex flex-row w-full">
               <div className="flex-1 flex flex-col gap-5 p-8">
                 <FormField
