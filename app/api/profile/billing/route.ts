@@ -33,13 +33,13 @@ export async function GET(req: NextRequest) {
         data: billingAddress,
         message: "success get profile billing address",
       }),
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("Session Retrieval Error:", error);
     return NextResponse.json(
       { message: "Internal server error", error },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -75,7 +75,7 @@ export async function POST(req: NextRequest) {
   ) {
     return NextResponse.json(
       { message: "Missing required fields" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -109,13 +109,13 @@ export async function POST(req: NextRequest) {
 
     return new NextResponse(
       JSON.stringify({ data: null, message: "success update billing address" }),
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("Session Retrieval Error:", error);
     return NextResponse.json(
       { message: "Internal server error", error },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
