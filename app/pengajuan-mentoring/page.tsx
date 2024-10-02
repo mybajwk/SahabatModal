@@ -111,7 +111,7 @@ const PengajuanFunding: React.FC<PengajuanMentoring> = ({}) => {
             <div
               className="absolute z-0"
               style={{
-                top: '140px', 
+                top: '125px', 
                 left: '77px',
                 borderTopLeftRadius: '54.888px', 
                 borderBottomLeftRadius: '54.888px', 
@@ -134,7 +134,7 @@ const PengajuanFunding: React.FC<PengajuanMentoring> = ({}) => {
             <div
               className="absolute z-0"
               style={{
-                bottom: '140px', 
+                bottom: '125px', 
                 left: '0px', 
                 borderTopRightRadius: '54.888px', 
                 borderBottomRightRadius: '54.888px',
