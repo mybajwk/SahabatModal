@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Lexend, Bricolage_Grotesque, Poppins } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/ui/Navbar";
-import Footer from "@/components/ui/footer";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/footer";
 import SessionAuthProvider from "@/provider/SessionAuthProvider";
 
 const geistSans = localFont({

@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { Button } from "../ui/button";
+import { Button } from "../../components/ui/button";
 import { Plus, Trash2 } from "lucide-react";
 import FormFundingAddReward, {
   FormFundingRewardSchema,
-} from "../form-funding-add-reward";
+} from "../../components/form-funding-add-reward";
 import { z } from "zod";
 import Image from "next/image";
-import { Separator } from "../ui/separator";
+import { Separator } from "../../components/ui/separator";
 
 const FundingRewardPage = () => {
   const [statePage, setStatePage] = useState("list");
