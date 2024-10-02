@@ -42,6 +42,7 @@ export async function GET(req: NextRequest) {
 
     const formattedForums: FormattedForum[] = forums
       .map((forum: ForumResponse) => ({
+        id: forum.id,
         date: forum.created_at.toISOString().split("T")[0],
         avatarSrc: forum.user?.image || "default-avatar.png",
         authorName: forum.user?.name || "Unknown Author",
@@ -127,6 +128,7 @@ export async function POST(req: NextRequest) {
 
     const formattedForums: FormattedForum[] = forums
       .map((forum: ForumResponse) => ({
+        id: forum.id,
         date: forum.created_at.toISOString().split("T")[0],
         avatarSrc: forum.user?.image || "default-avatar.png",
         authorName: forum.user?.name || "Unknown Author",

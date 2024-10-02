@@ -42,6 +42,7 @@ export interface Comment {
 }
 
 export interface FormattedForum {
+  id: string;
   date: string;
   avatarSrc: string;
   authorName: string;

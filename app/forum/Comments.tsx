@@ -1,15 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Textarea } from "@/components/ui/textarea";
 import { IoIosSend } from "react-icons/io";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Comment } from "../utils/PostFeeds";
+import { Comment, FormattedForum } from "../utils/PostFeeds";
+import axios from "axios";
 
 interface CommentsProps {
   comments: Comment[];
+  forumId: string;
+  setForumData: React.Dispatch<React.SetStateAction<FormattedForum[]>>;
 }
 
-const Comments: React.FC<CommentsProps> = ({ comments }) => {
+const Comments: React.FC<CommentsProps> = ({
+  comments,
+  forumId,
+  setForumData,
+}) => {
+  const [comment, setComment] = useState("");
+
+  const handleSubmit = async () => {
+    if (!comment.trim()) {
+      return; // Do nothing if comment is empty or just spaces
+    }
+
+    try {
+      const response = await axios.post("/api/forum/" + forumId + "/comment", {
+        content: comment,
+      });
+      console.log(response.data);
+      setForumData(response.data.data);
+
+      setComment("");
+    } catch (error) {
+      console.error("Error submitting comment:", error);
+    }
+  };
   return (
     <>
       <div className="flex flex-row items-center space-x-2 pb-3 border-b-2 border-b-black">
@@ -20,8 +46,13 @@ const Comments: React.FC<CommentsProps> = ({ comments }) => {
         <Textarea
           placeholder="Berikan Komentar Anda"
           className="text-[8px] text-black border-black"
+          onChange={(e) => setComment(e.target.value)}
+          value={comment}
         ></Textarea>
-        <IoIosSend className="text-black hover:cursor-pointer" />
+        <IoIosSend
+          onClick={handleSubmit}
+          className="text-black hover:cursor-pointer"
+        />
       </div>
 
       {comments.length > 0 && (

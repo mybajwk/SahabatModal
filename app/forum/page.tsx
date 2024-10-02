@@ -204,6 +204,7 @@ function ForumPage() {
           return (
             <FeedCard
               key={index}
+              id={item.id}
               date={item.date}
               avatarSrc={item.avatarSrc}
               authorName={item.authorName}
@@ -212,6 +213,7 @@ function ForumPage() {
               content={item.content}
               tags={item.tags}
               comments={item.comments}
+              setForumData={setForumData}
             />
           );
         })}
