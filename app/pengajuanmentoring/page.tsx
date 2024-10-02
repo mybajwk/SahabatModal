@@ -21,12 +21,12 @@ import { Calendar } from '../../components/ui/calendar';
 import { TimePicker } from '../../components/time-picker/time-picker';
 // import { useNavigate } from 'react-router-dom';
 
-interface FundingBasicPageProps {
+interface PengajuanMentoring {
   setCurrentPage: Dispatch<SetStateAction<string>>;
 }
 
 
-export const FormFundingBasicSchema = z.object({
+export const FormPengajuanMentoring= z.object({
   topik: z.string().min(1, "Topik mentoring wajib diisi"),
   deskripsi: z.string().min(1, "Deskripsi wajib diisi"),
   startDate: z.coerce.date(),
@@ -34,9 +34,9 @@ export const FormFundingBasicSchema = z.object({
   endDate: z.coerce.date(),
 });
 
-const FundingBasicPage: React.FC<FundingBasicPageProps> = ({}) => {
-  const form = useForm<z.infer<typeof FormFundingBasicSchema>>({
-    resolver: zodResolver(FormFundingBasicSchema),
+const FundingBasicPage: React.FC<PengajuanMentoring> = ({}) => {
+  const form = useForm<z.infer<typeof FormPengajuanMentoring>>({
+    resolver: zodResolver(FormPengajuanMentoring),
     defaultValues: {
       topik: "",
       deskripsi: "",
@@ -44,7 +44,7 @@ const FundingBasicPage: React.FC<FundingBasicPageProps> = ({}) => {
   });
   const [progress, setProgress] = useState(0);
 
-  const onSubmit = (data: z.infer<typeof FormFundingBasicSchema>) => {
+  const onSubmit = (data: z.infer<typeof FormPengajuanMentoring>) => {
     console.log(data);
   };
 
