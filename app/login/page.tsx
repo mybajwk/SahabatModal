@@ -2,6 +2,8 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -9,33 +11,29 @@ export default function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const router = useRouter();
+
   const handleLogin = async () => {
     setLoading(true);
-    setError("");
-    try {
-      const response = await fetch("/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, password }),
-      });
+    console.log(username, password);
+    const res = await signIn("credentials", {
+      email: username,
+      password: password,
+      redirect: false,
+      callbackUrl: "/",
+    });
 
-      if (!response.ok) {
-        throw new Error("Login failed");
-      }
-
-      const data = await response.json();
-      console.log("Login successful", data);
-    } finally {
-      setLoading(false);
+    if (res?.error) {
+      return;
     }
+    router.refresh();
+    router.push("/forum");
   };
 
   return (
     <div className="flex h-screen">
       <div
-        className="relative flex items-center justify-center text-white"
+        className="relative hidden md:flex items-center justify-center text-white md:w-1/2 lg:w-2/5"
         style={{
           width: "675px",
           opacity: 0.75,
@@ -76,13 +74,15 @@ export default function Login() {
         </div>
       </div>
       <div
-        className="flex items-center justify-center bg-white"
+        className="flex flex-1 items-center justify-center bg-white w-full md:w-1/2 lg:w-3/5"
         style={{ width: "837px" }}
       >
         <div className="w-3/4">
           <div
-            className="absolute top-12 right-20 flex flex-col justify-center items-center mb-4"
+            className="relative hidden md:flex items-center  justify-center text-white md:w-1/2 lg:w-2/5 top-28 "
             style={{
+              position: "absolute",
+              right: "80px",
               width: "60px",
               height: "60px",
               borderRadius: "50%",
@@ -177,7 +177,6 @@ export default function Login() {
             <p className="text-gray-500">
               belum memiliki akun?{" "}
               <a
-                href="#"
                 style={{ color: "#DC2522", textDecoration: "underline" }}
               >
                 Register here
