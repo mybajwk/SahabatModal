@@ -677,9 +677,9 @@ export default function FormRegister() {
             </button>
             <div className="text-center mt-4">
               <p className="text-gray-500">
-                sudah memiliki akun?{" "}
+                sudah memiliki akun?
                 <a
-                  href="#"
+                  href="login"
                   style={{ color: "#DC2522", textDecoration: "underline" }}
                 >
                   login here
