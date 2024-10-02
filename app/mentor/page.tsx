@@ -7,7 +7,7 @@ import PerusahaanCard from "./PerusahaanCard";
 import imageUrl from "../assets/mawar.jpeg";
 
 function MentorPage() {
-  const [query, setQuery] = useState("");
+  const [, setQuery] = useState("");
 
   const dummyData = [
     {

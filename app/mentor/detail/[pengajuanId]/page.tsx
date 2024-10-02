@@ -9,7 +9,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import sephora from "../../../assets/sephora.png";
 
-function page({ params }: { params: { pengajuanId: string } }) {
+function page({}: { params: { pengajuanId: string } }) {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const router = useRouter();
 
