@@ -11,7 +11,17 @@ import leftCircle from "../assets/kiri.png";
 import rightCircle from "../assets/kanan.png";
 import middleCircle from "../assets/tengah.png";
 
-const dummyValue = [
+interface DummyItem {
+  imageSrc: StaticImageData;
+  progressValue: number;
+  avatarSrc: string;
+  avatarFallback: string;
+  title: string;
+  owner: string;
+  daysLeft: number;
+}
+
+const dummyValue: DummyItem[] = [
   {
     imageSrc: barista,
     progressValue: 33,
@@ -133,9 +143,6 @@ function Page() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const horizontalBubble: StaticImageData = bubbleBgHorizontal;
-  const verticalBubble: StaticImageData = bubbleBgVertical;
-
   return (
     <div className="flex bg-conic-blue flex-col space-y-6 items-center py-[100px] font-lexend relative">
       <div className="absolute top-0 left-[-20px] md:w-48 md:h-48 z-[1]">
@@ -168,7 +175,7 @@ function Page() {
           className="w-full md:max-w-[200px] md:max-h-[600px] md:mt-5 rounded-xl flex flex-col space-y-2 p-4"
           style={{
             backgroundImage: `url(${
-              isMobile ? horizontalBubble.src : verticalBubble.src
+              isMobile ? bubbleBgHorizontal.src : bubbleBgVertical.src
             })`,
             backgroundSize: "cover",
           }}
