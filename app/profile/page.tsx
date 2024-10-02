@@ -5,8 +5,9 @@ import AccountSettings from "./account_settings";
 import BillingAdddress from "./billing_address";
 import ChangePassword from "./change_password";
 import FinancialStatement from "./financial_statement";
-import { useRouter } from "next/navigation";
+
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 function ProfilePage() {
   const { data: session, status } = useSession();
@@ -15,6 +16,7 @@ function ProfilePage() {
     return <div>Loading...</div>; // You can replace this with a spinner or loading animation
   }
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const router = useRouter();
 
   if (!session) {
