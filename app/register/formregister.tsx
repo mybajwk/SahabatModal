@@ -7,6 +7,10 @@ import { motion } from "framer-motion";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
+import axios from "axios";
+import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
+import FileUploader from "@/components/file-uploader";
 
 export const FormDataSchema = z.object({
   username: z.string().min(1, "Username is required"),
@@ -42,6 +46,7 @@ export default function FormRegister() {
   const [currentStep, setCurrentStep] = useState(0);
   const delta = currentStep - previousStep;
   const [isBusiness, setIsBusiness] = useState(false);
+  const [path, setPath] = useState<string | undefined>("");
 
   const {
     register,
@@ -55,6 +60,9 @@ export default function FormRegister() {
   });
 
   const selectedRole = watch("role");
+
+  const { toast } = useToast();
+  const router = useRouter();
 
   useEffect(() => {
     setIsBusiness(selectedRole === "seeker");
@@ -84,58 +92,39 @@ export default function FormRegister() {
       email: data.email,
       name: data.name,
       phone_number: data.phone_number,
-      role: data.role,
-    };
-
-    const businessData = {
-      companyname: data.companyname,
-      companyowner: data.companyowner,
-      business_age: data.business_age,
-      report: data.report,
+      role: data.role == "investor" ? 4 : 3,
     };
 
     try {
-      const registerResponse = await fetch(registerEndpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(generalData),
-      });
-
-      if (!registerResponse.ok) {
-        throw new Error("Network response for registration was not ok");
-      }
-
-      const registerResult = await registerResponse.json();
-      console.log("Registration Success:", registerResult);
+      const userResponse = await axios.post("/api/registration", generalData);
+      console.log("response regis user", userResponse);
+      const newUserId = userResponse.data?.user.id;
 
       if (
         isBusiness &&
-        (businessData.companyname ||
-          businessData.companyowner ||
-          businessData.business_age ||
-          businessData.report)
+        (data.companyname || data.companyowner || data.business_age || path)
       ) {
-        const formData = new FormData();
+        const businessData = {
+          name: data.companyname,
+          owner: data.companyowner,
+          business_age: data.business_age,
+          report: path,
+          user_id: newUserId,
+        };
 
-        const businessResponse = await fetch(businessEndpoint, {
-          method: "POST",
-          body: formData,
-        });
-
-        if (!businessResponse.ok) {
-          throw new Error("Network response for business data was not ok");
-        }
-
-        const businessResult = await businessResponse.json();
-        console.log("Business Registration Success:", businessResult);
+        const businessResponse = await axios.post(
+          "/api/registration/business",
+          businessData
+        );
+        toast({ variant: "default", title: "success register business" });
       }
-
-      reset();
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Registration error:", error);
+      toast({ variant: "destructive", title: "Fail to register" });
     }
+
+    router.refresh();
+    router.push("/login");
   };
 
   const handleRegister = async () => {
@@ -555,53 +544,7 @@ export default function FormRegister() {
                   )}
                 </div>
               </div>
-              <div className="sm:col-span-10">
-                <label
-                  htmlFor="report"
-                  className="block mb-0"
-                  style={{ color: "#0010A4" }}
-                >
-                  Laporan Keuangan atau Proposal Bisnis Anda
-                  <span style={{ color: "red" }}>*</span>
-                </label>
-                <div className="mt-2">
-                  <label
-                    htmlFor="report"
-                    className="flex items-center justify-center w-full h-30 p-4 border rounded-md cursor-pointer bg-gray-100 hover:bg-gray-200"
-                    style={{ border: "2px dashed #C9C9C9" }}
-                  >
-                    <Image
-                      src="/upload.png"
-                      alt="Upload"
-                      className="mr-2 w-6 h-6"
-                    />
-                    <span className="text-gray-700">Upload File</span>
-                  </label>
-
-                  <input
-                    type="file"
-                    id="report"
-                    onChange={(e) => {
-                      const file = e.target.files?.[0];
-                      if (file) {
-                        register("report").onChange({
-                          target: {
-                            name: "report",
-                            value: file,
-                          },
-                        });
-                      }
-                    }}
-                    className="hidden"
-                    accept=".pdf, .doc, .docx"
-                  />
-                  {errors.report?.message && (
-                    <p className="mt-2 text-sm text-red-400">
-                      {errors.report.message}
-                    </p>
-                  )}
-                </div>
-              </div>
+              <FileUploader path={path} setPath={setPath} />
             </div>
           </motion.div>
         )}

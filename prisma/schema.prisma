@@ -48,31 +48,32 @@ model UserBillingAddress {
 }
 
 model Mentoring {
-  id               String      @id @default(uuid())
-  created_at       DateTime    @default(now())
+  id               String       @id @default(uuid())
+  created_at       DateTime     @default(now())
   image            String
   Topic            String
   requested_date   String
-  date             DateTime
-  mentor_id        String
+  date             DateTime?
+  mentor_id        String?
   mentee_id        String
   business_id      String?
   Description      String?
   mentoring_status Int
   content          String[]
-  mentor           UserAccount @relation("MentorRelation", fields: [mentor_id], references: [id])
-  mentee           UserAccount @relation("MenteeRelation", fields: [mentee_id], references: [id])
+  mentor           UserAccount? @relation("MentorRelation", fields: [mentor_id], references: [id])
+  mentee           UserAccount  @relation("MenteeRelation", fields: [mentee_id], references: [id])
 }
 
 model Business {
-  id           String       @id @default(uuid())
-  created_at   DateTime     @default(now())
-  name         String
-  image        String?
-  description  String?
-  business_age String
-  owner_id     String       @unique
-  owner        UserAccount? @relation(fields: [owner_id], references: [id])
+  id             String           @id @default(uuid())
+  created_at     DateTime         @default(now())
+  name           String
+  image          String?
+  description    String?
+  business_age   Int
+  owner_id       String           @unique
+  owner          UserAccount?     @relation(fields: [owner_id], references: [id])
+  BusinessReport BusinessReport[]
 }
 
 model Crowdfunding {
@@ -150,4 +151,13 @@ model ForumComment {
   coin       BigInt
   user       UserAccount? @relation(fields: [creator_id], references: [id])
   forum      Forum        @relation(fields: [forum_id], references: [id])
+}
+
+model BusinessReport {
+  id          String   @id @default(uuid())
+  created_at  DateTime @default(now())
+  date        DateTime
+  report      String
+  business_id String
+  business    Business @relation(fields: [business_id], references: [id])
 }
