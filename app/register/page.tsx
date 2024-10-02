@@ -1,4 +1,4 @@
-import FormRegister from "@/components/ui/formregister";
+import FormRegister from "./formregister";
 import Image from "next/image";
 
 export default function Register() {

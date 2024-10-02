@@ -1,13 +1,13 @@
 "use client";
 
-import FundingCategoryPage from "@/components/pages/funding-category";
+import FundingCategoryPage from "./funding-category";
 import { useEffect, useState } from "react";
-import FundingStepPage from "@/components/pages/funding-step";
-import FundingFormNavbar from "@/components/pages/funding-form-navbar";
+import FundingStepPage from "./funding-step";
+import FundingFormNavbar from "./funding-form-navbar";
 import Image from "next/image";
-import FundingBasicPage from "@/components/pages/funding-basic";
-import FundingRewardPage from "@/components/pages/funding-reward";
-import FundingDescPage from "@/components/pages/funding-deskripsi";
+import FundingBasicPage from "./funding-basic";
+import FundingRewardPage from "./funding-reward";
+import FundingDescPage from "./funding-deskripsi";
 
 const FormFundingPage = () => {
   const [currentPage, setCurrentPage] = useState("desc");

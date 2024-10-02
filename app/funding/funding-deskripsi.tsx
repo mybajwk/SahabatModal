@@ -5,16 +5,16 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
+} from "../../components/ui/form";
 
 import { z } from "zod";
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import TextEditor from "../text-editor";
-import { Separator } from "../ui/separator";
-import { Input } from "../ui/input";
-import { Textarea } from "../ui/textarea";
-import { Button } from "../ui/button";
+import TextEditor from "../../components/text-editor";
+import { Separator } from "../../components/ui/separator";
+import { Input } from "../../components/ui/input";
+import { Textarea } from "../../components/ui/textarea";
+import { Button } from "../../components/ui/button";
 import { Trash } from "lucide-react";
 
 export const FundingDescSchema = z.object({
@@ -23,7 +23,7 @@ export const FundingDescSchema = z.object({
     z.object({
       question: z.string().min(1, "Pertanyaan wajib diisi"),
       answer: z.string().min(1, "Jawaban wajib diisi"),
-    }),
+    })
   ),
 });
 const FundingDescPage = () => {

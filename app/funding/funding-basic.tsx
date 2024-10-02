@@ -6,15 +6,15 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
+} from "../../components/ui/form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Input } from "../ui/input";
-import { Separator } from "../ui/separator";
-import FileUpload from "../file-upload";
+import { Input } from "../../components/ui/input";
+import { Separator } from "../../components/ui/separator";
+import FileUpload from "../../components/file-upload";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { DatePicker } from "../date-picker";
-import { Button } from "../ui/button";
+import { DatePicker } from "../../components/date-picker";
+import { Button } from "../../components/ui/button";
 
 interface FundingBasicPageProps {
   setCurrentPage: Dispatch<SetStateAction<string>>;
