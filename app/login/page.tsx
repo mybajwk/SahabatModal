@@ -75,12 +75,12 @@ export default function Login() {
         </div>
       </div>
       <div
-        className="flex items-center justify-center bg-white w-full md:w-1/2 lg:w-3/5"
+        className="flex flex-1 items-center justify-center bg-white w-full md:w-1/2 lg:w-3/5"
         style={{ width: "837px" }}
       >
         <div className="w-3/4">
           <div
-            className="relative hidden md:flex items-center  justify-center text-white md:w-1/2 lg:w-2/5 top-10 "
+            className="relative hidden md:flex items-center  justify-center text-white md:w-1/2 lg:w-2/5 top-28 "
             style={{
               position: "absolute",
               right: "80px",
