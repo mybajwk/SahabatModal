@@ -80,7 +80,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const billingAddress = await client.userBillingAddress.upsert({
+    await client.userBillingAddress.upsert({
       where: {
         user_id: token?.id?.toString() || "",
       },

@@ -58,7 +58,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const user = await client.userAccount.update({
+    await client.userAccount.update({
       where: {
         id: token?.id?.toString() || "",
       },
