@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FiMessageCircle } from "react-icons/fi";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Comments from "./Comments";
+import { Comment } from "../utils/PostFeeds";
 
 interface FeedCardProps {
   date: string;
@@ -11,7 +12,7 @@ interface FeedCardProps {
   title: string;
   content: string;
   tags: string[];
-  comments: any[];
+  comments: Comment[];
 }
 
 const FeedCard: React.FC<FeedCardProps> = ({
@@ -34,7 +35,7 @@ const FeedCard: React.FC<FeedCardProps> = ({
       <div className="flex flex-row space-x-2 items-center">
         <Avatar className="w-[40px] aspect-square">
           <AvatarImage src={avatarSrc} />
-          <AvatarFallback>EC</AvatarFallback>
+          <AvatarFallback className="bg-yellow-300">EC</AvatarFallback>
         </Avatar>
         <div className="flex flex-col">
           <p>{authorName}</p>

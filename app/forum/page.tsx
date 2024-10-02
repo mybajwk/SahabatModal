@@ -5,9 +5,7 @@ import { Button } from "@/components/ui/button";
 import FeedCard from "./FeedCard";
 import { FaPlus } from "react-icons/fa";
 import { useSession } from "next-auth/react";
-import prisma from "@/app/libs/prismadb";
-import { useRouter } from "next/navigation";
-import { redirect } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import {
   Dialog,
   DialogContent,
@@ -18,7 +16,6 @@ import {
   DialogFooter,
   DialogClose,
 } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
@@ -29,157 +26,59 @@ import { z } from "zod";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import axios from "axios";
+import { FormattedForum } from "../utils/PostFeeds";
 
-const dummyData = [
-  {
-    date: "2023-12-25",
-    avatarSrc: "https://randomuser.me/api/portraits/men/75.jpg",
-    authorName: "John Doe",
-    username: "johndoe123",
-    title: "My Christmas Experience",
-    content:
-      "This Christmas was amazing! I spent time with family and friends, ate delicious food, and watched Christmas movies.",
-    tags: ["Christmas", "Family", "Friends", "Food", "Movies"],
-    comments: [
-      {
-        author: "Jane Smith",
-        username: "janesmith456",
-        content: "Sounds like you had a wonderful Christmas!",
-      },
-      {
-        author: "Michael Johnson",
-        username: "michaeljohnson789",
-        content:
-          "I'm so jealous! I wish I could have spent Christmas with my family.",
-      },
-    ],
-  },
-  {
-    date: "2024-01-15",
-    avatarSrc: "https://randomuser.me/api/portraits/women/75.jpg",
-    authorName: "Jane Smith",
-    username: "janesmith456",
-    title: "My New Year's Resolution",
-    content:
-      "I'm excited to share my New Year's resolution. I'm going to start working out more and eating healthier.",
-    tags: ["New Year's Resolution", "Fitness", "Health", "Diet"],
-    comments: [
-      {
-        author: "John Doe",
-        username: "johndoe123",
-        content: "That's a great resolution! I'm sure you'll achieve it.",
-      },
-      {
-        author: "Emily Davis",
-        username: "emilydavis101",
-        content: "I'm rooting for you! Good luck with your new goals.",
-      },
-    ],
-  },
-  {
-    date: "2024-02-10",
-    avatarSrc: "https://randomuser.me/api/portraits/men/76.jpg",
-    authorName: "Michael Johnson",
-    username: "michaeljohnson789",
-    title: "My Travel Experience",
-    content:
-      "I recently went on a trip to Bali and it was amazing! I loved the beaches, the food, and the culture.",
-    tags: ["Travel", "Bali", "Beaches", "Food", "Culture"],
-    comments: [
-      {
-        author: "David Wilson",
-        username: "davidwilson124",
-        content: "Bali sounds amazing! I've always wanted to go there.",
-      },
-      {
-        author: "David Wilson",
-        username: "davidwilson124",
-        content: "Bali sounds amazing! I've always wanted to go there.",
-      },
-      {
-        author: "Emily Davis",
-        username: "emilydavis101",
-        content: "I'm jealous! I need to plan a trip somewhere warm.",
-      },
-    ],
-  },
-  {
-    date: "2024-03-20",
-    avatarSrc: "https://randomuser.me/api/portraits/women/76.jpg",
-    authorName: "Emily Davis",
-    username: "emilydavis101",
-    title: "My Favorite Book",
-    content:
-      "My favorite book is 'The Great Gatsby'. I love the characters, the story, and the setting.",
-    tags: ["Books", "Literature", "The Great Gatsby", "Fiction"],
-    comments: [
-      {
-        author: "Jane Smith",
-        username: "janesmith456",
-        content:
-          "I've never read 'The Great Gatsby'. I should definitely check it out.",
-      },
-      {
-        author: "Michael Johnson",
-        username: "michaeljohnson789",
-        content:
-          "I've read 'The Great Gatsby' a few times. It's one of my favorite books too.",
-      },
-    ],
-  },
-  {
-    date: "2024-04-05",
-    avatarSrc: "https://randomuser.me/api/portraits/men/77.jpg",
-    authorName: "David Wilson",
-    username: "davidwilson124",
-    title: "My New Hobby",
-    content:
-      "I recently started learning how to play the guitar and I'm really enjoying it. It's a great way to relax and have fun.",
-    tags: ["Hobbies", "Music", "Guitar", "Learning"],
-    comments: [
-      {
-        author: "John Doe",
-        username: "johndoe123",
-        content:
-          "That's great! Learning a new instrument is a great way to challenge yourself.",
-      },
-      {
-        author: "Jane Smith",
-        username: "janesmith456",
-        content:
-          "I've always wanted to learn how to play the guitar. Maybe I should give it a try.",
-      },
-    ],
-  },
-];
+import { useToast } from "@/hooks/use-toast";
 
 const formSchema = z.object({
   title: z.string().min(1, {
     message: "Title must not be empty.",
   }),
-  content: z.string().min(1, {
+  description: z.string().min(1, {
     message: "Content must not be empty.",
   }),
-  tags: z.string().min(1, {
-    message: "At least 1 tag.",
-  }),
+  tags: z.union([
+    z.string().min(1, { message: "At least 1 tag." }),
+    z.array(z.string()).min(1, { message: "At least 1 tag." }),
+  ]),
 });
 
 function ForumPage() {
   const { data: session, status } = useSession();
+
+  const [forumData, setForumData] = useState<FormattedForum[]>([]);
+
+  const { toast } = useToast();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("/api/forum");
+        setForumData(response.data.data);
+      } catch (error) {
+        console.error("Error fetching forum data:", error);
+      }
+    };
+
+    fetchData();
+    toast({
+      variant: "default",
+      title: "Feeds posted",
+    });
+  }, []);
 
   console.log("session", session);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: "",
-      content: "",
+      description: "",
       tags: "",
     },
   });
@@ -188,16 +87,39 @@ function ForumPage() {
     return <div>Loading...</div>; // You can replace this with a spinner or loading animation
   }
 
-  const router = useRouter();
+  // const router = useRouter();
 
-  if (!session) {
-    router.refresh();
-    router.push("/login");
-    return null;
-  }
+  // if (!session) {
+  //   router.refresh();
+  //   router.push("/login");
+  //   return null;
+  // }
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const tags_list: string[] =
+      typeof values.tags === "string"
+        ? values.tags.split(",").map((tag) => tag.trim())
+        : values.tags;
+
+    await axios
+      .post("/api/forum", {
+        ...values,
+        tags: tags_list,
+      })
+      .then(function (response) {
+        setForumData(response.data.data);
+        toast({
+          variant: "default",
+          title: "Feeds posted",
+        });
+      })
+      .catch(function (error) {
+        toast({
+          variant: "destructive",
+          title: "Fail to post",
+        });
+        console.log(error);
+      });
   }
 
   return (
@@ -231,7 +153,7 @@ function ForumPage() {
                   <div className="flex flex-col space-y-2">
                     <FormField
                       control={form.control}
-                      name="content"
+                      name="description"
                       render={({ field }) => (
                         <FormItem className="flex flex-col space-y-1 items-start">
                           <FormLabel>Content</FormLabel>
@@ -278,7 +200,7 @@ function ForumPage() {
           {/* <SearchBar onSearchChange={setQuery} /> */}
           <Button>Filter</Button>
         </div>
-        {dummyData.map((item, index) => {
+        {forumData.map((item, index) => {
           return (
             <FeedCard
               key={index}

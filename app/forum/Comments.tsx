@@ -1,12 +1,12 @@
 import React from "react";
 
-import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { IoIosSend } from "react-icons/io";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Comment } from "../utils/PostFeeds";
 
 interface CommentsProps {
-  comments: any[];
+  comments: Comment[];
 }
 
 const Comments: React.FC<CommentsProps> = ({ comments }) => {
@@ -27,15 +27,15 @@ const Comments: React.FC<CommentsProps> = ({ comments }) => {
       {comments.length > 0 && (
         <div>
           <h1 className="text-sm font-bold">Comments</h1>
-          {comments.map((comment) => (
+          {comments.map((comment, index) => (
             <div
-              key={comment.id}
+              key={index}
               className="flex flex-row space-x-3 items-center mt-2"
             >
               <Avatar className="w-[30px] h-[30px] aspect-square">
-                <AvatarImage src={comment.userAvatar} />
+                <AvatarImage src={comment.authorAvatar} />
                 <AvatarFallback className=" bg-yellow-300">
-                  {comment.username.charAt(0)}
+                  {comment.username.substring(0, 2)}
                 </AvatarFallback>
               </Avatar>
               <div className="flex flex-col">

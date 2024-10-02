@@ -45,7 +45,10 @@ export async function POST(
       },
     });
     return new NextResponse(
-      JSON.stringify({ data: null, message: "success update create comment" }),
+      JSON.stringify({
+        data: forumComment,
+        message: "success update create comment",
+      }),
       { status: 200 }
     );
   } catch (error) {
