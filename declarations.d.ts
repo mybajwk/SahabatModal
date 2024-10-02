@@ -10,26 +10,25 @@ declare module "react-country-state-city" {
 }
 
 declare module "*.png" {
-  const value: string;
-  export default value;
-}
-
-declare module "*.jpeg" {
-  const value: string;
-  export default value;
+  import { StaticImageData } from "next/image";
+  const content: StaticImageData;
+  export default content;
 }
 
 declare module "*.jpg" {
-  const value: string;
-  export default value;
+  import { StaticImageData } from "next/image";
+  const content: StaticImageData;
+  export default content;
 }
 
-declare module "*.gif" {
-  const value: string;
-  export default value;
+declare module "*.jpeg" {
+  import { StaticImageData } from "next/image";
+  const content: StaticImageData;
+  export default content;
 }
 
 declare module "*.svg" {
-  const content: any;
+  import { StaticImageData } from "next/image";
+  const content: StaticImageData;
   export default content;
 }

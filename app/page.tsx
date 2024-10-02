@@ -1,7 +1,7 @@
 import GetStartedButton from "../components/ui/get-started-button";
 import StartButton from "../components/ui/start-button";
 import StartButton2 from "../components/ui/start-button-2";
-import InspiringSection from "../components/ui/inspiring-section";
+import InspiringSection from "./inspiring-section";
 
 export default function Home() {
   return (

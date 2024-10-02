@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { FiMessageCircle } from "react-icons/fi";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Comments from "./Comments";
+import { Comment, FormattedForum } from "../utils/PostFeeds";
 
 interface FeedCardProps {
+  id: string;
   date: string;
   avatarSrc: string;
   authorName: string;
@@ -11,10 +13,12 @@ interface FeedCardProps {
   title: string;
   content: string;
   tags: string[];
-  comments: any[];
+  comments: Comment[];
+  setForumData: React.Dispatch<React.SetStateAction<FormattedForum[]>>;
 }
 
 const FeedCard: React.FC<FeedCardProps> = ({
+  id,
   date,
   avatarSrc,
   title,
@@ -23,6 +27,7 @@ const FeedCard: React.FC<FeedCardProps> = ({
   content,
   tags,
   comments,
+  setForumData,
 }) => {
   const [showFullText, setShowFullText] = useState<boolean>(false);
   const [showComments, setShowComments] = useState<boolean>(false);
@@ -34,7 +39,7 @@ const FeedCard: React.FC<FeedCardProps> = ({
       <div className="flex flex-row space-x-2 items-center">
         <Avatar className="w-[40px] aspect-square">
           <AvatarImage src={avatarSrc} />
-          <AvatarFallback>EC</AvatarFallback>
+          <AvatarFallback className="bg-yellow-300">EC</AvatarFallback>
         </Avatar>
         <div className="flex flex-col">
           <p>{authorName}</p>
@@ -74,7 +79,13 @@ const FeedCard: React.FC<FeedCardProps> = ({
         </div>
       </div>
 
-      {showComments && <Comments comments={comments} />}
+      {showComments && (
+        <Comments
+          forumId={id}
+          comments={comments}
+          setForumData={setForumData}
+        />
+      )}
     </div>
   );
 };
