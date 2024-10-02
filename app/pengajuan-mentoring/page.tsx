@@ -1,5 +1,5 @@
 "use client";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { useState } from "react";
 import {
   Form,
   FormControl,
@@ -23,21 +23,13 @@ import { format } from "date-fns";
 import { Calendar } from "../../components/ui/calendar";
 import { TimePicker } from "../../components/time-picker/time-picker";
 import { useRouter } from "next/navigation";
-import arrow from "./icons/icon-arrow-right.svg";
+import arrow from "../../public/icons/icon-arrow-right.svg";
 import Image from "next/image";
+import { FormPengajuanMentoring } from "./formSchema";
+
 // import { useNavigate } from 'react-router-dom';
 
-interface PengajuanMentoring {
-  setCurrentPage: Dispatch<SetStateAction<string>>;
-}
-
-export const FormPengajuanMentoring = z.object({
-  topik: z.string().min(1, "Topik mentoring wajib diisi"),
-  deskripsi: z.string().min(1, "Deskripsi wajib diisi"),
-  dateTime: z.date(),
-});
-
-const PengajuanFunding: React.FC<PengajuanMentoring> = ({}) => {
+const PengajuanFunding: React.FC = () => {
   const form = useForm<z.infer<typeof FormPengajuanMentoring>>({
     resolver: zodResolver(FormPengajuanMentoring),
     defaultValues: {
