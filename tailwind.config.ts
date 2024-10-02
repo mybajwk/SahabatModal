@@ -79,6 +79,10 @@ const config: Config = {
           "conic-gradient(from 114deg at 19.44% 28.89%, #110F22 0deg, #443D88 360deg)",
         "light-blue":
           "linear-gradient(90deg, rgba(116, 163, 255, 0.30) 0.05%, #FFF 141.48%)",
+        "orange-linear":
+          "linear-gradient(90deg, rgba(255, 209, 142, 0.50) 0%, #F49916 100%)",
+        "light-linear-yellow":
+          "linear-gradient(180deg, #F49916 0%, #EFC78D 100%)",
       },
       boxShadow: {
         "custom-inset":
