@@ -232,7 +232,7 @@ const PengajuanFunding: React.FC = () => {
                               variant={"outline"}
                               className={cn(
                                 "w-[280px] justify-start text-left font-lexend font-normal border border-[#9EA2AD] rounded-md",
-                                !field.value && "text-muted-foreground"
+                                !field.value && "text-muted-foreground",
                               )}
                             >
                               {field.value ? (
