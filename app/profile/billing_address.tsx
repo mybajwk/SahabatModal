@@ -214,7 +214,7 @@ function BillingAddress({ data }: UserAccountW) {
                           <Select
                             onValueChange={(value) => {
                               const country = countriesList.find(
-                                (item) => item.id === Number(value)
+                                (item) => item.id === Number(value),
                               );
                               if (country) {
                                 setCountryId(country.id);
@@ -223,7 +223,7 @@ function BillingAddress({ data }: UserAccountW) {
                                 form.setValue("state_province", "");
                               } else {
                                 console.error(
-                                  `Country with id ${value} not found.`
+                                  `Country with id ${value} not found.`,
                                 );
                               }
                             }}
@@ -264,14 +264,14 @@ function BillingAddress({ data }: UserAccountW) {
                           <Select
                             onValueChange={(value) => {
                               const state = stateList.find(
-                                (item) => item.id === Number(value)
+                                (item) => item.id === Number(value),
                               );
                               if (state) {
                                 setStateId(state.id);
                                 form.setValue("state_province", state.name);
                               } else {
                                 console.error(
-                                  `State with id ${value} not found.`
+                                  `State with id ${value} not found.`,
                                 );
                               }
                             }}
