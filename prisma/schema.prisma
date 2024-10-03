@@ -12,3 +12,156 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model UserAccount {
+  id                 String              @id @default(uuid())
+  created_at         DateTime            @default(now())
+  email              String              @unique
+  password           String
+  phone_number       String              @unique
+  username           String              @unique
+  name               String
+  role               Int
+  image              String?
+  mentor             Mentoring[]         @relation("MentorRelation")
+  mentee             Mentoring[]         @relation("MenteeRelation")
+  Business           Business?
+  Crowdfunding       Crowdfunding[]
+  UserBillingAddress UserBillingAddress?
+  Forum              Forum[]
+  ForumComment       ForumComment[]
+  FundingData        FundingData[]
+}
+
+model UserBillingAddress {
+  id             String       @id @default(uuid())
+  created_at     DateTime     @default(now())
+  user_id        String       @unique
+  name           String
+  company_name   String
+  address_line   String
+  country        String
+  state_province String
+  zip_code       String
+  email          String
+  phone_number   String
+  user           UserAccount? @relation(fields: [user_id], references: [id])
+}
+
+model Mentoring {
+  id               String       @id @default(uuid())
+  created_at       DateTime     @default(now())
+  image            String
+  Topic            String
+  requested_date   String
+  date             DateTime?
+  mentor_id        String?
+  mentee_id        String
+  business_id      String?
+  Description      String?
+  mentoring_status Int
+  content          String[]
+  mentor           UserAccount? @relation("MentorRelation", fields: [mentor_id], references: [id])
+  mentee           UserAccount  @relation("MenteeRelation", fields: [mentee_id], references: [id])
+}
+
+model Business {
+  id             String           @id @default(uuid())
+  created_at     DateTime         @default(now())
+  name           String
+  image          String?
+  description    String?
+  business_age   Int
+  owner_id       String           @unique
+  owner          UserAccount?     @relation(fields: [owner_id], references: [id])
+  BusinessReport BusinessReport[]
+}
+
+model Crowdfunding {
+  id               String             @id @default(uuid())
+  created_at       DateTime           @default(now())
+  seeker_id        String
+  name             String
+  address_line     String
+  address_url      String?
+  media            String
+  target_amount    BigInt
+  start_date       DateTime
+  end_date         DateTime
+  amount           BigInt
+  Description      String?
+  status           Int
+  owner            UserAccount?       @relation(fields: [seeker_id], references: [id])
+  CrowdfundingItem CrowdfundingItem[]
+  CrowdfundingFaq  CrowdfundingFaq[]
+  FundingData      FundingData[]
+}
+
+model CrowdfundingItem {
+  id              String        @id @default(uuid())
+  created_at      DateTime      @default(now())
+  crowdfunding_id String
+  name            String
+  description     String
+  image           String
+  jenis_item      String
+  amount          BigInt
+  crowdfunding    Crowdfunding  @relation(fields: [crowdfunding_id], references: [id])
+  FundingData     FundingData[]
+}
+
+model CrowdfundingFaq {
+  id              String       @id @default(uuid())
+  created_at      DateTime     @default(now())
+  crowdfunding_id String
+  Question        String
+  Answer          String?
+  crowdfunding    Crowdfunding @relation(fields: [crowdfunding_id], references: [id])
+}
+
+model FundingData {
+  id                   String            @id @default(uuid())
+  created_at           DateTime          @default(now())
+  crowdfunding_item_id String?
+  investor_id          String
+  amount               BigInt
+  funding_status       Boolean
+  received_status      Boolean
+  crowdfunding_item    CrowdfundingItem? @relation(fields: [crowdfunding_item_id], references: [id])
+  Crowdfunding         Crowdfunding?     @relation(fields: [crowdfundingId], references: [id])
+  crowdfundingId       String?
+  investor             UserAccount       @relation(fields: [investor_id], references: [id])
+}
+
+model Forum {
+  id           String         @id @default(uuid())
+  created_at   DateTime       @default(now())
+  creator_id   String
+  image        String?
+  title        String
+  description  String
+  coin         BigInt
+  tag          String[]
+  user         UserAccount?   @relation(fields: [creator_id], references: [id])
+  ForumComment ForumComment[]
+}
+
+model ForumComment {
+  id         String       @id @default(uuid())
+  created_at DateTime     @default(now())
+  creator_id String
+  forum_id   String
+  content    String
+  coin       BigInt
+  user       UserAccount? @relation(fields: [creator_id], references: [id])
+  forum      Forum        @relation(fields: [forum_id], references: [id])
+}
+
+model BusinessReport {
+  id          String   @id @default(uuid())
+  created_at  DateTime @default(now())
+  date        DateTime
+  report      String
+  business_id String
+  business    Business @relation(fields: [business_id], references: [id])
+}
