@@ -1,54 +1,58 @@
 import React from "react";
-import "./footer.css"; // Ensure your styling remains
+import Image from "next/image";
+import SamoLogo from "@/public/logo2.png";
+import { FaFacebook } from "react-icons/fa";
+import { FaInstagram } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
+import { FaLinkedin } from "react-icons/fa";
+import { FaYoutube } from "react-icons/fa";
 
-const Footer: React.FC = () => {
+function Footer() {
   return (
-    <footer className="footer">
-      <div className="footer-content">
-        {/* Left Section with Logo and Jargon */}
-        <div className="left-section">
-          <div className="logo-section">
-            {/* <img src="/logo2.png" alt="Sahabat Modal Logo" className="footer-logo" /> */}
-            <p className="jargon-text">#LangkahPertamamu</p>
-          </div>
+    <div className="bg-footer-blue font-lexend px-4 py-8 sm:px-12 lg:px-28 flex flex-col space-y-8">
+      <div className="flex flex-row justify-between items-center space-x-4 border-b border-b-[#2A2B34]">
+        <div className="flex flex-col items-start space-y-4 w-1/2 pb-8">
+          <Image
+            src={SamoLogo}
+            alt="thumbnail"
+            width={0}
+            height={0}
+            sizes="100vw"
+            className="object-cover w-[120px] object-center"
+          />
+          <p className="text-xs md:text-sm">#LangkahPertamamu</p>
+          <p className="text-xs md:text-sm">#BersamaSahabatModal</p>
         </div>
-
-        {/* Right Section with Navigation */}
-        <div className="right-section">
-          <nav className="footer-nav">
-            <a href="/">Home</a>
-            <a href="/forum">Forum</a>
-            <a href="/artikel">Artikel</a>
-          </nav>
+        <div className="flex sm:px-9 md:text-sm lg:pl-48 flex-col sm:flex-row sm:justify-end sm:space-y-0 sm:space-x-8 space-y-6 items-center flex-1 text-xs">
+          <a href="/">Home</a>
+          <a href="/forum">Forum</a>
+          <a href="/">Artikel</a>
         </div>
       </div>
-
-      {/* Line Separator */}
-      <hr className="footer-line" />
-
-      {/* Social Icons and Copyright */}
-      <div className="footer-bottom">
-        <div className="social-icons">
-          <a href="https://facebook.com" aria-label="Facebook">
-            {/* <img src="/icons/facebook.png" alt="Facebook" className="social-icon" /> */}
+      <div className="pt-8 flex flex-row w-full justify-between">
+        <p className="text-[8px] md:text-sm">
+          &#x24B8; 2024 Sahabat Modal. All Rights Reserved
+        </p>
+        <div className="flex flex-row space-x-2 md:text-xl">
+          <a>
+            <FaFacebook />
           </a>
-          <a href="https://instagram.com" aria-label="Instagram">
-            {/* <img src="/icons/instagram.png" alt="Instagram" className="social-icon" /> */}
+          <a>
+            <FaInstagram />
           </a>
-          <a href="https://x.com" aria-label="X (Twitter)">
-            {/* <img src="/icons/twitter.png" alt="Twitter" className="social-icon" /> */}
+          <a>
+            <FaXTwitter />
           </a>
-          <a href="https://linkedin.com" aria-label="LinkedIn">
-            {/* <img src="/icons/linkedin.png" alt="LinkedIn" className="social-icon" /> */}
+          <a>
+            <FaLinkedin />
           </a>
-          <a href="https://youtube.com" aria-label="YouTube">
-            {/* <img src="/icons/youtube.png" alt="YouTube" className="social-icon" /> */}
+          <a>
+            <FaYoutube />
           </a>
         </div>
-        <p>© 2024 Sahabat Modal. All Rights Reserved</p>
       </div>
-    </footer>
+    </div>
   );
-};
+}
 
 export default Footer;
