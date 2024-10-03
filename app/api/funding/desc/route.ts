@@ -26,7 +26,7 @@ export async function GET() {
     if (!funding) {
       return new NextResponse(
         JSON.stringify({ message: "Funding data not found" }),
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -39,13 +39,13 @@ export async function GET() {
           id: d.id,
         })),
       }),
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.log(error);
     return new NextResponse(
       JSON.stringify({ messsage: "Internal server error" }),
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
