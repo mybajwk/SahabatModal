@@ -5,7 +5,7 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import SessionAuthProvider from "@/provider/SessionAuthProvider";
 import { Toaster } from "@/components/ui/toaster";
-import Footer from "@/components/layout/Footer";
+import Footer from "../components/layout/Footer";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
