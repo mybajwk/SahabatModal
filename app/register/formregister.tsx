@@ -110,10 +110,7 @@ export default function FormRegister() {
           user_id: newUserId,
         };
 
-        await axios.post(
-          "/api/registration/business",
-          businessData
-        );
+        await axios.post("/api/registration/business", businessData);
         toast({ variant: "default", title: "success register business" });
       }
     } catch (error) {
@@ -542,7 +539,7 @@ export default function FormRegister() {
                   )}
                 </div>
               </div>
-              <FileUploader path={path} setPath={setPath} />
+              <FileUploader setPath={setPath} />
             </div>
           </motion.div>
         )}
