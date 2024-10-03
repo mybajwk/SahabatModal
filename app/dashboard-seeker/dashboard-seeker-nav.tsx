@@ -31,7 +31,15 @@ const DashboardSeekerNavbar = () => {
         onClick={() => router.push("list-investor")}
       >
         List Investor
-        
+      </p>
+      <p
+        className={cn(
+          "py-3 px-3 cursor-pointer",
+          currentPage.endsWith("items") && "border-b-[3px] border-black"
+        )}
+        onClick={() => router.push("items")}
+      >
+        Items
       </p>
     </nav>
   );

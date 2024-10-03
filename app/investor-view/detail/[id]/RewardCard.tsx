@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Image, { StaticImageData } from "next/image";
 import {
@@ -9,16 +11,17 @@ import { Button } from "@/components/ui/button";
 import useWindowSize from "@/hooks/useWindowSize";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { formatRupiah } from "@/lib/utils";
 
 interface RewardCardProps {
   imageSrc: StaticImageData | string;
   title: string;
-  quantity: number;
+  min_amount: number;
 }
 const RewardCard: React.FC<RewardCardProps> = ({
   imageSrc,
   title,
-  quantity,
+  min_amount,
 }) => {
   const { width } = useWindowSize();
   return (
@@ -35,7 +38,7 @@ const RewardCard: React.FC<RewardCardProps> = ({
         <div className="flex flex-col font-poppins items-start space-y-1">
           <h2 className="sm:text-lg">{title}</h2>
           <p className="text-[12px] sm:text-sm font-extralight">
-            Quantity: {quantity}
+            &gt; {formatRupiah(min_amount)}
           </p>
         </div>
       </PopoverTrigger>
