@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import {
   Form,
   FormControl,
@@ -9,7 +9,6 @@ import {
   FormMessage,
 } from "../../components/ui/form";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { Input } from "../../components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -19,67 +18,67 @@ import {
 } from "../../components/ui/popover";
 import { Button } from "../../components/ui/button";
 import { cn } from "@/lib/utils";
-import { format } from "date-fns";
+import { format, setHours, setMinutes } from "date-fns";
 import { Calendar } from "../../components/ui/calendar";
 import { TimePicker } from "../../components/time-picker/time-picker";
 import { useRouter } from "next/navigation";
 import arrow from "../../public/icons/icon-arrow-right.svg";
 import Image from "next/image";
-import { FormPengajuanMentoring } from "./formSchema";
+import { FormPengajuanMentoring } from "./formSchema"; // Make sure this schema matches the interface
+import axios from "axios";
+import { useToast } from "@/hooks/use-toast";
+import { useSession } from "next-auth/react";
 
-// import { useNavigate } from 'react-router-dom';
+// Define the interface
+export interface CreateMentoringRequest {
+  title: string;
+  description: string;
+  requestDate: Date;
+}
 
 const PengajuanFunding: React.FC = () => {
-  const form = useForm<z.infer<typeof FormPengajuanMentoring>>({
+  const router = useRouter();
+  const { toast } = useToast();
+  const { data: session, status } = useSession();
+
+  const form = useForm<CreateMentoringRequest>({
     resolver: zodResolver(FormPengajuanMentoring),
     defaultValues: {
-      topik: "",
-      deskripsi: "",
+      title: "",
+      description: "",
+      requestDate: new Date(),
     },
   });
-  // const [progress, setProgress] = useState(0);
 
-  const onSubmit = async (data: z.infer<typeof FormPengajuanMentoring>) => {
-    setLoading(true);
+  if (status === "loading") {
+    return <div>Loading...</div>;
+  }
 
+  if (session?.user.role !== 3) {
+    router.push("/");
+  }
+
+  const onSubmit = async (values: CreateMentoringRequest) => {
     try {
-      const response = await fetch("/pengajuan-mentoring", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
+      const response = await axios.post("/api/mentoring", values);
+
+      const data = response.data;
+
+      toast({
+        variant: "default",
+        title: data.message,
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to submit mentoring request");
-      }
-
-      //   // Redirect to dashboardpengusaha after successful submission
-      router.push("/dashboardpengusaha");
-    } catch (error) {
-      console.error("Error submitting mentoring request:", error);
-    } finally {
-      setLoading(false);
+      router.push("/dashboard-seeker/description");
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: "Error when requesting mentoring",
+        description: error.message,
+      });
     }
-    console.log(data);
   };
-  const [loading, setLoading] = useState(false);
-  //   useEffect(() => {
-  //     const calculateProgress = () => {
-  //       let filledFields = 0;
-  //       const totalFields = 3;
-  //       if (form.watch("topik")) filledFields += 1;
-  //       if (form.watch("deskripsi")) filledFields += 1;
-  //       if (form.watch("dateTime")) filledFields += 1;
-
-  //       setProgress((filledFields / totalFields) * 100);
-  //     };
-
-  //     calculateProgress();
-  //   }, [form.watch("topik"), form.watch("deskripsi"), form.watch("dateTime")]);
-
-  const router = useRouter();
 
   return (
     <Form {...form}>
@@ -99,7 +98,7 @@ const PengajuanFunding: React.FC = () => {
           >
             <button
               type="button"
-              onClick={() => router.push("/dashboard-pengusaha")}
+              onClick={() => router.push("/dashboard-seeker/list-investor")}
               className="absolute top-2 left-2 p-3 rounded-[35px] bg-gradient-to-b from-[#F49916] to-[#EFC78D]"
             >
               <Image
@@ -114,74 +113,20 @@ const PengajuanFunding: React.FC = () => {
             <h1 className="text-[32px] font-bricolage font-bold text-white z-2">
               Empower Your Business
             </h1>
-            <div
-              className="absolute z-0"
-              style={{
-                top: "125px",
-                left: "77px",
-                borderTopLeftRadius: "54.888px",
-                borderBottomLeftRadius: "54.888px",
-                background: "rgba(255, 255, 255, 0.01)",
-                boxShadow: `
-                  0px 2.676px 3.842px -2.47px rgba(4, 199, 130, 0.30) inset, 
-                  0px 0.48px 0.755px -0.274px #FFF inset, 
-                  0px -5.626px 4.665px -4.391px rgba(96, 68, 144, 0.30) inset, 
-                  0px 6.724px 6.861px -3.293px rgba(202, 172, 255, 0.30) inset, 
-                  0px 0.274px 1.235px 2.058px rgba(154, 146, 210, 0.25) inset, 
-                  0px 0.069px 2.744px 0px rgba(227, 222, 255, 0.20) inset`,
-                backdropFilter: "blur(5.838px)",
-                width: "140px",
-                height: "45px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            />
-            <div
-              className="absolute z-0"
-              style={{
-                bottom: "125px",
-                left: "0px",
-                borderTopRightRadius: "54.888px",
-                borderBottomRightRadius: "54.888px",
-                background: "rgba(255, 255, 255, 0.01)",
-                boxShadow: `
-                  0px 2.676px 3.842px -2.47px rgba(4, 199, 130, 0.30) inset, 
-                  0px 0.48px 0.755px -0.274px #FFF inset, 
-                  0px -5.626px 4.665px -4.391px rgba(96, 68, 144, 0.30) inset, 
-                  0px 6.724px 6.861px -3.293px rgba(202, 172, 255, 0.30) inset, 
-                  0px 0.274px 1.235px 2.058px rgba(154, 146, 210, 0.25) inset, 
-                  0px 0.069px 2.744px 0px rgba(227, 222, 255, 0.20) inset`,
-                backdropFilter: "blur(5.838px)",
-                width: "140px",
-                height: "45px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            />
+            {/* Other decorative elements */}
           </div>
 
-          {/* Form Section */}
           <div className="flex-1 flex flex-col gap-5 justify-center items-center">
-            {/* Progress Bar */}
-            {/* <div className="w-full bg-gray-200 rounded-full h-3">
-              <div className="h-full rounded-full" style={{ width: `${progress}%`, backgroundColor: '#00326C' }} />
-            </div>
-            <div className="text-sm font-medium text-gray-700 mt-2">
-                {progress <= 33 && <p>Step 1: Input Mentoring Topic</p>}
-                {progress > 33 && progress <= 66 && <p>Step 2: Input Description</p>}
-                {progress > 66 && <p>Step 3: Select Date and Time</p>}
-            </div> */}
             <div className="flex flex-row w-full">
               <div className="flex-1 flex flex-col gap-5 p-8">
+                {/* Title Field */}
                 <FormField
                   control={form.control}
-                  name="topik"
+                  name="title"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="font-lexend text-base text-[#0010A4]">
-                        Topik Mentoring{" "}
+                        Topik Mentoring
                         <span className="text-[#DC2522]">*</span>
                       </FormLabel>
                       <FormControl>
@@ -195,13 +140,14 @@ const PengajuanFunding: React.FC = () => {
                     </FormItem>
                   )}
                 />
+                {/* Description Field */}
                 <FormField
                   control={form.control}
-                  name="deskripsi"
+                  name="description"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="font-lexend text-base text-[#0010A4]">
-                        Deskripsi Detail Mentoring{" "}
+                        Deskripsi Detail Mentoring
                         <span className="text-[#DC2522]">*</span>
                       </FormLabel>
                       <FormControl>
@@ -215,17 +161,17 @@ const PengajuanFunding: React.FC = () => {
                     </FormItem>
                   )}
                 />
+                {/* Date and Time Picker */}
                 <div className="flex justify-start">
                   <FormField
                     control={form.control}
-                    name="dateTime"
+                    name="requestDate"
                     render={({ field }) => (
                       <FormItem className="flex flex-col">
                         <FormLabel className="font-lexend text-base text-[#0010A4]">
-                          Pilih Tanggal dan Waktu{" "}
+                          Pilih Tanggal dan Waktu
                           <span className="text-[#DC2522]">*</span>
                         </FormLabel>
-                        {/* popover */}
                         <Popover>
                           <PopoverTrigger asChild>
                             <Button
@@ -241,7 +187,7 @@ const PengajuanFunding: React.FC = () => {
                                 </span>
                               ) : (
                                 <span className="text-[#9EA2AD]">
-                                  Pick a date and time
+                                  Pilih tanggal dan waktu
                                 </span>
                               )}
                             </Button>
@@ -250,16 +196,31 @@ const PengajuanFunding: React.FC = () => {
                             <Calendar
                               mode="single"
                               selected={field.value}
-                              onSelect={field.onChange}
-                              disabled={(date) =>
-                                date > new Date() ||
-                                date < new Date("1900-01-01")
-                              }
+                              onSelect={(date) => {
+                                if (date) {
+                                  const updatedDate = setHours(
+                                    setMinutes(date, field.value.getMinutes()),
+                                    field.value.getHours(),
+                                  );
+                                  field.onChange(updatedDate);
+                                }
+                              }}
                               initialFocus
                             />
                             <div className="p-3 border-t border-border">
                               <TimePicker
-                                setDate={field.onChange}
+                                setDate={(time) => {
+                                  if (time) {
+                                    const updatedTime = setHours(
+                                      setMinutes(
+                                        field.value,
+                                        time.getMinutes(),
+                                      ),
+                                      time.getHours(),
+                                    );
+                                    field.onChange(updatedTime);
+                                  }
+                                }}
                                 date={field.value}
                               />
                             </div>
@@ -270,11 +231,11 @@ const PengajuanFunding: React.FC = () => {
                     )}
                   />
                 </div>
-
+                {/* Submit Button */}
                 <div className="flex pb-10 justify-end items-center w-full">
                   <Button
                     type="submit"
-                    className={`rounded-full px-6 sm:px-10 text-[20px] sm:text-[24px] py-4 sm:py-6 text-white font-lexend transition duration-200 ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
+                    className={`rounded-full px-6 sm:px-10 text-[20px] sm:text-[24px] py-4 sm:py-6 text-white font-lexend transition duration-200`}
                     style={{
                       borderRadius: "269.667px",
                       background:
@@ -285,9 +246,8 @@ const PengajuanFunding: React.FC = () => {
                           0px 1.079px 0px 2.697px rgba(255, 255, 255, 0.40) inset
                         `,
                     }}
-                    disabled={loading}
                   >
-                    {loading ? "Loading..." : "Book Sesi"}
+                    Submit
                   </Button>
                 </div>
               </div>
@@ -298,4 +258,5 @@ const PengajuanFunding: React.FC = () => {
     </Form>
   );
 };
+
 export default PengajuanFunding;

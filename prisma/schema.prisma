@@ -51,18 +51,18 @@ model UserBillingAddress {
 model Mentoring {
   id               String       @id @default(uuid())
   created_at       DateTime     @default(now())
-  image            String
   Topic            String
-  requested_date   String
+  requested_date   DateTime
   date             DateTime?
   mentor_id        String?
   mentee_id        String
-  business_id      String?
+  business_id      String       @unique
   Description      String?
   mentoring_status Int
   content          String[]
   mentor           UserAccount? @relation("MentorRelation", fields: [mentor_id], references: [id])
   mentee           UserAccount  @relation("MenteeRelation", fields: [mentee_id], references: [id])
+  business         Business     @relation(fields: [business_id], references: [id])
 }
 
 model Business {
@@ -75,6 +75,7 @@ model Business {
   owner_id       String           @unique
   owner          UserAccount?     @relation(fields: [owner_id], references: [id])
   BusinessReport BusinessReport[]
+  Mentoring      Mentoring?
 }
 
 model Crowdfunding {
