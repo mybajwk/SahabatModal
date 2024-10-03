@@ -1,56 +1,72 @@
 "use client";
 
 import SearchBar from "@/components/ui/searchbar";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import PerusahaanCard from "./PerusahaanCard";
-import imageUrl from "../assets/mawar.jpeg";
+import axios from "axios";
+import { MentoringFormattedData } from "../utils/Mentoring";
+import { useSession } from "next-auth/react";
+
+function formatDateToWIB(date: Date | null): string {
+  if (!date) return "";
+
+  // Convert to Jakarta timezone and format
+  const options: Intl.DateTimeFormatOptions = {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false, // Use 24-hour format
+    timeZone: "Asia/Jakarta", // Set the time zone to WIB (Western Indonesian Time)
+  };
+
+  try {
+    // Convert the date to the desired time zone using toLocaleString
+    const formattedDate = date.toLocaleString("en-GB", options);
+
+    // Replace slashes with dashes and append "WIB"
+    return `${formattedDate.replace(/\//g, "-")} WIB`;
+  } catch (error) {
+    console.error("Error formatting date:", error);
+    return "";
+  }
+}
 
 function MentorPage() {
   const [, setQuery] = useState("");
 
-  const dummyData = [
-    {
-      imageUrl: imageUrl,
-      namaPerusahaan: "PT Maju Terus",
-      namaPemilik: "Andi Setiawan",
-      topic: "Innovasi dalam Pemasaran Digital",
-      tanggal: "20-09-2024, 10:00:00 WIB",
-    },
-    {
-      imageUrl: imageUrl,
-      namaPerusahaan: "PT Berkah Jaya",
-      namaPemilik: "Budi Raharjo",
-      topic: "Strategi Bisnis untuk Startup",
-      tanggal: "21-09-2024, 11:00:00 WIB",
-    },
-    {
-      imageUrl: imageUrl,
-      namaPerusahaan: "PT Kreatif Inovasi",
-      namaPemilik: "Charlie Van Houten",
-      topic: "Pentingnya Kreativitas dalam Produk",
-      tanggal: "22-09-2024, 12:00:00 WIB",
-    },
-    {
-      imageUrl: imageUrl,
-      namaPerusahaan: "PT Solusi Teknologi",
-      namaPemilik: "Dewi Sartika",
-      topic: "Teknologi Terbaru dalam Manufaktur",
-      tanggal: "23-09-2024, 13:00:00 WIB",
-    },
-    {
-      imageUrl: imageUrl,
-      namaPerusahaan: "PT Adil Makmur",
-      namaPemilik: "Eko Wahyudi",
-      topic: "Etika Bisnis dalam Globalisasi",
-      tanggal: "24-09-2024, 14:00:00 WIB",
-    },
-  ];
+  const [requests, setRequests] = useState([]);
+
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("/api/mentoring");
+        setRequests(response.data.data);
+      } catch (error) {
+        console.error("Error fetching forum data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
-    <div className="min-h-screen w-full text-white font-lexend p-8 md:px-32 md:py-10">
+    <div
+      className="min-h-screen w-full text-white font-lexend p-8 md:px-32 md:py-10"
+      style={{
+        backgroundImage: 'url("./bg_main.png")',
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+      }}
+    >
       <div className="flex text-sm flex-col space-y-3 ">
-        <p>Hallo, John Doe!</p>
+        <p>Hallo, {session ? session.user.name : "John Doe"} </p>
         <div className="px-4 text-sm py-1 rounded-full border-2 border-white w-fit">
           Digital Marketing
         </div>
@@ -62,14 +78,15 @@ function MentorPage() {
         </Button>
       </div>
       <div className="flex flex-col space-y-4 mt-5 w-full items-center">
-        {dummyData.map((data, index) => (
+        {requests.map((data: MentoringFormattedData, index) => (
           <PerusahaanCard
             key={index}
-            imageUrl={data.imageUrl}
-            namaPerusahaan={data.namaPerusahaan}
-            namaPemilik={data.namaPemilik}
-            topic={data.topic}
-            tanggal={data.tanggal}
+            imageUrl={data.businessImage || ""}
+            namaPerusahaan={data.businessName || ""}
+            namaPemilik={data.businessOwnerName || ""}
+            topic={data.mentoringTopic}
+            tanggal={formatDateToWIB(data.mentoringDate)}
+            pengajuanId={data.mentoringId}
           />
         ))}
       </div>

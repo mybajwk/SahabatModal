@@ -8,6 +8,7 @@ import FinancialStatement from "./financial_statement";
 
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Loading from "@/components/ui/loading";
 import axios from "axios";
 import { UserAccount } from "../utils/Profile";
 
@@ -35,7 +36,7 @@ function ProfilePage() {
   }, []);
 
   if (status === "loading" || !userData) {
-    return <div>Loading...</div>; // You can replace this with a spinner or loading animation
+    return <Loading />;
   }
 
   console.log(userData);

@@ -1,10 +1,11 @@
 import client from "@/lib/prismadb";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
+import { options } from "../auth/[...nextauth]/options";
 
 export async function GET() {
   try {
-    const session = await getServerSession();
+    const session = await getServerSession(options);
     if (!session?.user?.id) {
       return new NextResponse(JSON.stringify({ message: "Unauthorizedd" }), {
         status: 401,

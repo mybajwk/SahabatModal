@@ -1,3 +1,5 @@
+"use client";
+
 import React, { Dispatch, SetStateAction } from "react";
 import {
   Form,
@@ -15,15 +17,18 @@ import FileUpload from "../../components/file-upload";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DatePicker } from "../../components/date-picker";
 import { Button } from "../../components/ui/button";
+import { useToast } from "@/hooks/use-toast";
+import axios from "axios";
 
 interface FundingBasicPageProps {
   setCurrentPage: Dispatch<SetStateAction<string>>;
+  setStatus: Dispatch<SetStateAction<number | undefined>>;
+  id?: string;
 }
 
 const allowedFileType = ["image/jpg", "image/png", "image/jpeg", "video/mp4"];
 
 export const FormFundingBasicSchema = z.object({
-  title: z.string().min(1, "Judul wajib diisi"),
   address: z.string().min(1, "Alamat wajib diisi"),
   gmaps: z.string().min(1, "Link GMaps wajib diisi"),
   image: z
@@ -44,20 +49,54 @@ export const FormFundingBasicSchema = z.object({
   endDate: z.coerce.date(),
 });
 
-const FundingBasicPage: React.FC<FundingBasicPageProps> = ({}) => {
+const FundingBasicPage: React.FC<FundingBasicPageProps> = ({
+  id,
+  setCurrentPage,
+  setStatus,
+}) => {
   const form = useForm<z.infer<typeof FormFundingBasicSchema>>({
     resolver: zodResolver(FormFundingBasicSchema),
     defaultValues: {
       address: "",
       fund: 0,
       image: null,
-      title: "",
       gmaps: "",
+      endDate: new Date(),
+      startDate: new Date(),
     },
   });
 
-  const onSubmit = (data: z.infer<typeof FormFundingBasicSchema>) => {
+  const { toast } = useToast();
+
+  const onSubmit = async (data: z.infer<typeof FormFundingBasicSchema>) => {
     console.log(data);
+    try {
+      console.log("tes", id);
+
+      if (id) {
+        console.log("tes", id);
+        await axios.post(`/api/crowdfunding/${id}/basic`, {
+          address: data.address,
+          gmaps: data.gmaps,
+          media: data.image,
+          fund: data.fund,
+          endDate: data.endDate.toISOString(),
+          startDate: data.startDate.toISOString(),
+        });
+        setStatus(1);
+        toast({
+          variant: "default",
+          title: "Submit successfull",
+        });
+        setCurrentPage("reward");
+      }
+    } catch (error) {
+      console.log(error);
+      toast({
+        variant: "destructive",
+        title: "Submit failed",
+      });
+    }
   };
   return (
     <Form {...form}>
@@ -66,7 +105,7 @@ const FundingBasicPage: React.FC<FundingBasicPageProps> = ({}) => {
         className="w-full flex justify-center items-center"
       >
         <section className="bg-white w-[70%] z-[5] rounded-lg flex flex-col gap-5 px-10 justify-center items-center">
-          <div className="flex flex-row gap-10 py-10 w-full">
+          {/* <div className="flex flex-row gap-10 py-10 w-full">
             <div className="flex flex-col flex-[0.3] py-5 text-black gap-4 font-lexend">
               <h1 className="text-[28px] font-semibold">Nama Pendanaan</h1>
               <p className="text-base font-[300]">
@@ -102,7 +141,7 @@ const FundingBasicPage: React.FC<FundingBasicPageProps> = ({}) => {
                 )}
               />
             </div>
-          </div>
+          </div> */}
           <Separator className="h-[1.5px] bg-[#DDD]" />
           <div className="flex flex-row gap-10 py-10 w-full">
             <div className="flex flex-col flex-[0.3] py-5 text-black gap-4 font-lexend">
@@ -232,7 +271,7 @@ const FundingBasicPage: React.FC<FundingBasicPageProps> = ({}) => {
               </p>
             </div>
             <div className="border-[1.5px] flex-1 border-[#C9C9C9] rounded-sm space-y-3 p-12">
-              <FormField
+              {/* <FormField
                 control={form.control}
                 name="fund"
                 render={({ field }) => (
@@ -258,8 +297,8 @@ const FundingBasicPage: React.FC<FundingBasicPageProps> = ({}) => {
                     <FormMessage />
                   </FormItem>
                 )}
-              />
-              <div className="flex flex-row gap-3 items-center">
+              /> */}
+              <div className="flex flex-wrap gap-3 items-center">
                 <FormField
                   control={form.control}
                   name="startDate"

@@ -1,22 +1,31 @@
+"use client";
+
 import axios from "axios";
 import Image from "next/image";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { FaClock } from "react-icons/fa6";
 
-const ListInvestorDescPage = async () => {
-  let data;
-  try {
-    const dataFetch = await axios.get(
-      `${process.env.BACKEND_URL}/api/funding/list-investor`,
-    );
+const ListInvestorDescPage = () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [data, setData] = useState<any | undefined>();
+  const router = useRouter();
 
-    data = dataFetch.data;
-    console.log(data);
-  } catch (error) {
-    console.log(error);
-    return redirect("/");
-    // return null;
-  }
+  useEffect(() => {
+    const get = async () => {
+      try {
+        const dataFetch = await axios.get(`/api/funding/list-investor`);
+        // console.log(dataFetch);
+        setData(dataFetch.data);
+      } catch (error) {
+        console.log(error);
+        return router.push("/");
+        // return null;
+      }
+    };
+
+    get();
+  }, [router]);
 
   if (!data) return null;
   return (

@@ -1,19 +1,30 @@
+"use client";
+
 import RewardCardSeeker from "@/components/reward-card-seeker";
 import axios from "axios";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
-const DashSeekerDescPage = async () => {
-  let data;
-  try {
-    const dataFetch = await axios.get(
-      `${process.env.BACKEND_URL}/api/funding/items`,
-    );
-    data = dataFetch.data;
-  } catch (error) {
-    console.log(error);
+const DashSeekerDescPage = () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [data, setData] = useState<any | undefined>();
+  const router = useRouter();
 
-    return redirect("/");
-  }
+  useEffect(() => {
+    const get = async () => {
+      try {
+        const dataFetch = await axios.get(`/api/funding/items`);
+        console.log(dataFetch);
+        setData(dataFetch.data);
+      } catch (error) {
+        console.log(error);
+        return router.push("/");
+        // return null;
+      }
+    };
+
+    get();
+  }, [router]);
 
   if (!data) return null;
   return (
