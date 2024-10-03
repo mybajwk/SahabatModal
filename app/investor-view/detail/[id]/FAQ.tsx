@@ -46,7 +46,7 @@ function FAQ({ id }: { id: string }) {
           data.faq.map(
             (
               i: { id: string; answer: string; question: string },
-              index: number
+              index: number,
             ) => (
               <FAQCard
                 key={i.id}
@@ -54,7 +54,7 @@ function FAQ({ id }: { id: string }) {
                 question={i.question}
                 answer={i.answer}
               />
-            )
+            ),
           )
         ) : (
           <p className="py-20 w-full text-center text-white font-lexend text-lg">

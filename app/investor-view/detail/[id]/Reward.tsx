@@ -61,7 +61,7 @@ function Reward({ id }: { id: string }) {
                   quantity: number;
                 }[];
               },
-              index: number
+              index: number,
             ) => (
               <AvailableReward
                 key={index}
@@ -71,7 +71,7 @@ function Reward({ id }: { id: string }) {
                 onClick={() => setSelectedItem(item)}
                 isActive={selectedItem?.title === item.title}
               />
-            )
+            ),
           )
         ) : (
           <p className="py-20 w-full text-center text-white font-lexend text-lg">

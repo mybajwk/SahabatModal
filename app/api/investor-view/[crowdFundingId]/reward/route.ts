@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   _req: NextRequest,
-  { params: { crowdFundingID } }: { params: { crowdFundingID: string } }
+  { params: { crowdFundingID } }: { params: { crowdFundingID: string } },
 ) {
   try {
     const session = await getServerSession(options);
@@ -29,7 +29,7 @@ export async function GET(
     if (!funding) {
       return new NextResponse(
         JSON.stringify({ message: "Funding data not found" }),
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -37,7 +37,7 @@ export async function GET(
     for (let i = 0; i < funding.CrowdfundingItem.length; i++) {
       if (
         !amounts.includes(
-          parseInt(funding.CrowdfundingItem[i].amount.toString())
+          parseInt(funding.CrowdfundingItem[i].amount.toString()),
         )
       ) {
         amounts.push(parseInt(funding.CrowdfundingItem[i].amount.toString()));
@@ -50,7 +50,7 @@ export async function GET(
       const d = {
         title: `Reward ${i + 1}`,
         milestone: Math.round(
-          (amounts[i] / parseInt(funding.target_amount.toString())) * 100
+          (amounts[i] / parseInt(funding.target_amount.toString())) * 100,
         ),
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         rewards: [] as any[],
@@ -76,13 +76,13 @@ export async function GET(
       JSON.stringify({
         data: newData,
       }),
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.log(error);
     return new NextResponse(
       JSON.stringify({ messsage: "Internal server error" }),
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

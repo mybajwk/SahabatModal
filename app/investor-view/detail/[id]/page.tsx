@@ -26,7 +26,7 @@ function InvestorDetail({ params }: { params: { id: string } }) {
       case "Deskripsi":
         return <Deskripsi id={params.id} />;
       case "Reward":
-        return <Reward id={params.id}/>;
+        return <Reward id={params.id} />;
       case "FAQ":
         return <FAQ id={params.id} />;
       default:

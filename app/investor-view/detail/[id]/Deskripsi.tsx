@@ -36,9 +36,9 @@ function Deskripsi({ id }: { id: string }) {
         Deskripsi
       </h1>
       <div
-      className="overflow-y-auto font-lexend text-justify text-base text-white"
-      dangerouslySetInnerHTML={{ __html: data?.desc }}
-    />
+        className="overflow-y-auto font-lexend text-justify text-base text-white"
+        dangerouslySetInnerHTML={{ __html: data?.desc }}
+      />
     </div>
   );
 }
