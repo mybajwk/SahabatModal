@@ -33,10 +33,11 @@ export async function GET(req: NextRequest) {
       const daysLeft = Math.ceil(
         (parseISO(crowdfunding.end_date.toISOString()).getTime() -
           new Date().getTime()) /
-          (1000 * 60 * 60 * 24)
+          (1000 * 60 * 60 * 24),
       );
       const progressValue = Math.round(
-        (Number(crowdfunding.amount) / Number(crowdfunding.target_amount)) * 100
+        (Number(crowdfunding.amount) / Number(crowdfunding.target_amount)) *
+          100,
       );
 
       return {
@@ -49,13 +50,13 @@ export async function GET(req: NextRequest) {
     });
     return new NextResponse(
       JSON.stringify({ data: formattedData, message: "success get forum" }),
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("Session Retrieval Error:", error);
     return NextResponse.json(
       { message: "Internal server error", error },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
