@@ -30,6 +30,7 @@ model UserAccount {
   UserBillingAddress UserBillingAddress?
   Forum              Forum[]
   ForumComment       ForumComment[]
+  FundingData        FundingData[]
 }
 
 model UserBillingAddress {
@@ -97,15 +98,16 @@ model Crowdfunding {
 }
 
 model CrowdfundingItem {
-  id              String       @id @default(uuid())
-  created_at      DateTime     @default(now())
+  id              String        @id @default(uuid())
+  created_at      DateTime      @default(now())
   crowdfunding_id String
   name            String
   description     String
   image           String
   jenis_item      String
   amount          BigInt
-  crowdfunding    Crowdfunding @relation(fields: [crowdfunding_id], references: [id])
+  crowdfunding    Crowdfunding  @relation(fields: [crowdfunding_id], references: [id])
+  FundingData     FundingData[]
 }
 
 model CrowdfundingFaq {
@@ -118,15 +120,17 @@ model CrowdfundingFaq {
 }
 
 model FundingData {
-  id                   String       @id @default(uuid())
-  created_at           DateTime     @default(now())
-  crowdfunding_item_id String
+  id                   String            @id @default(uuid())
+  created_at           DateTime          @default(now())
+  crowdfunding_item_id String?
   investor_id          String
-  address_id           String
   amount               BigInt
   funding_status       Boolean
   received_status      Boolean
-  crowdfunding_item    Crowdfunding @relation(fields: [crowdfunding_item_id], references: [id])
+  crowdfunding_item    CrowdfundingItem? @relation(fields: [crowdfunding_item_id], references: [id])
+  Crowdfunding         Crowdfunding?     @relation(fields: [crowdfundingId], references: [id])
+  crowdfundingId       String?
+  investor             UserAccount       @relation(fields: [investor_id], references: [id])
 }
 
 model Forum {
