@@ -1,14 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import client from "@/lib/prismadb";
-import { getToken } from "next-auth/jwt";
-import {
-  FormattedForum,
-  PostFeedsRequest,
-  ForumResponse,
-  ForumComment,
-} from "@/app/utils/PostFeeds";
 import { InvestorViewCardList } from "@/app/utils/investorView";
-import { formatDistanceToNow, parseISO } from "date-fns"; // Used for date calculations
+import { parseISO } from "date-fns"; // Used for date calculations
 
 export async function GET(req: NextRequest) {
   if (req.method !== "GET") {

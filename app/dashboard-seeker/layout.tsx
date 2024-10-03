@@ -112,7 +112,7 @@ const DashboardInvestorLayout = async ({
 
             <div className="flex flex-col font-lexend text-white">
               <h3 className="text-[28px] md:text-[32px] font-semibold">
-                {hitungSelisihHari(data.start_date, data.end_date)}
+                {hitungSelisihHari(new Date().toISOString(), data.end_date)}
               </h3>
               <p className="text-[20px] md:text-[24px] font-light">
                 Hari tersisa

@@ -6,124 +6,23 @@ import MouCard from "./mou-card";
 import bubbleBgHorizontal from "../assets/horizontal-bubble.png";
 import bubbleBgVertical from "../assets/vertical-bubble.png";
 import barista from "../assets/barista.png";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import leftCircle from "../assets/kiri.png";
 import rightCircle from "../assets/kanan.png";
 import middleCircle from "../assets/tengah.png";
 import axios from "axios";
 import { InvestorViewCardList } from "../utils/investorView";
 import { useSession } from "next-auth/react";
-
-interface DummyItem {
-  imageSrc: StaticImageData;
-  progressValue: number;
-  avatarSrc: string;
-  avatarFallback: string;
-  title: string;
-  owner: string;
-  daysLeft: number;
-}
-
-const dummyValue: DummyItem[] = [
-  {
-    imageSrc: barista,
-    progressValue: 33,
-    avatarSrc: "https://github.com/shadcn.png",
-    avatarFallback: "CN",
-    title: "Kopi Kenalan",
-    owner: "Asep Hendriadi",
-    daysLeft: 24,
-  },
-  {
-    imageSrc: barista,
-    progressValue: 50,
-    avatarSrc: "https://github.com/username1.png",
-    avatarFallback: "AB",
-    title: "Cafe Nusantara",
-    owner: "Budi Santoso",
-    daysLeft: 12,
-  },
-  {
-    imageSrc: barista,
-    progressValue: 75,
-    avatarSrc: "https://github.com/username2.png",
-    avatarFallback: "XY",
-    title: "Warung Kopi Bali",
-    owner: "Cahyo Widodo",
-    daysLeft: 5,
-  },
-  {
-    imageSrc: barista,
-    progressValue: 20,
-    avatarSrc: "https://github.com/username3.png",
-    avatarFallback: "DZ",
-    title: "Kopi Hitam Manis",
-    owner: "Dewi Kartika",
-    daysLeft: 30,
-  },
-  {
-    imageSrc: barista,
-    progressValue: 50,
-    avatarSrc: "https://github.com/username1.png",
-    avatarFallback: "AB",
-    title: "Cafe Nusantara",
-    owner: "Budi Santoso",
-    daysLeft: 12,
-  },
-  {
-    imageSrc: barista,
-    progressValue: 75,
-    avatarSrc: "https://github.com/username2.png",
-    avatarFallback: "XY",
-    title: "Warung Kopi Bali",
-    owner: "Cahyo Widodo",
-    daysLeft: 5,
-  },
-  {
-    imageSrc: barista,
-    progressValue: 20,
-    avatarSrc: "https://github.com/username3.png",
-    avatarFallback: "DZ",
-    title: "Kopi Hitam Manis",
-    owner: "Dewi Kartika",
-    daysLeft: 30,
-  },
-  {
-    imageSrc: barista,
-    progressValue: 50,
-    avatarSrc: "https://github.com/username1.png",
-    avatarFallback: "AB",
-    title: "Cafe Nusantara",
-    owner: "Budi Santoso",
-    daysLeft: 12,
-  },
-  {
-    imageSrc: barista,
-    progressValue: 75,
-    avatarSrc: "https://github.com/username2.png",
-    avatarFallback: "XY",
-    title: "Warung Kopi Bali",
-    owner: "Cahyo Widodo",
-    daysLeft: 5,
-  },
-  {
-    imageSrc: barista,
-    progressValue: 20,
-    avatarSrc: "https://github.com/username3.png",
-    avatarFallback: "DZ",
-    title: "Kopi Hitam Manis",
-    owner: "Dewi Kartika",
-    daysLeft: 30,
-  },
-];
+import { useToast } from "@/hooks/use-toast";
 
 function Page() {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const [query, setQuery] = useState<string>("");
   const [data, setData] = useState<InvestorViewCardList[]>([]);
 
   const [isMobile, setIsMobile] = useState<boolean>(false);
 
+  const { toast } = useToast();
   // Function to update `isMobile` state based on window width
   const handleResize = () => {
     if (window.innerWidth < 768) {
@@ -132,13 +31,18 @@ function Page() {
       setIsMobile(false);
     }
   };
-
+  useEffect(() => {
+    setData((prev) => prev.filter((p) => p.title.includes(query)));
+  }, [query]);
   useEffect(() => {
     const get = async () => {
       try {
         const data = await axios.get("/api/investor-view");
-        setData(data.data);
-      } catch (error) {}
+        setData(data.data.data);
+      } catch (error) {
+        console.error("Registration error:", error);
+        toast({ variant: "destructive", title: "Fail to load data" });
+      }
     };
 
     get();
@@ -150,7 +54,7 @@ function Page() {
 
     // Cleanup event listener when component unmounts
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [toast]);
   console.log("ini", data);
   if (status === "loading" || !data) {
     return <div>Loading...</div>; // You can replace this with a spinner or loading animation
