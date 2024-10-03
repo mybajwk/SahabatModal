@@ -71,7 +71,7 @@ function ForumPage() {
       variant: "default",
       title: "Feeds posted",
     });
-  }, []);
+  }, [toast]);
 
   console.log("session", session);
   const form = useForm<z.infer<typeof formSchema>>({

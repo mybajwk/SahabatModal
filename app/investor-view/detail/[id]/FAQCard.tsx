@@ -14,7 +14,7 @@ interface FAQCardProps {
 
 const FAQCard: React.FC<FAQCardProps> = ({ question, answer, index }) => {
   return (
-    <AccordionItem value={`item-${index + 1}`} className="border-b-0">
+    <AccordionItem value={`item-${index + 1}`} className="border-b-0 w-full">
       <AccordionTrigger className="w-full sm:text-lg rounded-md border border-[#D9D9D9] p-3 shadow-custom-inset">
         {question}
       </AccordionTrigger>
