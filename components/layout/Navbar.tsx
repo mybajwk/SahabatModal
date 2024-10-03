@@ -1,7 +1,9 @@
 "use client";
 
 import React from "react";
-import { FaSignInAlt } from "react-icons/fa"; // Icon for the button
+import { FaSignInAlt } from "react-icons/fa";
+import Image from "next/image";
+import SamoLogo from "@/public/logo2.png";
 
 const Navbar = () => {
   return (
@@ -11,10 +13,14 @@ const Navbar = () => {
         backgroundImage: "url('/BG_Navbar.png')",
       }}
     >
-      {/* Left: Logo */}
-      <div className="flex items-center space-x-4">
-        {/* <img src="/logo.png" alt="Sahabat Modal Logo" className="w-20 h-auto" /> */}
-      </div>
+      <Image
+        src={SamoLogo}
+        alt="thumbnail"
+        width={0}
+        height={0}
+        sizes="100vw"
+        className="object-cover w-[120px] object-center"
+      />
 
       {/* Center: Navigation Links */}
       <nav className="hidden md:flex space-x-8">
@@ -29,7 +35,6 @@ const Navbar = () => {
         </a>
       </nav>
 
-      {/* Right: Login Button */}
       <a
         href="/login"
         className="flex items-center justify-center space-x-2 text-white py-2 px-4 rounded-full shadow-lg hover:shadow-xl transition duration-300"
