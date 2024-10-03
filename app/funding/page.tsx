@@ -10,7 +10,7 @@ import FundingRewardPage from "./funding-reward";
 import FundingDescPage from "./funding-deskripsi";
 
 const FormFundingPage = () => {
-  const [currentPage, setCurrentPage] = useState("desc");
+  const [currentPage, setCurrentPage] = useState("kategori");
 
   useEffect(() => {
     console.log(currentPage);
