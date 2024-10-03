@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import client from "@/app/libs/prismadb";
+import client from "@/lib/prismadb";
+
 import { PostCrowdFundingRewardRequest } from "@/app/utils/PostCrowdFunding";
 
 interface Params {

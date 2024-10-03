@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import client from "@/app/libs/prismadb";
+
 import { getToken } from "next-auth/jwt";
 import { PostCrowdFundingBasicRequest } from "@/app/utils/PostCrowdFunding";
+import client from "@/lib/prismadb";
 
 export async function POST(req: NextRequest) {
   if (req.method !== "POST") {
@@ -26,7 +27,7 @@ export async function POST(req: NextRequest) {
   ) {
     return NextResponse.json(
       { message: "Missing required fields" },
-      { status: 400 },
+      { status: 400 }
     );
   }
 
@@ -51,13 +52,13 @@ export async function POST(req: NextRequest) {
         data: null,
         message: "Success create crowdfunding",
       }),
-      { status: 200 },
+      { status: 200 }
     );
   } catch (error) {
     console.error("Session Retrieval Error:", error);
     return NextResponse.json(
       { message: "Internal server error", error },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }
