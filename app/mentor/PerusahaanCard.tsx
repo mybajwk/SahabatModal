@@ -2,6 +2,8 @@ import React from "react";
 import Image, { StaticImageData } from "next/image";
 import { RxArrowTopRight } from "react-icons/rx";
 import { MdFileUpload } from "react-icons/md";
+import { useRouter } from "next/navigation";
+import sephora from "../assets/sephora.png"
 
 interface PerusahaanCardProps {
   imageUrl: string | StaticImageData;
@@ -9,6 +11,7 @@ interface PerusahaanCardProps {
   namaPemilik: string;
   topic: string;
   tanggal: string;
+  pengajuanId: string;
 }
 
 const PerusahaanCard: React.FC<PerusahaanCardProps> = ({
@@ -17,11 +20,17 @@ const PerusahaanCard: React.FC<PerusahaanCardProps> = ({
   namaPemilik,
   topic,
   tanggal,
+  pengajuanId,
 }) => {
+  const router = useRouter();
+  const navigateToDetail = (id: string) => {
+    router.push(`/mentor/detail/${id}`);
+  };
+
   return (
     <div className="max-w-[600px] w-full shadow-custom-inset rounded-lg flex flex-row space-x-4 px-5 py-4">
       <Image
-        src={imageUrl}
+        src={imageUrl || sephora}
         alt="thumbnail"
         width={50}
         height={50}
@@ -29,7 +38,10 @@ const PerusahaanCard: React.FC<PerusahaanCardProps> = ({
         className="object-cover rounded-lg object-center aspect-square w-1/3"
       />
       <div className="md:text-xs flex flex-col flex-1 space-y-3 text-[8px] relative">
-        <div className="absolute hover:cursor-pointer flex justify-center items-center bg-light-linear-yellow aspect-square w-[25px] rounded-full top-0 right-0">
+        <div
+          onClick={() => navigateToDetail(pengajuanId)}
+          className="absolute hover:cursor-pointer flex justify-center items-center bg-light-linear-yellow aspect-square w-[25px] rounded-full top-0 right-0"
+        >
           <RxArrowTopRight className="w-1/2 h-auto text-black" />
         </div>
         <h1 className="md:text-xl">{namaPerusahaan}</h1>
