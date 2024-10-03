@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AccountSettings from "./account_settings";
 import BillingAdddress from "./billing_address";
 import ChangePassword from "./change_password";
@@ -8,16 +8,37 @@ import FinancialStatement from "./financial_statement";
 
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import axios from "axios";
+import { UserAccount } from "../utils/Profile";
 
 function ProfilePage() {
   const { data: session, status } = useSession();
 
-  if (status === "loading") {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const router = useRouter();
+
+  const [userData, setUserData] = useState<UserAccount>();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get<{ data: UserAccount }>("/api/profile");
+        if (response.data && response.data.data) {
+          setUserData(response.data.data); // assuming the response structure includes a `data` object
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (status === "loading" || !userData) {
     return <div>Loading...</div>; // You can replace this with a spinner or loading animation
   }
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const router = useRouter();
+  console.log(userData);
 
   if (!session) {
     router.refresh();
@@ -26,12 +47,18 @@ function ProfilePage() {
   }
   return (
     <div className="bg-conic-purple flex flex-col space-y-4 items-center py-6">
-      <h1 className="font-lexend text-lg font-semibold drop-shadow-text-white">
+      <h1
+        className="font-lexend text-2xl font-semibold drop-shadow-text-white lg:text-3xl lg:py-5"
+        style={{
+          textShadow:
+            "0px 0px 28.792px rgba(255, 255, 255, 0.40), 0px 0px 14.396px rgba(255, 255, 255, 0.80)",
+        }}
+      >
         Profil
       </h1>
       <div className="relative bg-white p-6 lg:py-14 lg:px-24 space-y-4 rounded-t-lg w-[85vw] max-w-[900px]">
-        <AccountSettings />
-        <BillingAdddress />
+        <AccountSettings data={userData} />
+        <BillingAdddress data={userData} />
         <ChangePassword />
         <FinancialStatement />
       </div>

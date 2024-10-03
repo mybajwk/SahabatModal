@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+"use client";
+
+import React, { Dispatch, SetStateAction, useState } from "react";
 import { Button } from "../../components/ui/button";
 import { Plus, Trash2 } from "lucide-react";
 import FormFundingAddReward, {
@@ -7,8 +9,20 @@ import FormFundingAddReward, {
 import { z } from "zod";
 import Image from "next/image";
 import { Separator } from "../../components/ui/separator";
+import { useToast } from "@/hooks/use-toast";
+import axios from "axios";
 
-const FundingRewardPage = () => {
+interface FundingBasicPageProps {
+  setCurrentPage: Dispatch<SetStateAction<string>>;
+  id?: string;
+  setStatus: Dispatch<SetStateAction<number | undefined>>;
+}
+
+const FundingRewardPage: React.FC<FundingBasicPageProps> = ({
+  setCurrentPage,
+  setStatus,
+  id,
+}) => {
   const [statePage, setStatePage] = useState("list");
   const [rewards, setRewards] = useState<
     z.infer<typeof FormFundingRewardSchema>[]
@@ -32,8 +46,29 @@ const FundingRewardPage = () => {
     }).format(number);
   };
 
-  const onSubmit = () => {
+  const { toast } = useToast();
+
+  const onSubmit = async () => {
     console.log(rewards);
+    try {
+      if (id) {
+        await axios.post(`/api/crowdfunding/${id}/reward`, {
+          reward: rewards,
+        });
+        toast({
+          variant: "default",
+          title: "Submit successfull",
+        });
+        setStatus(2);
+        setCurrentPage("desc");
+      }
+    } catch (error) {
+      console.log(error);
+      toast({
+        variant: "destructive",
+        title: "Submit failed",
+      });
+    }
   };
   return (
     <div className="w-full flex justify-center items-center">
@@ -86,7 +121,7 @@ const FundingRewardPage = () => {
                   <Separator className="h-[3px] text-[#DDD]" />
                 </>
               ))}
-              {rewards.length > 0 && (
+              {
                 <div className="w-full flex justify-center items-center">
                   <Button
                     onClick={onSubmit}
@@ -95,7 +130,7 @@ const FundingRewardPage = () => {
                     Save
                   </Button>
                 </div>
-              )}
+              }
             </div>
           </>
         ) : (

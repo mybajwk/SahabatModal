@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import client from "@/app/libs/prismadb";
+import client from "@/lib/prismadb";
 import { PostCrowdFundingDescRequest } from "@/app/utils/PostCrowdFunding";
 
 interface Params {
@@ -38,6 +38,7 @@ export async function POST(
       },
       data: {
         Description: deskripsi,
+        status: 3,
       },
     });
 

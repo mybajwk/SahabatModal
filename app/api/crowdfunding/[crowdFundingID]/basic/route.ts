@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import client from "@/app/libs/prismadb";
+import client from "@/lib/prismadb";
 import { getToken } from "next-auth/jwt";
 import { PostCrowdFundingBasicRequest } from "@/app/utils/PostCrowdFunding";
 
@@ -18,18 +18,10 @@ export async function POST(
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
   const body = await req.json();
-  const { title, address, gmaps, media, fund, endDate, startDate } =
+  const { address, gmaps, media, fund, endDate, startDate } =
     body as PostCrowdFundingBasicRequest;
 
-  if (
-    !title ||
-    !address ||
-    !gmaps ||
-    !media ||
-    !fund ||
-    !endDate ||
-    !startDate
-  ) {
+  if (!address || !gmaps || !media || !fund || !endDate || !startDate) {
     return NextResponse.json(
       { message: "Missing required fields" },
       { status: 400 },
@@ -37,12 +29,22 @@ export async function POST(
   }
 
   try {
-    await client.crowdfunding.upsert({
+    await client.crowdfunding.update({
       where: {
         id: crowdFundingID,
       },
-      create: {
-        name: title,
+      // create: {
+      //   address_line: address,
+      //   amount: 0,
+      //   end_date: endDate,
+      //   start_date: startDate,
+      //   media: media,
+      //   status: 1,
+      //   target_amount: fund,
+      //   address_url: gmaps,
+      //   seeker_id: token?.id?.toString() || "",
+      // },
+      data: {
         address_line: address,
         amount: 0,
         end_date: endDate,
@@ -51,19 +53,7 @@ export async function POST(
         status: 1,
         target_amount: fund,
         address_url: gmaps,
-        seeker_id: token?.id?.toString() || "",
-      },
-      update: {
-        name: title,
-        address_line: address,
-        amount: 0,
-        end_date: endDate,
-        start_date: startDate,
-        media: media,
-        status: 1,
-        target_amount: fund,
-        address_url: gmaps,
-        seeker_id: token?.id?.toString() || "",
+        seeker_id: token?.id || "",
       },
     });
 

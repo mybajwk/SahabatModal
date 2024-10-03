@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import client from "@/app/libs/prismadb";
+import client from "@/lib/prismadb";
 import { getToken } from "next-auth/jwt";
 import bcrypt from "bcryptjs";
 
@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
       old_password,
       getUserData?.password || "",
     );
-    if (isValidPassword) {
+    if (!isValidPassword) {
       return NextResponse.json({ message: "Wrong password" }, { status: 400 });
     }
 
