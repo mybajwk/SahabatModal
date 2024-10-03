@@ -38,6 +38,7 @@ export async function POST(
       },
       data: {
         Description: deskripsi,
+        status: 3,
       },
     });
 

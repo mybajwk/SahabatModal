@@ -99,7 +99,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ file, setFile }) => {
                   href={file}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-black underline"
+                  className="text-black underline w-full text-center"
                 >
                   {file}
                 </Link>
