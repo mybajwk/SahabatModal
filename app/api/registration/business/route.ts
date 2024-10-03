@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import client from "@/app/libs/prismadb";
-import { time } from "console";
 
 export async function POST(req: NextRequest) {
   if (req.method !== "POST") {
@@ -31,7 +30,7 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    const businessReport = await client.businessReport.create({
+    await client.businessReport.create({
       data: {
         date: new Date(),
         business_id: business.id,

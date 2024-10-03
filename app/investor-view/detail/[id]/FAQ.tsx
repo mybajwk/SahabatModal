@@ -37,7 +37,7 @@ function FAQ() {
         Frequently Asked Question
       </h1>
       {faqData.map((item, index) => (
-        <FAQCard key={index} question={item.question} answer={item.answer} />
+        <FAQCard key={index} question={item.question} answer={item.answer} index={index} />
       ))}
     </div>
   );
