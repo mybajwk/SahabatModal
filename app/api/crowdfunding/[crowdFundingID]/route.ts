@@ -5,7 +5,7 @@ import { options } from "../../auth/[...nextauth]/options";
 
 export async function DELETE(
   req: NextRequest,
-  { params: { crowdFundingID } }: { params: { crowdFundingID: string } }
+  { params: { crowdFundingID } }: { params: { crowdFundingID: string } },
 ) {
   try {
     const session = await getServerSession(options);
@@ -40,7 +40,7 @@ export async function DELETE(
     console.error(error);
     return NextResponse.json(
       { message: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

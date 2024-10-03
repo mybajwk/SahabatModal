@@ -36,8 +36,8 @@ export async function POST(
         id: crowdFundingID,
       },
       data: {
-       status: 2 
-      }
+        status: 2,
+      },
     });
 
     reward.map(async (faqItem) => {

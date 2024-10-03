@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
 import RewardCardSeeker from "@/components/reward-card-seeker";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const DashSeekerDescPage =  () => {
+const DashSeekerDescPage = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [data, setData] = useState<any | undefined>();
   const router = useRouter();
@@ -13,9 +13,7 @@ const DashSeekerDescPage =  () => {
   useEffect(() => {
     const get = async () => {
       try {
-        const dataFetch = await axios.get(
-          `/api/funding/items`
-        );
+        const dataFetch = await axios.get(`/api/funding/items`);
         console.log(dataFetch);
         setData(dataFetch.data);
       } catch (error) {
@@ -55,7 +53,7 @@ const DashSeekerDescPage =  () => {
                 title={d.name}
                 key={d.id}
               />
-            )
+            ),
           )
         ) : (
           <p className="py-20 w-full text-center text-white font-lexend text-lg">

@@ -56,7 +56,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ file, setFile }) => {
         }
       }
     },
-    [setFile]
+    [setFile],
   );
   const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
     onDrop,
@@ -80,7 +80,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ file, setFile }) => {
           onClick={() => open()}
           className={cn(
             "cursor-pointer w-full flex-col min-h-[200px] transition-all flex justify-center border-[#C9C9C9] rounded-lg items-center border-dashed border gap-2",
-            isDragActive && "border-[2px] border-[#9EA2AD]"
+            isDragActive && "border-[2px] border-[#9EA2AD]",
           )}
         >
           <Upload className="size-9 text-black" />

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useEffect, useState } from "react";
 import PageContent from "./page-content";
@@ -7,7 +7,7 @@ import { Accordion } from "@/components/ui/accordion";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
-const DashSeekerDescPage =  () => {
+const DashSeekerDescPage = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [data, setData] = useState<any | undefined>();
   const router = useRouter();
@@ -15,9 +15,7 @@ const DashSeekerDescPage =  () => {
   useEffect(() => {
     const get = async () => {
       try {
-        const dataFetch = await axios.get(
-          `/api/funding/desc`
-        );
+        const dataFetch = await axios.get(`/api/funding/desc`);
         // console.log(dataFetch);
         setData(dataFetch.data);
       } catch (error) {
@@ -66,7 +64,7 @@ const DashSeekerDescPage =  () => {
             data.faq.map(
               (
                 i: { id: string; answer: string; question: string },
-                index: number
+                index: number,
               ) => (
                 <FAQCard
                   key={i.id}
@@ -74,7 +72,7 @@ const DashSeekerDescPage =  () => {
                   question={i.question}
                   answer={i.answer}
                 />
-              )
+              ),
             )
           ) : (
             <p className="py-20 w-full text-center text-white font-lexend text-lg">

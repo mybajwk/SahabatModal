@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
   if (!title) {
     return NextResponse.json(
       { message: "Missing required fields" },
-      { status: 400 }
+      { status: 400 },
     );
   }
   console.log(token);
@@ -45,13 +45,13 @@ export async function POST(req: NextRequest) {
         data: { id: created.id },
         message: "Success create crowdfunding",
       }),
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("Session Retrieval Error:", error);
     return NextResponse.json(
       { message: "Internal server error", error },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -77,7 +77,7 @@ export async function GET() {
     if (!crowdfunding) {
       return new NextResponse(
         JSON.stringify({ message: "Funding data not found" }),
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -87,13 +87,13 @@ export async function GET() {
       }),
       {
         status: 200,
-      }
+      },
     );
   } catch (error) {
     console.error(error);
     return NextResponse.json(
       { message: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

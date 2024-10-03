@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaClock } from "react-icons/fa6";
 
-const ListInvestorDescPage =  () => {
+const ListInvestorDescPage = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [data, setData] = useState<any | undefined>();
   const router = useRouter();
@@ -14,9 +14,7 @@ const ListInvestorDescPage =  () => {
   useEffect(() => {
     const get = async () => {
       try {
-        const dataFetch = await axios.get(
-          `/api/funding/list-investor`
-        );
+        const dataFetch = await axios.get(`/api/funding/list-investor`);
         // console.log(dataFetch);
         setData(dataFetch.data);
       } catch (error) {
@@ -106,7 +104,7 @@ const ListInvestorDescPage =  () => {
                   </div>
                 </div>
               </div>
-            )
+            ),
           )
         ) : (
           <p className="py-20 w-full text-center text-white font-lexend text-lg">

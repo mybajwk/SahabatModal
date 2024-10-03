@@ -7,7 +7,7 @@ interface Params {
 }
 export async function POST(
   req: NextRequest,
-  { params: { crowdFundingID } }: { params: Params }
+  { params: { crowdFundingID } }: { params: Params },
 ) {
   if (req.method !== "POST") {
     return new NextResponse(JSON.stringify({ message: "Method Not Allowed" }), {
@@ -21,7 +21,7 @@ export async function POST(
   if (!deskripsi) {
     return NextResponse.json(
       { message: "Missing required fields" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -57,13 +57,13 @@ export async function POST(
         data: null,
         message: "Success create crowdfunding",
       }),
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("Session Retrieval Error:", error);
     return NextResponse.json(
       { message: "Internal server error", error },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

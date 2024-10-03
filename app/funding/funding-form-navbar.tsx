@@ -27,7 +27,7 @@ const FundingFormNavbar: React.FC<FundingFormNavbarProps> = ({
       <p
         className={cn(
           "py-3 px-3 cursor-pointer",
-          currentPage === "basic" && "border-b-[3px] border-black"
+          currentPage === "basic" && "border-b-[3px] border-black",
         )}
         onClick={() => {
           if (status && status >= 0) {
@@ -45,7 +45,7 @@ const FundingFormNavbar: React.FC<FundingFormNavbarProps> = ({
       <p
         className={cn(
           "py-3 px-3 cursor-pointer",
-          currentPage === "reward" && "border-b-[3px] border-black"
+          currentPage === "reward" && "border-b-[3px] border-black",
         )}
         onClick={() => {
           if (status && status >= 1) {
@@ -63,7 +63,7 @@ const FundingFormNavbar: React.FC<FundingFormNavbarProps> = ({
       <p
         className={cn(
           "py-3 px-3 cursor-pointer",
-          currentPage === "desc" && "border-b-[3px] border-black"
+          currentPage === "desc" && "border-b-[3px] border-black",
         )}
         onClick={() => {
           if (status && status >= 2) {
