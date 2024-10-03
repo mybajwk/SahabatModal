@@ -40,7 +40,7 @@ function Page() {
         const data = await axios.get("/api/investor-view");
         setData(data.data.data);
       } catch (error) {
-        console.error("Registration error:", error);
+        console.error("error:", error);
         toast({ variant: "destructive", title: "Fail to load data" });
       }
     };
@@ -55,7 +55,6 @@ function Page() {
     // Cleanup event listener when component unmounts
     return () => window.removeEventListener("resize", handleResize);
   }, [toast]);
-  console.log("ini", data);
   if (status === "loading" || !data) {
     return <div>Loading...</div>; // You can replace this with a spinner or loading animation
   }
@@ -118,6 +117,7 @@ function Page() {
                 owner={item.owner}
                 daysLeft={item.daysLeft}
                 key={index}
+                id={item.id}
               />
             );
           })}
