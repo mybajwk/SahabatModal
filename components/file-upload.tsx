@@ -4,6 +4,7 @@ import { FileRejection, useDropzone } from "react-dropzone";
 import { Upload } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import axios from "axios";
 
 export interface FileUploadProps {
   file: File | string | null;
@@ -12,16 +13,10 @@ export interface FileUploadProps {
 
 const FileUpload: React.FC<FileUploadProps> = ({ file, setFile }) => {
   const [error, setError] = useState<string[]>([]);
-  // const [file, setFile] = useState<File | null>(null);
-  // const [fileURL, setFileURL] = useState<string | null>(
-  //   submission?.url_submission
-  //     ? getImageUrl(submission.url_submission.url)
-  //     : null
-  // );
 
   useEffect(() => {});
   const onDrop = useCallback(
-    (acceptedFiles: File[], fileRejections: FileRejection[]) => {
+    async (acceptedFiles: File[], fileRejections: FileRejection[]) => {
       if (fileRejections.length > 0) {
         const errorFile = fileRejections[0].errors;
         const errMessage = new Set<string>();
@@ -41,12 +36,26 @@ const FileUpload: React.FC<FileUploadProps> = ({ file, setFile }) => {
 
       if (acceptedFiles.length > 0) {
         if (acceptedFiles[0]) {
-          setFile(acceptedFiles[0]);
-          // setFileURL(URL.createObjectURL(acceptedFiles[0]));
+          const file = acceptedFiles[0];
+          const formData = new FormData();
+          formData.append("file", file);
+          formData.append("file_name", file.name);
+
+          try {
+            const response = await axios.post("api/media/upload", formData, {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            });
+
+            setFile(response.data?.uploadedFile?.url);
+          } catch (error) {
+            setError(["File gagal di upload"]);
+          }
         }
       }
     },
-    [setFile],
+    [setFile]
   );
   const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
     onDrop,
@@ -70,7 +79,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ file, setFile }) => {
           onClick={() => open()}
           className={cn(
             "cursor-pointer w-full flex-col min-h-[200px] transition-all flex justify-center border-[#C9C9C9] rounded-lg items-center border-dashed border gap-2",
-            isDragActive && "border-[2px] border-[#9EA2AD]",
+            isDragActive && "border-[2px] border-[#9EA2AD]"
           )}
         >
           <Upload className="size-9 text-black" />
