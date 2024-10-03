@@ -7,7 +7,7 @@ import { FaXTwitter } from "react-icons/fa6";
 import { FaLinkedin } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
 
-function Footer() {
+const Footer = () => {
   return (
     <div className="bg-footer-blue font-lexend px-4 py-8 sm:px-12 lg:px-28 flex flex-col space-y-8">
       <div className="flex flex-row justify-between items-center space-x-4 border-b border-b-[#2A2B34]">
