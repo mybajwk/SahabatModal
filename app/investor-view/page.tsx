@@ -12,6 +12,7 @@ import rightCircle from "../assets/kanan.png";
 import middleCircle from "../assets/tengah.png";
 import axios from "axios";
 import { InvestorViewCardList } from "../utils/investorView";
+import { useSession } from "next-auth/react";
 
 interface DummyItem {
   imageSrc: StaticImageData;
@@ -117,18 +118,9 @@ const dummyValue: DummyItem[] = [
 ];
 
 function Page() {
+  const { data: session, status } = useSession();
   const [query, setQuery] = useState<string>("");
   const [data, setData] = useState<InvestorViewCardList[]>([]);
-
-  useEffect(() => {
-    const get = async () => {
-      try {
-        const data = await axios.get("/api/investor-view");
-      } catch (error) {}
-    };
-
-    get();
-  }, []);
 
   const [isMobile, setIsMobile] = useState<boolean>(false);
 
@@ -142,6 +134,14 @@ function Page() {
   };
 
   useEffect(() => {
+    const get = async () => {
+      try {
+        const data = await axios.get("/api/investor-view");
+        setData(data.data);
+      } catch (error) {}
+    };
+
+    get();
     // Check screen width when component mounts
     handleResize();
 
@@ -151,6 +151,10 @@ function Page() {
     // Cleanup event listener when component unmounts
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+  console.log("ini", data);
+  if (status === "loading" || !data) {
+    return <div>Loading...</div>; // You can replace this with a spinner or loading animation
+  }
 
   return (
     <div className="flex bg-conic-blue flex-col space-y-6 items-center py-[100px] font-lexend relative">
@@ -199,12 +203,12 @@ function Page() {
           </ul>
         </div>
         <div className="flex flex-col items-center md:flex-row md:flex-wrap md:space-y-0 md:justify-center space-y-5">
-          {dummyValue.map((item, index) => {
+          {data?.map((item, index) => {
             return (
               <MouCard
-                imageSrc={item.imageSrc}
+                imageSrc={barista}
                 progressValue={item.progressValue}
-                avatarSrc={item.avatarSrc}
+                avatarSrc="https://github.com/shadcn.png"
                 avatarFallback={item.avatarFallback}
                 title={item.title}
                 owner={item.owner}
