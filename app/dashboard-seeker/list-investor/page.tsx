@@ -7,7 +7,7 @@ const ListInvestorDescPage = async () => {
   let data;
   try {
     const dataFetch = await axios.get(
-      `${process.env.BACKEND_URL}/api/funding/list-investor`
+      `${process.env.BACKEND_URL}/api/funding/list-investor`,
     );
 
     data = dataFetch.data;
@@ -95,7 +95,7 @@ const ListInvestorDescPage = async () => {
                   </div>
                 </div>
               </div>
-            )
+            ),
           )
         ) : (
           <p className="py-20 w-full text-center text-white font-lexend text-lg">

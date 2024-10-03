@@ -6,7 +6,7 @@ const DashSeekerDescPage = async () => {
   let data;
   try {
     const dataFetch = await axios.get(
-      `${process.env.BACKEND_URL}/api/funding/items`
+      `${process.env.BACKEND_URL}/api/funding/items`,
     );
     data = dataFetch.data;
   } catch (error) {
@@ -42,7 +42,7 @@ const DashSeekerDescPage = async () => {
                 title={d.name}
                 key={d.id}
               />
-            )
+            ),
           )
         ) : (
           <p className="py-20 w-full text-center text-white font-lexend text-lg">

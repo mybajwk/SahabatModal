@@ -17,7 +17,7 @@ const DashboardSeekerNavbar = () => {
       <p
         className={cn(
           "py-3 px-3 cursor-pointer",
-          currentPage.endsWith("description") && "border-b-[3px] border-black"
+          currentPage.endsWith("description") && "border-b-[3px] border-black",
         )}
         onClick={() => router.push("description")}
       >
@@ -26,7 +26,8 @@ const DashboardSeekerNavbar = () => {
       <p
         className={cn(
           "py-3 px-3 cursor-pointer",
-          currentPage.endsWith("list-investor") && "border-b-[3px] border-black"
+          currentPage.endsWith("list-investor") &&
+            "border-b-[3px] border-black",
         )}
         onClick={() => router.push("list-investor")}
       >
@@ -35,7 +36,7 @@ const DashboardSeekerNavbar = () => {
       <p
         className={cn(
           "py-3 px-3 cursor-pointer",
-          currentPage.endsWith("items") && "border-b-[3px] border-black"
+          currentPage.endsWith("items") && "border-b-[3px] border-black",
         )}
         onClick={() => router.push("items")}
       >

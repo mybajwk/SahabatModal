@@ -9,7 +9,7 @@ const DashSeekerDescPage = async () => {
   let data;
   try {
     const dataFetch = await axios.get(
-      `${process.env.BACKEND_URL}/api/funding/desc`
+      `${process.env.BACKEND_URL}/api/funding/desc`,
     );
     data = dataFetch.data;
     console.log(data);
@@ -53,7 +53,7 @@ const DashSeekerDescPage = async () => {
             data.faq.map(
               (
                 i: { id: string; answer: string; question: string },
-                index: number
+                index: number,
               ) => (
                 <FAQCard
                   key={i.id}
@@ -61,7 +61,7 @@ const DashSeekerDescPage = async () => {
                   question={i.question}
                   answer={i.answer}
                 />
-              )
+              ),
             )
           ) : (
             <p className="py-20 w-full text-center text-white font-lexend text-lg">
