@@ -30,7 +30,6 @@ import { useToast } from "@/hooks/use-toast";
 import { useSession } from "next-auth/react";
 import Loading from "@/components/ui/loading";
 
-
 // Define the interface
 export interface CreateMentoringRequest {
   title: string;
