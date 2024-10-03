@@ -31,6 +31,7 @@ const DashSeekerDescPage = () => {
         {["", ""].map((i, index) => (
           <FAQCard
             key={index}
+            index={index}
             question="Ini apa yaa?"
             answer="kamu keren sekalii"
           />
