@@ -8,11 +8,11 @@ interface FileUploaderProps {
   setPath: (value?: string) => void;
 }
 
-const FileUploader = ({ path, setPath }: FileUploaderProps) => {
-  const [isUploaded, setIsUploaded] = useState(false); // State to track upload status
-  const [uploadError, setUploadError] = useState(""); // State to track upload errors
+const FileUploader = ({ setPath }: FileUploaderProps) => {
+  const [isUploaded, setIsUploaded] = useState(false);
+  const [uploadError] = useState("");
 
-  const handleFileChange = async (e: any) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       // Prepare FormData

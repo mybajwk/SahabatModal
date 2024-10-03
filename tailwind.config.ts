@@ -89,8 +89,12 @@ const config: Config = {
           "0px 2.676px 3.842px -2.47px rgba(116, 163, 255, 0.30) inset, 0px 0.48px 0.755px -0.274px #FFF inset, 0px -5.626px 4.665px -4.391px rgba(96, 68, 144, 0.30) inset, 0px 6.724px 6.861px -3.293px rgba(202, 172, 255, 0.30) inset, 0px 0.274px 1.235px 2.058px rgba(154, 146, 210, 0.25) inset, 0px 0.069px 2.744px 0px rgba(227, 222, 255, 0.20) inset",
         "custom-shadow-green-button":
           "0px 1.305px 81.553px 0px #D9E6FE, 0px 0px 0px 14.353px rgba(255, 255, 255, 0.07), 0px -1.305px 0px 3.262px rgba(0, 0, 0, 0.20) inset, 0px 1.305px 0px 3.262px rgba(255, 255, 255, 0.40) inset",
+        "custom-chill-green-button":
+          "0px -1.436px 0px 3.591px rgba(0, 0, 0, 0.20) inset, 0px 1.436px 0px 3.591px rgba(255, 255, 255, 0.40) inset",
         "custom-shadow-blue-button":
           "0px 1.079px 67.417px 0px #D9E6FE, 0px 0px 0px 11.865px rgba(255, 255, 255, 0.07), 0px -1.079px 0px 2.697px rgba(0, 0, 0, 0.20) inset, 0px 1.079px 0px 2.697px rgba(255, 255, 255, 0.40) inset",
+        "custom-bubble":
+          "0px 15.145px 21.747px -13.98px #04C782 inset, 0px 2.718px 4.272px -1.553px #FFF inset, 0px -31.844px 26.407px -24.854px rgba(96, 68, 144, 0.30) inset, 0px 38.058px 38.835px -18.641px rgba(202, 172, 255, 0.30) inset, 0px 1.553px 6.99px 11.65px rgba(154, 146, 210, 0.25) inset, 0px 0.388px 15.534px 0px rgba(227, 222, 255, 0.20) inset",
       },
       keyframes: {
         "accordion-down": {
