@@ -54,29 +54,34 @@ export default function Home() {
 
   const faqData = [
     {
-      question: "What is Lorem Ipsum?",
+      question: "Apa itu SahabatModal?",
       answer:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        "SahabatModal adalah platform crowdfunding yang membantu UMKM dan individu dengan ide bisnis inovatif mendapatkan pendanaan dari investor langsung. Kami juga menyediakan fitur edukasi bisnis dan inkubasi untuk mendukung perkembangan usaha.",
     },
     {
-      question: "Why use Lorem Ipsum?",
+      question: "Siapa yang bisa menggunakan SahabatModal?",
       answer:
-        "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
+        "SahabatModal terbuka untuk UMKM dan startup yang memiliki ide bisnis inovatif yang membutuhkan pendanaan serta bimbingan untuk mengembangkan usaha mereka. Selain itu, Sahabat juga terbuka bagi investor yang ingin mendanai berbagai proyek UMKM yang sistemnya crowdfunding.",
     },
     {
-      question: "Where does it come from?",
+      question: "Bagaimana cara mendapatkan pendanaan melalui SahabatModal?",
       answer:
-        "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.",
+        "Untuk mendapatkan pendanaan, Anda perlu mendaftar sebagai pengguna, mengajukan proposal bisnis Anda, dan mengikuti tahap mentoring. Jika disetujui, Anda bisa memulai membuat proyek Anda yang nantinya akan dipublikasikan di halaman investor.",
     },
     {
-      question: "How many variations exist?",
+      question: "Apakah ada biaya untuk menggunakan platform ini?",
       answer:
-        "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form.",
+        "Pendaftaran di SahabatModal gratis. Namun, kami mengambil persentase kecil dari funding dana yang berhasil terkumpul untuk biaya operasional platform.",
     },
     {
-      question: "Where can I get some?",
+      question: "Bagaimana cara investor memilih proyek untuk didanai?",
       answer:
-        "There are many websites on the Internet that provide Lorem Ipsum passages, and many variants of the text can be found by performing a simple search.",
+        "Investor dapat melihat deskripsi funding, membaca mou, dan memilih reward dari funding yang terbuka.",
+    },
+    {
+      question: "Apakah SahabatModal juga memberikan edukasi dan bimbingan?",
+      answer:
+        "Ya, SahabatModal menyediakan fitur edukasi bisnis melaui sistem inkubasi(mentoring) yang dirancang untuk membantu pemilik usaha dalam berbagai aspek, mulai dari manajemen hingga pemasaran.",
     },
   ];
 
