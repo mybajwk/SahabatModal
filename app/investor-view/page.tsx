@@ -10,6 +10,8 @@ import Image, { StaticImageData } from "next/image";
 import leftCircle from "../assets/kiri.png";
 import rightCircle from "../assets/kanan.png";
 import middleCircle from "../assets/tengah.png";
+import axios from "axios";
+import { InvestorViewCardList } from "../utils/investorView";
 
 interface DummyItem {
   imageSrc: StaticImageData;
@@ -116,10 +118,17 @@ const dummyValue: DummyItem[] = [
 
 function Page() {
   const [query, setQuery] = useState<string>("");
+  const [data, setData] = useState<InvestorViewCardList[]>([]);
 
   useEffect(() => {
-    console.log(query);
-  }, [query]);
+    const get = async () => {
+      try {
+        const data = await axios.get("/api/investor-view");
+      } catch (error) {}
+    };
+
+    get();
+  }, []);
 
   const [isMobile, setIsMobile] = useState<boolean>(false);
 
