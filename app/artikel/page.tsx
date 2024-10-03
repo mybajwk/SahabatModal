@@ -1,14 +1,9 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 
-import bubbleBgHorizontal from "../assets/horizontal-bubble.png";
-import bubbleBgVertical from "../assets/vertical-bubble.png";
-import barista from "../assets/barista.png";
-import Image, { StaticImageData } from "next/image";
-import leftCircle from "../assets/kiri.png";
-import rightCircle from "../assets/kanan.png";
-import middleCircle from "../assets/tengah.png";
+import Image from "next/image";
+
 
 import { Heart, Eye } from "lucide-react";
 
