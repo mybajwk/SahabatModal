@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import client from "@/app/libs/prismadb";
+import client from "@/lib/prismadb";
 import bcrypt from "bcryptjs";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
   if (req.method !== "POST") {
     return NextResponse.json(
       { message: "Method Not Allowed" },
-      { status: 405 },
+      { status: 405 }
     );
   }
 
@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
   if (!username || !name || !email || !password || !phone_number || !role) {
     return NextResponse.json(
       { message: "Missing required fields" },
-      { status: 400 },
+      { status: 400 }
     );
   }
 
@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(
       { message: "User created successfully", user },
-      { status: 201 },
+      { status: 201 }
     );
   } catch (error: unknown) {
     if (error instanceof PrismaClientKnownRequestError) {
@@ -45,13 +45,13 @@ export async function POST(req: NextRequest) {
         // Prisma error for duplicate entry
         return NextResponse.json(
           { message: "Email, Mobile Phone, or Username already exists" },
-          { status: 409 },
+          { status: 409 }
         );
       }
     }
     return NextResponse.json(
       { message: "Internal server error", error },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }

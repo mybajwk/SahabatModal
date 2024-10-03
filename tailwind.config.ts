@@ -67,8 +67,6 @@ const config: Config = {
       },
       backgroundImage: {
         "blue-gradient-radial": "radial-gradient(circle, #3E3183, #3B47BC)",
-        "purple-gradient-radial":
-          "radial-gradient(61.94% 48.96% at 49.96% 96.22%, #3B47BC 0%, #374583 100%)",
         "green-gradient":
           "radial-gradient(61.94% 48.96% at 49.96% 96.22%, #04C782 0%, #18D3A7 100%)",
         "green-gradient2":
@@ -81,6 +79,7 @@ const config: Config = {
           "conic-gradient(from 114deg at 19.44% 28.89%, #110F22 0deg, #443D88 360deg)",
         "light-blue":
           "linear-gradient(90deg, rgba(116, 163, 255, 0.30) 0.05%, #FFF 141.48%)",
+        "orange-white": "linear-gradient(90deg, #F49916 0%, #FFF 100%)",
       },
       boxShadow: {
         "custom-inset":

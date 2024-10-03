@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import client from "@/app/libs/prismadb";
+import client from "@/lib/prismadb";
 import { getToken } from "next-auth/jwt";
 
 export async function GET(req: NextRequest) {
