@@ -1,23 +1,34 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import PageContent from "./page-content";
 import FAQCard from "@/app/investor-view/detail/[id]/FAQCard";
 import { Accordion } from "@/components/ui/accordion";
 import axios from "axios";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
-const DashSeekerDescPage = async () => {
-  let data;
-  try {
-    const dataFetch = await axios.get(
-      `${process.env.BACKEND_URL}/api/funding/desc`,
-    );
-    data = dataFetch.data;
-    console.log(data);
-  } catch (error) {
-    console.log(error);
-    return redirect("/");
-    // return null;
-  }
+const DashSeekerDescPage = () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [data, setData] = useState<any | undefined>();
+  const router = useRouter();
+
+  useEffect(() => {
+    const get = async () => {
+      try {
+        const dataFetch = await axios.get(`/api/funding/desc`);
+        // console.log(dataFetch);
+        setData(dataFetch.data);
+      } catch (error) {
+        console.log(error);
+        return router.push("/");
+        // return null;
+      }
+    };
+
+    get();
+  }, [router]);
+
+  if (!data) return null;
 
   return (
     <div className="flex flex-col md:px-10 md:py-6 px-6 py-4 justify-center items-center ">

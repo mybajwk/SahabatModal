@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Form,
   FormControl,
@@ -16,6 +18,15 @@ import { Input } from "../../components/ui/input";
 import { Textarea } from "../../components/ui/textarea";
 import { Button } from "../../components/ui/button";
 import { Trash } from "lucide-react";
+import { Dispatch, SetStateAction } from "react";
+import axios from "axios";
+import { useToast } from "@/hooks/use-toast";
+
+interface FundingDescPageProps {
+  setCurrentPage: Dispatch<SetStateAction<string>>;
+  id?: string;
+  setStatus: Dispatch<SetStateAction<number | undefined>>;
+}
 
 export const FundingDescSchema = z.object({
   deskripsi: z.string(),
@@ -26,7 +37,11 @@ export const FundingDescSchema = z.object({
     }),
   ),
 });
-const FundingDescPage = () => {
+const FundingDescPage: React.FC<FundingDescPageProps> = ({
+  setCurrentPage,
+  setStatus,
+  id,
+}) => {
   const form = useForm<z.infer<typeof FundingDescSchema>>({
     resolver: zodResolver(FundingDescSchema),
     defaultValues: {
@@ -35,8 +50,30 @@ const FundingDescPage = () => {
     },
   });
 
-  const onSubmit = (data: z.infer<typeof FundingDescSchema>) => {
+  const { toast } = useToast();
+
+  const onSubmit = async (data: z.infer<typeof FundingDescSchema>) => {
     console.log(data);
+    try {
+      if (id) {
+        await axios.post(`/api/crowdfunding/${id}/description`, {
+          deskripsi: data.deskripsi,
+          faq: data.faq,
+        });
+        toast({
+          variant: "default",
+          title: "Submit successfull",
+        });
+        setCurrentPage("step");
+        setStatus(3);
+      }
+    } catch (error) {
+      console.log(error);
+      toast({
+        variant: "destructive",
+        title: "Submit failed",
+      });
+    }
   };
 
   const { fields, append, remove } = useFieldArray({

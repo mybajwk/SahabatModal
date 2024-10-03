@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
       old_password,
       getUserData?.password || "",
     );
-    if (isValidPassword) {
+    if (!isValidPassword) {
       return NextResponse.json({ message: "Wrong password" }, { status: 400 });
     }
 

@@ -66,6 +66,7 @@ const FormFundingAddReward: React.FC<FormFundingAddRewardProps> = ({
   });
 
   const onSubmit = (data: z.infer<typeof FormFundingRewardSchema>) => {
+    console.log(data);
     addReward(data);
     form.reset();
     setStatePage("list");

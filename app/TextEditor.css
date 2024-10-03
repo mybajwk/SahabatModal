@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.tiptap :first-child {
+  margin-top: 0;
+}
+
+.tiptap {
+  font-family: "Sen", "sans-serif";
+}
+
+/* Heading styles */
+.tiptap h1,
+.tiptap h2 {
+  line-height: 1.1;
+  font-weight: 700;
+  margin-top: 0.5em;
+  font-family: "Sen", "sans-serif";
+  margin-bottom: 0.5em;
+}
+
+h1.text-heading {
+  line-height: 1.1;
+  font-weight: 700;
+  font-size: 1.5em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  font-family: "Sen", "sans-serif";
+}
+
+h2.text-heading {
+  line-height: 1.1;
+  font-weight: 700;
+  font-size: 1.3em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  font-family: "Sen", "sans-serif";
+}
+
+.tiptap h1 {
+  font-size: 1.5rem;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  font-family: "Sen", "sans-serif";
+}
+
+.tiptap h2 {
+  font-size: 1.3rem;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  font-family: "Sen", "sans-serif";
+}
+
+/* List styles */
+.tiptap ul,
+.tiptap ol {
+  padding: 0 1rem;
+  margin: 1.25rem 1rem 1.25rem 0.4rem;
+}
+
+.tiptap ul li p,
+.tiptap ol li p {
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
+}
+
+ul.list li p,
+ol.list li p {
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
+}
+
+.list {
+  padding: 0 1rem;
+  margin: 1.25rem 1rem 1.25rem 0.4rem;
+  font-family: "Sen", "sans-serif";
+}
+
+ul.list {
+  list-style-type: disc;
+}
+
+ol.list {
+  list-style-type: decimal;
+}
+
+.tiptap ul {
+  list-style-type: disc;
+}
+
+.tiptap ol {
+  list-style-type: decimal;
+}
+
+.tiptap p.is-editor-empty:first-child::before {
+  color: #adb5bd;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}

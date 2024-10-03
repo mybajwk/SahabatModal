@@ -17,15 +17,18 @@ import {
   FormMessage,
   FormLabel,
 } from "@/components/ui/form";
+import { UserAccountW } from "../utils/Profile";
+import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 
 const formSchema = z.object({
-  firstName: z.string().min(1, { message: "This field has to be filled." }),
-  lastName: z.string().min(1, { message: "This field has to be filled." }),
+  name: z.string().min(1, { message: "This field has to be filled." }),
   email: z
     .string()
     .min(1, { message: "This field has to be filled." })
     .email("This is not a valid email."),
-  phone: z
+  phone_number: z
     .string()
     .min(6, { message: "Phone number must at least 6 characters." }),
   image: z
@@ -36,9 +39,12 @@ const formSchema = z.object({
     }),
 });
 
-function AccountSettings() {
+function AccountSettings({ data }: UserAccountW) {
   const [image, setImage] = useState<null | File>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const { toast } = useToast();
+  const router = useRouter();
 
   const handleChooseClick = () => {
     fileInputRef?.current?.click();
@@ -59,16 +65,24 @@ function AccountSettings() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      phone: "",
+      name: data.name,
+      email: data.email,
+      phone_number: data.phone_number,
       image: undefined,
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      const response = await axios.post("/api/profile", values);
+      console.log("response regis user", response);
+      console.log(values);
+      router.refresh();
+      router.push("/profile");
+    } catch (error) {
+      console.error("Registration error:", error);
+      toast({ variant: "destructive", title: "Fail to save profile" });
+    }
   }
 
   return (
@@ -121,7 +135,7 @@ function AccountSettings() {
               <div className="flex flex-col space-y-1">
                 <FormField
                   control={form.control}
-                  name="firstName"
+                  name="name"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="font-poppins font-[400] text-xs">
@@ -131,27 +145,6 @@ function AccountSettings() {
                         <Input
                           className="text-[#666666] text-xs"
                           placeholder="Dianne"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <div className="flex flex-col space-y-1">
-                <FormField
-                  control={form.control}
-                  name="lastName"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="font-poppins font-[400] text-xs">
-                        Last Name
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          className="text-[#666666] text-xs"
-                          placeholder="Russell"
                           {...field}
                         />
                       </FormControl>
@@ -184,7 +177,7 @@ function AccountSettings() {
               <div className="flex flex-col space-y-1">
                 <FormField
                   control={form.control}
-                  name="phone"
+                  name="phone_number"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="font-poppins font-[400] text-xs">

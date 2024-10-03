@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Lexend, Bricolage_Grotesque, Poppins } from "next/font/google";
 import "./globals.css";
+import "./TextEditor.css";
 import Navbar from "./Navbar";
 import SessionAuthProvider from "@/provider/SessionAuthProvider";
 import { Toaster } from "@/components/ui/toaster";
