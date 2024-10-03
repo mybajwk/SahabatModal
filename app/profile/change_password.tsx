@@ -18,36 +18,44 @@ import { Input } from "@/components/ui/input";
 
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { IoEyeOffOutline } from "react-icons/io5";
+import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 
 const formSchema = z
   .object({
-    currentPassword: z
+    old_password: z
       .string()
       .min(1, { message: "This field has to be filled." }),
-    newPassword: z.string().min(1, { message: "This field has to be filled." }),
-    confirmPassword: z
+    new_password: z
+      .string()
+      .min(1, { message: "This field has to be filled." }),
+    confirm_password: z
       .string()
       .min(1, { message: "This field has to be filled." }),
   })
-  .refine((data) => data.newPassword === data.confirmPassword, {
+  .refine((data) => data.new_password === data.confirm_password, {
     message: "Passwords must match",
-    path: ["confirmPassword"],
+    path: ["confirm_password"],
   });
 
 function ChangePassword() {
+  const { toast } = useToast();
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      currentPassword: "",
-      newPassword: "",
-      confirmPassword: "",
+      old_password: "",
+      new_password: "",
+      confirm_password: "",
     },
   });
 
   const [showPassword, setShowPassword] = useState({
-    currentPassword: false,
-    newPassword: false,
-    confirmPassword: false,
+    old_password: false,
+    new_password: false,
+    confirm_password: false,
   });
 
   const togglePasswordVisibility = (field: string) => {
@@ -58,8 +66,17 @@ function ChangePassword() {
     }));
   };
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      const response = await axios.post("/api/profile/password", values);
+      console.log("response regis user", response);
+      console.log(values);
+      router.refresh();
+      router.push("/profile");
+    } catch (error) {
+      console.error("Registration error:", error);
+      toast({ variant: "destructive", title: "Fail to change password" });
+    }
   }
 
   return (
@@ -74,7 +91,7 @@ function ChangePassword() {
               <div className="flex flex-col space-y-1">
                 <FormField
                   control={form.control}
-                  name="currentPassword"
+                  name="old_password"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="font-poppins font-[400] text-xs">
@@ -87,17 +104,17 @@ function ChangePassword() {
                             placeholder="Enter your current password"
                             {...field}
                             type={
-                              showPassword.currentPassword ? "text" : "password"
+                              showPassword.old_password ? "text" : "password"
                             }
                           />
                           <button
                             type="button"
                             className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
                             onClick={() =>
-                              togglePasswordVisibility("currentPassword")
+                              togglePasswordVisibility("old_password")
                             }
                           >
-                            {showPassword.currentPassword ? (
+                            {showPassword.old_password ? (
                               <IoEyeOffOutline />
                             ) : (
                               <MdOutlineRemoveRedEye />
@@ -115,7 +132,7 @@ function ChangePassword() {
                 <div className="flex flex-col space-y-1">
                   <FormField
                     control={form.control}
-                    name="newPassword"
+                    name="new_password"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className="font-poppins font-[400] text-xs">
@@ -128,17 +145,17 @@ function ChangePassword() {
                               placeholder="Enter your new password"
                               {...field}
                               type={
-                                showPassword.newPassword ? "text" : "password"
+                                showPassword.new_password ? "text" : "password"
                               }
                             />
                             <button
                               type="button"
                               className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
                               onClick={() =>
-                                togglePasswordVisibility("newPassword")
+                                togglePasswordVisibility("new_password")
                               }
                             >
-                              {showPassword.newPassword ? (
+                              {showPassword.new_password ? (
                                 <IoEyeOffOutline />
                               ) : (
                                 <MdOutlineRemoveRedEye />
@@ -154,7 +171,7 @@ function ChangePassword() {
                 <div className="flex flex-col space-y-1">
                   <FormField
                     control={form.control}
-                    name="confirmPassword"
+                    name="confirm_password"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className="font-poppins font-[400] text-xs">
@@ -167,7 +184,7 @@ function ChangePassword() {
                               placeholder="Confirm your new password"
                               {...field}
                               type={
-                                showPassword.confirmPassword
+                                showPassword.confirm_password
                                   ? "text"
                                   : "password"
                               }
@@ -176,10 +193,10 @@ function ChangePassword() {
                               type="button"
                               className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
                               onClick={() =>
-                                togglePasswordVisibility("confirmPassword")
+                                togglePasswordVisibility("confirm_password")
                               }
                             >
-                              {showPassword.confirmPassword ? (
+                              {showPassword.confirm_password ? (
                                 <IoEyeOffOutline />
                               ) : (
                                 <MdOutlineRemoveRedEye />

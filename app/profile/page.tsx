@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AccountSettings from "./account_settings";
 import BillingAdddress from "./billing_address";
 import ChangePassword from "./change_password";
@@ -8,16 +8,37 @@ import FinancialStatement from "./financial_statement";
 
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import axios from "axios";
+import { UserAccount } from "../utils/Profile";
 
 function ProfilePage() {
   const { data: session, status } = useSession();
 
-  if (status === "loading") {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const router = useRouter();
+
+  const [userData, setUserData] = useState<UserAccount>();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get<{ data: UserAccount }>("/api/profile");
+        if (response.data && response.data.data) {
+          setUserData(response.data.data); // assuming the response structure includes a `data` object
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (status === "loading" || !userData) {
     return <div>Loading...</div>; // You can replace this with a spinner or loading animation
   }
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const router = useRouter();
+  console.log(userData);
 
   if (!session) {
     router.refresh();
@@ -36,8 +57,8 @@ function ProfilePage() {
         Profil
       </h1>
       <div className="relative bg-white p-6 lg:py-14 lg:px-24 space-y-4 rounded-t-lg w-[85vw] max-w-[900px]">
-        <AccountSettings />
-        <BillingAdddress />
+        <AccountSettings data={userData} />
+        <BillingAdddress data={userData} />
         <ChangePassword />
         <FinancialStatement />
       </div>
