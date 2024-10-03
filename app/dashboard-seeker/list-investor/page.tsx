@@ -2,11 +2,12 @@
 
 import axios from "axios";
 import Image from "next/image";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaClock } from "react-icons/fa6";
 
 const ListInvestorDescPage =  () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [data, setData] = useState<any | undefined>();
   const router = useRouter();
 
@@ -26,7 +27,7 @@ const ListInvestorDescPage =  () => {
     };
 
     get();
-  }, []);
+  }, [router]);
 
   if (!data) return null;
   return (

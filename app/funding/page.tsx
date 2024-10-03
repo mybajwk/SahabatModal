@@ -30,12 +30,14 @@ const FormFundingPage = () => {
           router.push("/dashboard-seeker/description");
         }
       } catch (error) {
+        console.log(error);
+
         setCurrentPage("judul");
       }
     };
-    console.log("effect");
+    // console.log("effect");
     getData();
-  }, []);
+  }, [router]);
 
   useEffect(() => {
     console.log("c", currentPage);

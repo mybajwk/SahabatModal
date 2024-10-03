@@ -12,6 +12,7 @@ const DashboardInvestorLayout = ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [data, setData] = useState<any | undefined>();
   const router = useRouter();
 
@@ -29,7 +30,7 @@ const DashboardInvestorLayout = ({
     };
 
     get();
-  }, []);
+  }, [router]);
 
   if (!data) return null;
 

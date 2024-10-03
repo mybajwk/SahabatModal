@@ -36,6 +36,7 @@ const FundingStepPage: React.FC<FundingStepPageProps> = ({
         setCurrentPage("judul");
       }
     } catch (error) {
+      console.log(error);
       toast({
         variant: "destructive",
         title: "Submit failed",
@@ -57,6 +58,8 @@ const FundingStepPage: React.FC<FundingStepPageProps> = ({
         setCurrentPage("judul");
       }
     } catch (error) {
+      console.log(error);
+
       toast({
         variant: "destructive",
         title: "Submit failed",
