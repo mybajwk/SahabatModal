@@ -46,7 +46,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ file, setFile }) => {
         }
       }
     },
-    [],
+    [setFile],
   );
   const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
     onDrop,

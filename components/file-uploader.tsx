@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Image from "next/image";
-import { toast } from "@/hooks/use-toast";
+// import { toast } from "@/hooks/use-toast";
 
 interface FileUploaderProps {
-  path: string | undefined;
   setPath: (value?: string) => void;
 }
 
-const FileUploader = ({ path, setPath }: FileUploaderProps) => {
+const FileUploader = ({ setPath }: FileUploaderProps) => {
   const [isUploaded, setIsUploaded] = useState(false); // State to track upload status
   const [uploadError, setUploadError] = useState(""); // State to track upload errors
 
@@ -31,16 +30,17 @@ const FileUploader = ({ path, setPath }: FileUploaderProps) => {
         console.log("File uploaded successfully:", response);
         setIsUploaded(true); // Set uploaded state to true
         setPath(response.data?.uploadedFile?.url);
-        toast({
-          variant: "default",
-          title: "success upload docs",
-        });
+        // toast({
+        //   variant: "default",
+        //   title: "success upload docs",
+        // });
       } catch (error) {
         console.error("Error uploading file:", error);
-        toast({
-          variant: "destructive",
-          title: "Fail to upload docs",
-        });
+        setUploadError("Fail to upload docs");
+        // toast({
+        //   variant: "destructive",
+        //   title: "Fail to upload docs",
+        // });
       }
     }
   };

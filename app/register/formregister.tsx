@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { z } from "zod";
@@ -52,7 +51,6 @@ export default function FormRegister() {
     register,
     handleSubmit,
     watch,
-    reset,
     setValue,
     formState: { errors },
   } = useForm<Inputs>({
@@ -77,15 +75,15 @@ export default function FormRegister() {
       setValue("business_age", null);
       setValue("report", null);
     }
-  }, [isBusiness, setValue]);
+  }, [isBusiness, setValue, selectedRole]);
 
   useEffect(() => {
     setIsBusiness(selectedRole === "seeker");
   }, [selectedRole]);
 
   const processForm: SubmitHandler<Inputs> = async (data) => {
-    const registerEndpoint = "api/registration";
-    const businessEndpoint = "api/registration/business";
+    // const registerEndpoint = "api/registration";
+    // const businessEndpoint = "api/registration/business";
     const generalData = {
       username: data.username,
       password: data.password,
@@ -112,7 +110,7 @@ export default function FormRegister() {
           user_id: newUserId,
         };
 
-        const businessResponse = await axios.post(
+        await axios.post(
           "/api/registration/business",
           businessData
         );
