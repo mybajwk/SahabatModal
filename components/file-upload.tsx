@@ -51,6 +51,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ file, setFile }) => {
             setFile(response.data?.uploadedFile?.url);
           } catch (error) {
             setError(["File gagal di upload"]);
+            console.log(error);
           }
         }
       }
