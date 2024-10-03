@@ -10,6 +10,8 @@ const DashSeekerDescPage = async () => {
     );
     data = dataFetch.data;
   } catch (error) {
+    console.log(error);
+
     return redirect("/");
   }
 
