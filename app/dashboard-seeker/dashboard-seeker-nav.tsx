@@ -31,6 +31,7 @@ const DashboardSeekerNavbar = () => {
         onClick={() => router.push("list-investor")}
       >
         List Investor
+        
       </p>
     </nav>
   );
