@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import client from "@/lib/prismadb";
-
 import { PostCrowdFundingRewardRequest } from "@/app/utils/PostCrowdFunding";
 
 interface Params {
@@ -30,6 +29,15 @@ export async function POST(
       where: {
         crowdfunding_id: crowdFundingID,
       },
+    });
+
+    await client.crowdfunding.update({
+      where: {
+        id: crowdFundingID,
+      },
+      data: {
+       status: 2 
+      }
     });
 
     reward.map(async (faqItem) => {

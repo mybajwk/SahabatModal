@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import client from "@/lib/prismadb";
-import { PostCrowdFundingDescRequest } from "@/app/utils/PostCrowdFunding";
+import { getServerSession } from "next-auth";
+import { options } from "@/app/api/auth/[...nextauth]/options";
 
 interface Params {
   crowdFundingID: string;
@@ -14,42 +15,32 @@ export async function POST(
       status: 405,
     });
   }
-
-  const body = await req.json();
-  const { deskripsi, faq } = body as PostCrowdFundingDescRequest;
-
-  if (!deskripsi) {
-    return NextResponse.json(
-      { message: "Missing required fields" },
-      { status: 400 }
-    );
+  const session = await getServerSession(options);
+  if (!session?.user?.id) {
+    return new NextResponse(JSON.stringify({ message: "Unauthorizedd" }), {
+      status: 401,
+    });
   }
 
   try {
-    await client.crowdfundingFaq.deleteMany({
-      where: {
-        crowdfunding_id: crowdFundingID,
-      },
-    });
-
     await client.crowdfunding.update({
       where: {
         id: crowdFundingID,
       },
+      // create: {
+      //   address_line: address,
+      //   amount: 0,
+      //   end_date: endDate,
+      //   start_date: startDate,
+      //   media: media,
+      //   status: 1,
+      //   target_amount: fund,
+      //   address_url: gmaps,
+      //   seeker_id: token?.id?.toString() || "",
+      // },
       data: {
-        Description: deskripsi,
-        status: 3,
+        status: 4,
       },
-    });
-
-    faq.map(async (faqItem) => {
-      return await client.crowdfundingFaq.create({
-        data: {
-          crowdfunding_id: crowdFundingID,
-          Question: faqItem.question,
-          Answer: faqItem.answer,
-        },
-      });
     });
 
     return new NextResponse(

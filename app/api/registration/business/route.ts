@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import client from "@/app/libs/prismadb";
+
+import client from "@/lib/prismadb";
+// import { time } from "console";
 
 export async function POST(req: NextRequest) {
   if (req.method !== "POST") {

@@ -8,25 +8,62 @@ import Image from "next/image";
 import FundingBasicPage from "./funding-basic";
 import FundingRewardPage from "./funding-reward";
 import FundingDescPage from "./funding-deskripsi";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const FormFundingPage = () => {
-  const [currentPage, setCurrentPage] = useState("kategori");
+  const [currentPage, setCurrentPage] = useState("judul");
+  const [id, setId] = useState<string | undefined>();
+  const [status, setStatus] = useState<number | undefined>();
+  const router = useRouter();
 
   useEffect(() => {
-    console.log(currentPage);
-  }, [currentPage]);
+    const getData = async () => {
+      try {
+        const resp = await axios.get("/api/crowdfunding");
+
+        if (resp.data.data.status < 4) {
+          setId(resp.data.data.id);
+          setStatus(resp.data.data.status);
+          setCurrentPage("tahapan");
+        } else if (resp.data.data.status === 4) {
+          router.push("/dashboard-seeker/description");
+        }
+      } catch (error) {
+        setCurrentPage("judul");
+      }
+    };
+    console.log("effect");
+    getData();
+  }, []);
+
+  useEffect(() => {
+    console.log("c", currentPage);
+    console.log("id", id);
+    console.log("status", status);
+  }, [currentPage, id, status]);
 
   return (
     <main className="w-full h-full">
-      {currentPage === "kategori" && (
-        <FundingCategoryPage setCurrentPage={setCurrentPage} />
+      {currentPage === "judul" && (
+        <FundingCategoryPage
+          setCurrentPage={setCurrentPage}
+          setStatus={setStatus}
+          setId={setId}
+        />
       )}
 
       {currentPage === "tahapan" && (
-        <FundingStepPage setCurrentPage={setCurrentPage} />
+        <FundingStepPage
+          setCurrentPage={setCurrentPage}
+          status={status}
+          id={id}
+          setId={setId}
+          setStatus={setStatus}
+        />
       )}
 
-      {currentPage !== "kategori" && currentPage !== "tahapan" && (
+      {currentPage !== "judul" && currentPage !== "tahapan" && (
         <div className="bg-[#443d88] relative min-h-screen w-screen pt-32">
           <div className="absolute inset-0 z-[1]">
             <Image
@@ -49,14 +86,31 @@ const FormFundingPage = () => {
             <FundingFormNavbar
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}
+              status={status}
             />
           </div>
           <div className="flex justify-center items-center w-full py-10">
             {currentPage === "basic" && (
-              <FundingBasicPage setCurrentPage={setCurrentPage} />
+              <FundingBasicPage
+                setCurrentPage={setCurrentPage}
+                setStatus={setStatus}
+                id={id}
+              />
             )}
-            {currentPage === "reward" && <FundingRewardPage />}
-            {currentPage === "desc" && <FundingDescPage />}
+            {currentPage === "reward" && (
+              <FundingRewardPage
+                id={id}
+                setCurrentPage={setCurrentPage}
+                setStatus={setStatus}
+              />
+            )}
+            {currentPage === "desc" && (
+              <FundingDescPage
+                id={id}
+                setCurrentPage={setCurrentPage}
+                setStatus={setStatus}
+              />
+            )}
           </div>
         </div>
       )}
