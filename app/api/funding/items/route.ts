@@ -42,6 +42,8 @@ export async function GET() {
       { status: 200 }
     );
   } catch (error) {
+    console.log(error);
+
     return new NextResponse(
       JSON.stringify({ messsage: "Internal server error" }),
       { status: 500 }

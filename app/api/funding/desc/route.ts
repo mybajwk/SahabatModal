@@ -13,7 +13,6 @@ export async function GET() {
 
     // const session = { user: { id: "dc090071-d078-470c-860d-f6f2ac4e02c7" } };
 
-
     const funding = await client.crowdfunding.findFirst({
       where: {
         seeker_id: session.user.id,
@@ -38,12 +37,12 @@ export async function GET() {
           question: d.Question,
           answer: d.Answer,
           id: d.id,
-        
         })),
       }),
       { status: 200 }
     );
   } catch (error) {
+    console.log(error);
     return new NextResponse(
       JSON.stringify({ messsage: "Internal server error" }),
       { status: 500 }
