@@ -64,9 +64,15 @@ function Reward() {
   const [selectedItem, setSelectedItem] = useState(dummyData[0]);
 
   return (
-    <div className="flex font-lexend flex-col md:flex-row md:space-y-0 space-y-8 p-6 w-full md:justify-between">
+    <div className="flex font-lexend flex-col md:flex-row md:space-y-0 space-y-8 p-6 lg:p-14 w-full md:justify-between">
       <div className="flex flex-col space-y-2 md:w-1/2">
-        <h1 className="drop-shadow-text-white font-bold text-center md:text-start md:text-2xl mb-4">
+        <h1
+          style={{
+            textShadow:
+              "0px 0px 28.792px rgba(255, 255, 255, 0.40), 0px 0px 14.396px rgba(255, 255, 255, 0.80)",
+          }}
+          className="drop-shadow-text-white font-bold text-center md:text-start md:text-2xl mb-4"
+        >
           Reward yang Tersedia
         </h1>
         {dummyData.map((item, index) => (

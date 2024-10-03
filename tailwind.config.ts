@@ -83,6 +83,7 @@ const config: Config = {
           "linear-gradient(180deg, #F49916 0%, #EFC78D 100%)",
         "footer-blue":
           "radial-gradient(57.74% 57.66% at 50.94% -0.07%, rgba(116, 163, 255, 0.20) 0%, rgba(0, 50, 108, 0.20) 100%), #01020C",
+        "blue-transparent": "rgba(48, 69, 121, 0.50)",
         "orange-white": "linear-gradient(90deg, #F49916 0%, #FFF 100%)",
       },
       boxShadow: {

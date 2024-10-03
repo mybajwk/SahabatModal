@@ -27,47 +27,53 @@ import {
   FormMessage,
   FormLabel,
 } from "@/components/ui/form";
+import { UserAccountW } from "../utils/Profile";
+import axios from "axios";
+import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
-  firstName: z.string().min(1, { message: "This field has to be filled." }),
-  lastName: z.string().min(1, { message: "This field has to be filled." }),
-  companyName: z
+  name: z.string().min(1, { message: "This field has to be filled." }),
+  company_name: z
     .string()
     .min(1, { message: "This field has to be filled." })
     .optional(),
-  streetAddress: z.string().min(1, { message: "This field has to be filled." }),
+  address_line: z.string().min(1, { message: "This field has to be filled." }),
   country: z.string().min(1, { message: "This field has to be filled." }),
-  state: z.string().min(1, { message: "This field has to be filled." }),
-  zipcode: z.string().min(1, { message: "This field has to be filled." }),
+  state_province: z
+    .string()
+    .min(1, { message: "This field has to be filled." }),
+  zip_code: z.string().min(1, { message: "This field has to be filled." }),
   email: z
     .string()
     .min(1, { message: "This field has to be filled." })
     .email("This is not a valid email."),
-  phone: z
+  phone_number: z
     .string()
     .min(6, { message: "Phone number must at least 6 characters." }),
 });
 
-function BillingAddress() {
+function BillingAddress({ data }: UserAccountW) {
   const [countryId, setCountryId] = useState<number | null>(null);
   const [stateId, setStateId] = useState<number | null>(null);
 
   const [countriesList, setCountriesList] = useState<any[]>([]);
   const [stateList, setStateList] = useState<any[]>([]);
   //   const [cityList, setCityList] = useState<any[]>([]);
+  const { toast } = useToast();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
-      companyName: "",
-      streetAddress: "",
-      country: "",
-      state: "",
-      zipcode: "",
-      email: "",
-      phone: "",
+      name: data.UserBillingAddress?.name,
+      company_name: data.UserBillingAddress?.company_name,
+      address_line: data.UserBillingAddress?.address_line,
+      country: data.UserBillingAddress?.country,
+      state_province: data.UserBillingAddress?.state_province,
+      zip_code: data.UserBillingAddress?.zip_code,
+      email: data.UserBillingAddress?.email,
+      phone_number: data.UserBillingAddress?.phone_number,
     },
   });
 
@@ -91,12 +97,18 @@ function BillingAddress() {
     }
   }, [countryId]);
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      const response = await axios.post("/api/profile/billing", values);
+      console.log("response regis user", response);
+      console.log(values);
+      router.refresh();
+      router.push("/profile");
+    } catch (error) {
+      console.error("Registration error:", error);
+      toast({ variant: "destructive", title: "Fail to register" });
+    }
   }
-
   //   useEffect(() => {
   //     if (countryId !== null && stateId !== null) {
   //       async function fetchCities() {
@@ -121,7 +133,7 @@ function BillingAddress() {
                 <div className="flex flex-col space-y-1">
                   <FormField
                     control={form.control}
-                    name="firstName"
+                    name="name"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className="font-poppins font-[400] text-xs">
@@ -139,31 +151,10 @@ function BillingAddress() {
                     )}
                   />
                 </div>
-                <div className="flex flex-col space-y-1">
-                  <FormField
-                    control={form.control}
-                    name="lastName"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="font-poppins font-[400] text-xs">
-                          Last Name
-                        </FormLabel>
-                        <FormControl>
-                          <Input
-                            className="text-[#666666] text-xs"
-                            placeholder="Russell"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
                 <div className="flex flex-col space-y-1 md:col-span-2 lg:col-span-1">
                   <FormField
                     control={form.control}
-                    name="companyName"
+                    name="company_name"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className="font-poppins font-[400] text-xs">
@@ -188,7 +179,7 @@ function BillingAddress() {
               <div className="flex flex-col space-y-1 mt-1">
                 <FormField
                   control={form.control}
-                  name="streetAddress"
+                  name="address_line"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="font-poppins font-[400] text-xs">
@@ -229,7 +220,7 @@ function BillingAddress() {
                                 setCountryId(country.id);
                                 setStateList([]);
                                 form.setValue("country", country.name);
-                                form.setValue("state", "");
+                                form.setValue("state_province", "");
                               } else {
                                 console.error(
                                   `Country with id ${value} not found.`,
@@ -263,7 +254,7 @@ function BillingAddress() {
                 <div className="flex flex-col space-y-1">
                   <FormField
                     control={form.control}
-                    name="state"
+                    name="state_province"
                     render={() => (
                       <FormItem>
                         <FormLabel className="font-poppins font-[400] text-xs">
@@ -277,7 +268,7 @@ function BillingAddress() {
                               );
                               if (state) {
                                 setStateId(state.id);
-                                form.setValue("state", state.name);
+                                form.setValue("state_province", state.name);
                               } else {
                                 console.error(
                                   `State with id ${value} not found.`,
@@ -312,7 +303,7 @@ function BillingAddress() {
                 <div className="flex flex-col space-y-1 md:col-span-2 lg:col-span-1">
                   <FormField
                     control={form.control}
-                    name="zipcode"
+                    name="zip_code"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className="font-poppins font-[400] text-xs">
@@ -357,7 +348,7 @@ function BillingAddress() {
                 <div className="flex flex-col space-y-1">
                   <FormField
                     control={form.control}
-                    name="phone"
+                    name="phone_number"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className="font-poppins font-[400] text-xs">
