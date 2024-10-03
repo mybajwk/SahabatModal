@@ -51,7 +51,7 @@ export const options: AuthOptions = {
           ...session.user,
           id: token.sub, // Attach user ID from token
           image: token.picture || "", // Attach user image from token
-          role: token.user || "",
+          role: token.role || "",
         },
       };
     },
@@ -59,6 +59,7 @@ export const options: AuthOptions = {
       if (user) {
         token.id = user.id; // Attach the user ID to the JWT token
         token.role = user.role;
+        token.picture = user.image;
       }
       return token;
     },
