@@ -91,7 +91,7 @@ function Reward() {
           <RewardCard
             key={index}
             title={reward.title}
-            quantity={reward.quantity}
+            min_amount={reward.quantity}
             imageSrc={reward.imageSrc}
           />
         ))}
