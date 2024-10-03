@@ -8,7 +8,6 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit"
-    
   },
   "dependencies": {
     "@fortawesome/free-brands-svg-icons": "^6.6.0",
