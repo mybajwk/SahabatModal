@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import client from "@/app/libs/prismadb";
-import { getToken } from "next-auth/jwt";
 import { PostCrowdFundingDescRequest } from "@/app/utils/PostCrowdFunding";
 
 interface Params {
