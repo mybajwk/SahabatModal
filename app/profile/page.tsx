@@ -26,7 +26,13 @@ function ProfilePage() {
   }
   return (
     <div className="bg-conic-purple flex flex-col space-y-4 items-center py-6">
-      <h1 className="font-lexend text-lg font-semibold drop-shadow-text-white">
+      <h1
+        className="font-lexend text-2xl font-semibold drop-shadow-text-white lg:text-3xl lg:py-5"
+        style={{
+          textShadow:
+            "0px 0px 28.792px rgba(255, 255, 255, 0.40), 0px 0px 14.396px rgba(255, 255, 255, 0.80)",
+        }}
+      >
         Profil
       </h1>
       <div className="relative bg-white p-6 lg:py-14 lg:px-24 space-y-4 rounded-t-lg w-[85vw] max-w-[900px]">
