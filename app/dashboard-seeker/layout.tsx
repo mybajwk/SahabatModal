@@ -18,9 +18,7 @@ const DashboardInvestorLayout = ({
   useEffect(() => {
     const get = async () => {
       try {
-        const dataFetch = await axios.get(
-          `/api/funding`
-        );
+        const dataFetch = await axios.get(`/api/funding`);
         console.log("tes", dataFetch);
         setData(dataFetch.data);
       } catch (error) {
@@ -104,7 +102,7 @@ const DashboardInvestorLayout = ({
               <div
                 className="bg-[#18D3A7] h-full"
                 style={{
-                  width: "60%",
+                  width: `${data.amount / data.target}%`,
                 }}
               />
             </div>
