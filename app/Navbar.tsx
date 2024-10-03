@@ -4,8 +4,15 @@ import React from "react";
 import { FaSignInAlt } from "react-icons/fa";
 import Image from "next/image";
 import SamoLogo from "@/public/logo2.png";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { CgProfile } from "react-icons/cg";
+import { FiLogOut } from "react-icons/fi";
 
 const Navbar = () => {
   const { data: session } = useSession();
@@ -62,12 +69,33 @@ const Navbar = () => {
           <FaSignInAlt className="ml-2" />
         </a>
       ) : (
-        <a href="/profile">
-          <Avatar>
-            <AvatarImage src={session.user.image} />
-            <AvatarFallback className="bg-yellow-400">CN</AvatarFallback>
-          </Avatar>
-        </a>
+        <Popover>
+          <PopoverTrigger>
+            <Avatar>
+              <AvatarImage src={session.user.image} />
+              <AvatarFallback className="bg-yellow-400">CN</AvatarFallback>
+            </Avatar>
+          </PopoverTrigger>
+
+          <PopoverContent className="flex flex-col space-y-4 w-fit px-8 font-lexend">
+            <a href="/profile" className="flex flex-row space-x-3 items-center">
+              <CgProfile />
+              <p>Profile</p>
+            </a>
+            <a
+              onClick={() => {
+                signOut({
+                  redirect: true,
+                  callbackUrl: `${window.location.origin}/login`,
+                });
+              }}
+              className="text-red-700 flex flex-row space-x-3 items-center"
+            >
+              <FiLogOut />
+              <p>Logout</p>
+            </a>
+          </PopoverContent>
+        </Popover>
       )}
     </header>
   );
