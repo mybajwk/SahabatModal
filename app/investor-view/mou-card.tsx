@@ -1,9 +1,12 @@
+"use client";
+
 import React from "react";
 import { Progress } from "@/components/ui/progress";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import Image, { StaticImageData } from "next/image";
 import { FaRegClock } from "react-icons/fa6";
+import { useRouter } from "next/navigation";
 
 interface MouCardProps {
   imageSrc: StaticImageData | string;
@@ -13,6 +16,7 @@ interface MouCardProps {
   title: string;
   owner: string;
   daysLeft: number;
+  id: string;
 }
 
 const MouCard: React.FC<MouCardProps> = ({
@@ -23,9 +27,17 @@ const MouCard: React.FC<MouCardProps> = ({
   title,
   owner,
   daysLeft,
+  id,
 }) => {
+  const router = useRouter();
+  const onClick = () => {
+    router.push(`/investor-view/detail/${id}`);
+  };
   return (
-    <div className="ml-3 mr-3 p-3 flex flex-col w-full max-w-[320px] md:max-w-[350px] hover:scale-110 transition-all duration-300 cursor-pointer">
+    <div
+      className="ml-3 mr-3 p-3 flex flex-col w-full max-w-[320px] md:max-w-[350px] hover:scale-110 transition-all duration-300 cursor-pointer"
+      onClick={onClick}
+    >
       <Image
         src={imageSrc}
         alt="thumbnail"
