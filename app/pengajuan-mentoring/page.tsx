@@ -28,6 +28,7 @@ import { FormPengajuanMentoring } from "./formSchema"; // Make sure this schema 
 import axios from "axios";
 import { useToast } from "@/hooks/use-toast";
 import { useSession } from "next-auth/react";
+import Loading from "@/components/ui/loading";
 
 // Define the interface
 export interface CreateMentoringRequest {
@@ -51,7 +52,7 @@ const PengajuanFunding: React.FC = () => {
   });
 
   if (status === "loading") {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   if (session?.user.role !== 3) {

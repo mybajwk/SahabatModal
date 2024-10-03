@@ -8,12 +8,13 @@ import FinancialStatement from "./financial_statement";
 
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Loading from "@/components/ui/loading";
 
 function ProfilePage() {
   const { data: session, status } = useSession();
 
   if (status === "loading") {
-    return <div>Loading...</div>; // You can replace this with a spinner or loading animation
+    return <Loading />; // You can replace this with a spinner or loading animation
   }
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
