@@ -10,6 +10,7 @@ import axios from "axios";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import FileUploader from "@/components/file-uploader";
+import FileUpload from "@/components/file-upload";
 
 export const FormDataSchema = z.object({
   username: z.string().min(1, "Username is required"),
@@ -45,7 +46,7 @@ export default function FormRegister() {
   const [currentStep, setCurrentStep] = useState(0);
   const delta = currentStep - previousStep;
   const [isBusiness, setIsBusiness] = useState(false);
-  const [path, setPath] = useState<string | undefined>("");
+  const [path, setPath] = useState<string | File | undefined>("");
 
   const {
     register,
@@ -540,6 +541,7 @@ export default function FormRegister() {
                 </div>
               </div>
               <FileUploader setPath={setPath} />
+              <FileUpload file={path} setFile={setPath} />
             </div>
           </motion.div>
         )}

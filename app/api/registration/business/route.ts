@@ -1,12 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
+<<<<<<< HEAD
 import client from "@/lib/prismadb";
 // import { time } from "console";
+=======
+import client from "@/app/libs/prismadb";
+>>>>>>> 78b165fd95f39fa7019df3743be12ffd5e4ca476
 
 export async function POST(req: NextRequest) {
   if (req.method !== "POST") {
     return NextResponse.json(
       { message: "Method Not Allowed" },
-      { status: 405 }
+      { status: 405 },
     );
   }
 
@@ -16,7 +20,7 @@ export async function POST(req: NextRequest) {
   if (!user_id || !name || !business_age || !report) {
     return NextResponse.json(
       { message: "Missing required fields" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -31,7 +35,7 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    const businessReport = await client.businessReport.create({
+    await client.businessReport.create({
       data: {
         date: new Date(),
         business_id: business.id,
@@ -41,12 +45,12 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(
       { message: "User created successfully", business },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error: unknown) {
     return NextResponse.json(
       { message: "Internal server error", error },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

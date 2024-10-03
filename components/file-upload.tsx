@@ -7,7 +7,7 @@ import Link from "next/link";
 import axios from "axios";
 
 export interface FileUploadProps {
-  file: File | string | null;
+  file?: File | string | null;
   setFile: (value: File | string) => void;
 }
 
