@@ -3,7 +3,7 @@ import Image, { StaticImageData } from "next/image";
 import { RxArrowTopRight } from "react-icons/rx";
 import { MdFileUpload } from "react-icons/md";
 import { useRouter } from "next/navigation";
-import sephora from "../assets/sephora.png"
+import sephora from "../assets/sephora.png";
 
 interface PerusahaanCardProps {
   imageUrl: string | StaticImageData;
