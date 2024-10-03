@@ -4,4 +4,5 @@ export interface InvestorViewCardList {
   title: string;
   owner: string;
   daysLeft: number;
+  id: string;
 }

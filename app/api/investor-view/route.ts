@@ -46,6 +46,7 @@ export async function GET(req: NextRequest) {
         title: crowdfunding.name,
         owner: crowdfunding?.owner?.name || "",
         daysLeft,
+        id: crowdfunding.id,
       };
     });
     return new NextResponse(

@@ -1,36 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import FAQCard from "./FAQCard";
 import { Accordion } from "@/components/ui/accordion";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 
-function FAQ() {
-  const faqData = [
-    {
-      question: "What is Lorem Ipsum?",
-      answer:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-    },
-    {
-      question: "Why use Lorem Ipsum?",
-      answer:
-        "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-    },
-    {
-      question: "Where does it come from?",
-      answer:
-        "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.",
-    },
-    {
-      question: "How many variations exist?",
-      answer:
-        "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form.",
-    },
-    {
-      question: "Where can I get some?",
-      answer:
-        "There are many websites on the Internet that provide Lorem Ipsum passages, and many variants of the text can be found by performing a simple search.",
-    },
-  ];
+function FAQ({ id }: { id: string }) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [data, setData] = useState<any | undefined>();
+
+  const router = useRouter();
+  useEffect(() => {
+    const get = async () => {
+      try {
+        const dataFetch = await axios.get(`/api/investor-view/${id}/qna`);
+        console.log("tes", dataFetch);
+        setData(dataFetch.data);
+      } catch (error) {
+        console.log(error);
+        return router.push("/");
+        // return null;
+      }
+    };
+
+    get();
+  }, []);
 
   return (
     <div className="p-6 lg:p-14 w-full font-lexend flex flex-col space-y-4 items-center">
@@ -48,14 +42,25 @@ function FAQ() {
         collapsible
         className="flex flex-col space-y-6 w-full"
       >
-        {faqData.map((item, index) => (
-          <FAQCard
-            key={index}
-            question={item.question}
-            answer={item.answer}
-            index={index}
-          />
-        ))}
+        {data?.faq ? (
+          data.faq.map(
+            (
+              i: { id: string; answer: string; question: string },
+              index: number,
+            ) => (
+              <FAQCard
+                key={i.id}
+                index={index}
+                question={i.question}
+                answer={i.answer}
+              />
+            ),
+          )
+        ) : (
+          <p className="py-20 w-full text-center text-white font-lexend text-lg">
+            Tidak ada FAQ
+          </p>
+        )}
       </Accordion>
     </div>
   );
