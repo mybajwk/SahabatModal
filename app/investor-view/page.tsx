@@ -6,12 +6,22 @@ import MouCard from "./mou-card";
 import bubbleBgHorizontal from "../assets/horizontal-bubble.png";
 import bubbleBgVertical from "../assets/vertical-bubble.png";
 import barista from "../assets/barista.png";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import leftCircle from "../assets/kiri.png";
 import rightCircle from "../assets/kanan.png";
 import middleCircle from "../assets/tengah.png";
 
-const dummyValue = [
+interface DummyItem {
+  imageSrc: StaticImageData;
+  progressValue: number;
+  avatarSrc: string;
+  avatarFallback: string;
+  title: string;
+  owner: string;
+  daysLeft: number;
+}
+
+const dummyValue: DummyItem[] = [
   {
     imageSrc: barista,
     progressValue: 33,

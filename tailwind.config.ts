@@ -71,14 +71,16 @@ const config: Config = {
           "radial-gradient(61.94% 48.96% at 49.96% 96.22%, #04C782 0%, #18D3A7 100%)",
         "green-gradient2":
           "linear-gradient(90deg, rgba(4, 199, 130, 0.30) 0%, #18D3A7 43.72%)",
-        "purple-gradient-radial":
-          "radial-gradient(61.94% 48.96% at 49.96% 96.22%, #3B47BC 0%, #374583 100%)",
         "conic-blue":
           "conic-gradient(from 177deg at 39.85% 40.01%, #00326C 262.9855942726135deg, #0B162D 319.3100953102112deg)",
         "conic-purple":
           "conic-gradient(from 114deg at 19.44% 28.89%, #110F22 0deg, #443D88 360deg)",
         "light-blue":
           "linear-gradient(90deg, rgba(116, 163, 255, 0.30) 0.05%, #FFF 141.48%)",
+        "orange-linear":
+          "linear-gradient(90deg, rgba(255, 209, 142, 0.50) 0%, #F49916 100%)",
+        "light-linear-yellow":
+          "linear-gradient(180deg, #F49916 0%, #EFC78D 100%)",
         "orange-white": "linear-gradient(90deg, #F49916 0%, #FFF 100%)",
       },
       boxShadow: {

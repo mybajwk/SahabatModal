@@ -37,8 +37,8 @@ CREATE TABLE "Mentoring" (
     "image" TEXT NOT NULL,
     "Topic" TEXT NOT NULL,
     "requested_date" TEXT NOT NULL,
-    "date" TIMESTAMP(3) NOT NULL,
-    "mentor_id" TEXT NOT NULL,
+    "date" TIMESTAMP(3),
+    "mentor_id" TEXT,
     "mentee_id" TEXT NOT NULL,
     "business_id" TEXT,
     "Description" TEXT,
@@ -55,7 +55,7 @@ CREATE TABLE "Business" (
     "name" TEXT NOT NULL,
     "image" TEXT,
     "description" TEXT,
-    "business_age" TEXT NOT NULL,
+    "business_age" INTEGER NOT NULL,
     "owner_id" TEXT NOT NULL,
 
     CONSTRAINT "Business_pkey" PRIMARY KEY ("id")
@@ -145,6 +145,17 @@ CREATE TABLE "ForumComment" (
     CONSTRAINT "ForumComment_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "BusinessReport" (
+    "id" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "date" TIMESTAMP(3) NOT NULL,
+    "report" TEXT NOT NULL,
+    "business_id" TEXT NOT NULL,
+
+    CONSTRAINT "BusinessReport_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "UserAccount_email_key" ON "UserAccount"("email");
 
@@ -164,7 +175,7 @@ CREATE UNIQUE INDEX "Business_owner_id_key" ON "Business"("owner_id");
 ALTER TABLE "UserBillingAddress" ADD CONSTRAINT "UserBillingAddress_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "UserAccount"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Mentoring" ADD CONSTRAINT "Mentoring_mentor_id_fkey" FOREIGN KEY ("mentor_id") REFERENCES "UserAccount"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Mentoring" ADD CONSTRAINT "Mentoring_mentor_id_fkey" FOREIGN KEY ("mentor_id") REFERENCES "UserAccount"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Mentoring" ADD CONSTRAINT "Mentoring_mentee_id_fkey" FOREIGN KEY ("mentee_id") REFERENCES "UserAccount"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -192,3 +203,6 @@ ALTER TABLE "ForumComment" ADD CONSTRAINT "ForumComment_creator_id_fkey" FOREIGN
 
 -- AddForeignKey
 ALTER TABLE "ForumComment" ADD CONSTRAINT "ForumComment_forum_id_fkey" FOREIGN KEY ("forum_id") REFERENCES "Forum"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "BusinessReport" ADD CONSTRAINT "BusinessReport_business_id_fkey" FOREIGN KEY ("business_id") REFERENCES "Business"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

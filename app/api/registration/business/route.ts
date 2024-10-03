@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import client from "@/lib/prismadb";
+import { time } from "console";
 
 export async function POST(req: NextRequest) {
   if (req.method !== "POST") {
@@ -10,16 +11,14 @@ export async function POST(req: NextRequest) {
   }
 
   const body = await req.json();
-  const { user_id, name, business_age, image, description } = body;
+  const { user_id, name, business_age, image, description, report } = body;
 
-  if (!user_id || !name || !business_age || !description) {
+  if (!user_id || !name || !business_age || !report) {
     return NextResponse.json(
       { message: "Missing required fields" },
       { status: 400 }
     );
   }
-
-  //  handling image
 
   try {
     const business = await client.business.create({
@@ -29,6 +28,14 @@ export async function POST(req: NextRequest) {
         image: image,
         description: description,
         owner_id: user_id,
+      },
+    });
+
+    const businessReport = await client.businessReport.create({
+      data: {
+        date: new Date(),
+        business_id: business.id,
+        report: report,
       },
     });
 
