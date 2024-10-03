@@ -16,7 +16,7 @@ interface MentoringData {
 
 function Page({ params }: { params: { pengajuanId: string } }) {
   const [mentoringData, setMentoringData] = useState<MentoringData | null>(
-    null
+    null,
   );
   const router = useRouter();
   useEffect(() => {

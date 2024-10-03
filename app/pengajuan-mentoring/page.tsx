@@ -178,7 +178,7 @@ const PengajuanFunding: React.FC = () => {
                               variant={"outline"}
                               className={cn(
                                 "w-[280px] justify-start text-left font-lexend font-normal border border-[#9EA2AD] rounded-md",
-                                !field.value && "text-muted-foreground"
+                                !field.value && "text-muted-foreground",
                               )}
                             >
                               {field.value ? (
@@ -200,7 +200,7 @@ const PengajuanFunding: React.FC = () => {
                                 if (date) {
                                   const updatedDate = setHours(
                                     setMinutes(date, field.value.getMinutes()),
-                                    field.value.getHours()
+                                    field.value.getHours(),
                                   );
                                   field.onChange(updatedDate);
                                 }
@@ -214,9 +214,9 @@ const PengajuanFunding: React.FC = () => {
                                     const updatedTime = setHours(
                                       setMinutes(
                                         field.value,
-                                        time.getMinutes()
+                                        time.getMinutes(),
                                       ),
-                                      time.getHours()
+                                      time.getHours(),
                                     );
                                     field.onChange(updatedTime);
                                   }
