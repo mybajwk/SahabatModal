@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import barista from "../../assets/barista.png";
 import OrderCard from "./OrderCard";
 import { Button } from "@/components/ui/button";
@@ -11,51 +11,110 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-
-const sampleData = [
-  {
-    imageSrc: barista,
-    title: "Product A",
-    quantity: "2",
-  },
-  {
-    imageSrc: barista,
-    title: "Product B",
-    quantity: "3",
-  },
-  {
-    imageSrc: barista,
-    title: "Product C",
-    quantity: "1",
-  },
-];
+import { useRouter, useSearchParams } from "next/navigation";
+import { formatRupiah } from "@/lib/utils";
+import FileUpload from "@/components/file-upload";
+import axios from "axios";
+import { useToast } from "@/hooks/use-toast";
 
 function OrderSummary() {
   const [paymentMethod, setPaymentMethod] = useState("");
+  const [file, setFile] = useState<string | File>("");
+  const [reward, setReward] = useState<
+    | {
+        id: string;
+        image: string;
+        name: string;
+        amount: bigint;
+        description: string;
+        created_at: Date;
+        crowdfunding_id: string;
+        jenis_item: string;
+      }
+    | undefined
+  >();
+  const params = useSearchParams();
+
+  const router = useRouter();
+
+  const amount = params.get("a");
+  const idCfd = params.get("id");
+  const idRew = params.get("idr");
+
+  useEffect(() => {
+    const get = async () => {
+      try {
+        const dataFetch = await axios.get(`/api/reward/${idRew}`);
+        // console.log(dataFetch);
+        setReward(dataFetch.data.data);
+        console.log(reward);
+      } catch (error) {
+        console.log(error);
+        return router.push(`/investor-view/detail/${idCfd}`);
+        // return null;
+      }
+    };
+
+    get();
+  }, [idRew]);
 
   const handlePaymentMethodChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
+    event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setPaymentMethod(event.target.value);
   };
 
+  const { toast } = useToast();
+  const [open, setOpen] = useState(false);
+
+  const onSubmit = async () => {
+    console.log({
+      amount,
+      proof: file,
+      idReward: idRew,
+    });
+    try {
+      await axios.post(`/api/investor-view/${idCfd}/invest`, {
+        amount,
+        proof: file,
+        idReward: idRew,
+      });
+
+      toast({
+        variant: "default",
+        title: "Success to invest",
+      });
+      setOpen(false);
+      router.push("/investor-view");
+    } catch (error) {
+      console.log(error);
+      toast({
+        variant: "destructive",
+        title: "Fail to submit",
+      });
+      router.push(`/investor-view/detail/${idCfd}`);
+
+      // return null;
+    }
+  };
+
+  // console.log(reward);
   return (
     <div className="bg-conic-blue min-h-screen w-full flex items-center justify-center font-lexend text-black ">
       <div className="bg-white rounded-lg flex flex-col w-[90%] py-8 px-4 space-y-4 max-w-[500px]">
         <h1 className="font-semibold">Reward Summary</h1>
         <div className="flex pb-4 flex-col justify-center border-b-2 border-b-[#E6E6E6] w-full space-y-2 text-xs">
-          {sampleData.map((item, index) => (
+          {reward && (
             <OrderCard
-              key={index}
-              imageSrc={item.imageSrc}
-              title={item.title}
-              quantity={item.quantity}
+              imageSrc={reward.image}
+              title={reward.name}
+              quantity={`${reward.amount}`}
             />
-          ))}
+          )}
         </div>
         <div className="w-full text-sm flex justify-between pb-4 border-b-2 border-b-[#E6E6E6]">
           <p>Total Investment : </p>
-          <p className="font-bold">Rp10.000.000</p>
+          <p className="font-bold">{formatRupiah(parseInt(amount!))}</p>
         </div>
         <h1 className="font-semibold">
           Payment Method <span className="text-red-700">*</span>
@@ -86,7 +145,7 @@ function OrderSummary() {
             <span>Paypal</span>
           </label>
         </div>
-        <Dialog>
+        <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger
             disabled={paymentMethod.length === 0}
             className={`h-9 px-4 py-2 text-white rounded-full bg-purple-gradient-radial shadow-custom-shadow-blue-button hover:cursor-pointer ${
@@ -103,11 +162,12 @@ function OrderSummary() {
               Upload Bukti Pembayaran <span className="text-red-700">*</span>
             </DialogTitle>
             <DialogDescription className="flex flex-col space-y-12">
-              <div className="border border-black px-3 py-2 rounded-lg">
-                Upload Field
-              </div>
+              <FileUpload file={file} setFile={setFile} />
 
-              <Button className="text-white rounded-full bg-purple-gradient-radial shadow-custom-shadow-blue-button hover:cursor-pointer w-1/2 place-self-center">
+              <Button
+                onClick={onSubmit}
+                className="text-white rounded-full bg-purple-gradient-radial shadow-custom-shadow-blue-button hover:cursor-pointer w-1/2 place-self-center"
+              >
                 Upload
               </Button>
             </DialogDescription>

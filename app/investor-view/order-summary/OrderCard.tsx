@@ -1,5 +1,6 @@
 import React from "react";
 import Image, { StaticImageData } from "next/image";
+import { formatRupiah } from "@/lib/utils";
 
 interface OrderCardProps {
   imageSrc: string | StaticImageData;
@@ -20,7 +21,7 @@ const OrderCard: React.FC<OrderCardProps> = ({ imageSrc, title, quantity }) => {
       />
       <div className="flex flex-1 justify-between flex-row space-x-2 items-center">
         <p>{title}</p>
-        <p>x{quantity}</p>
+        <p>Min Invets {formatRupiah(parseInt(quantity))}</p>
       </div>
     </div>
   );

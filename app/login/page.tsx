@@ -28,7 +28,7 @@ export default function Login() {
     }
 
     router.refresh();
-    router.push("/forum");
+    router.push("/");
   };
 
   return (
