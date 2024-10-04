@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
   if (!old_password || !new_password) {
     return NextResponse.json(
       { message: "Missing required fields" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
     // compare password
     const isValidPassword = await bcrypt.compare(
       old_password,
-      getUserData?.password || ""
+      getUserData?.password || "",
     );
     if (!isValidPassword) {
       return NextResponse.json({ message: "Wrong password" }, { status: 400 });
@@ -58,13 +58,13 @@ export async function POST(req: NextRequest) {
     });
     return new NextResponse(
       JSON.stringify({ data: user.name, message: "success update profile" }),
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("Session Retrieval Error:", error);
     return NextResponse.json(
       { message: "Internal server error", error },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -62,13 +62,13 @@ export async function GET(req: NextRequest) {
 
     return new NextResponse(
       JSON.stringify({ data: formattedForums, message: "success get forum" }),
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("Session Retrieval Error:", error);
     return NextResponse.json(
       { message: "Internal server error", error },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -92,7 +92,7 @@ export async function POST(req: NextRequest) {
   if (!description || !title) {
     return NextResponse.json(
       { message: "Missing required fields" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -156,13 +156,13 @@ export async function POST(req: NextRequest) {
         data: formattedForums,
         message: "Success create forum",
       }),
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("Session Retrieval Error:", error);
     return NextResponse.json(
       { message: "Internal server error", error },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
