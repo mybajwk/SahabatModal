@@ -10,7 +10,6 @@ import {
 import useWindowSize from "@/hooks/useWindowSize";
 
 import { formatRupiah } from "@/lib/utils";
-import { useRouter } from "next/navigation";
 
 interface RewardCardProps {
   imageSrc: StaticImageData | string;
@@ -25,11 +24,9 @@ const RewardCard: React.FC<RewardCardProps> = ({
   imageSrc,
   title,
   min_amount,
-  amount,
   desc,
 }) => {
   const { width } = useWindowSize();
-  const router = useRouter();
 
   // const onContinue = () => {
   //   router.push(`/investor-view/order-summary?a=${amount}`);

@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import barista from "../../assets/barista.png";
 import OrderCard from "./OrderCard";
 import { Button } from "@/components/ui/button";
 import {
