@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import OrderCard from "./OrderCard";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,7 +16,7 @@ import FileUpload from "@/components/file-upload";
 import axios from "axios";
 import { useToast } from "@/hooks/use-toast";
 
-function OrderSummary() {
+const OrderSummaryContent = () => {
   const [paymentMethod, setPaymentMethod] = useState("");
   const [file, setFile] = useState<string | File>("");
   const [reward, setReward] = useState<
@@ -39,6 +39,10 @@ function OrderSummary() {
   const amount = params.get("a");
   const idCfd = params.get("id");
   const idRew = params.get("idr");
+
+  // const amount = "10";
+  // const idCfd = "adae";
+  // const idRew = "ad";
 
   useEffect(() => {
     const get = async () => {
@@ -99,6 +103,7 @@ function OrderSummary() {
 
   // console.log(reward);
   return (
+    // <Suspense fallback={<div>Loading...</div>}>
     <div className="bg-conic-blue min-h-screen w-full flex items-center justify-center font-lexend text-black ">
       <div className="bg-white rounded-lg flex flex-col w-[90%] py-8 px-4 space-y-4 max-w-[500px]">
         <h1 className="font-semibold">Reward Summary</h1>
@@ -174,7 +179,16 @@ function OrderSummary() {
         </Dialog>
       </div>
     </div>
+    // </Suspense>
   );
-}
+};
 
-export default OrderSummary;
+const OrderSummaryPage = () => {
+  return (
+    <Suspense fallback={<div>Loading Order Summary...</div>}>
+      <OrderSummaryContent />
+    </Suspense>
+  );
+};
+
+export default OrderSummaryPage;
