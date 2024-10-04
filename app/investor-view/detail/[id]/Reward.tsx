@@ -1,11 +1,16 @@
+<<<<<<< HEAD
 "use client";
 
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+=======
+import React, { useEffect, useState } from "react";
+>>>>>>> 435101b4f7bc366bb9754b75bfcf26a35604dc6a
 
 import AvailableReward from "./AvailableReward";
 import RewardCard from "./RewardCard";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+<<<<<<< HEAD
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -25,6 +30,10 @@ function Reward({
   amount: number;
   setAmount: Dispatch<SetStateAction<number>>;
 }) {
+=======
+
+function Reward({ id }: { id: string }) {
+>>>>>>> 435101b4f7bc366bb9754b75bfcf26a35604dc6a
   const [selectedItem, setSelectedItem] = useState<
     | undefined
     | {
@@ -34,8 +43,11 @@ function Reward({
           imageSrc: string;
           title: string;
           quantity: number;
+<<<<<<< HEAD
           id: string;
           desc: string;
+=======
+>>>>>>> 435101b4f7bc366bb9754b75bfcf26a35604dc6a
         }[];
       }
   >();
@@ -58,6 +70,7 @@ function Reward({
 
     get();
   }, []);
+<<<<<<< HEAD
 
   const [items, setItems] = useState<
     {
@@ -121,6 +134,8 @@ function Reward({
       `/investor-view/order-summary?a=${amount}&id=${id}&idr=${select}`
     );
   };
+=======
+>>>>>>> 435101b4f7bc366bb9754b75bfcf26a35604dc6a
   return (
     <div className="flex font-lexend flex-col md:flex-row md:space-y-0 space-y-8 p-6 lg:p-14 w-full md:justify-between">
       <div className="flex flex-col space-y-2 md:flex-1">
@@ -140,6 +155,7 @@ function Reward({
                 title: string;
                 milestone: number;
                 rewards: {
+<<<<<<< HEAD
                   imageSrc: string;
                   title: string;
                   quantity: number;
@@ -148,6 +164,14 @@ function Reward({
                 }[];
               },
               index: number
+=======
+                  imageSrc: string; // Assuming barista is a string (URL or file path)
+                  title: string;
+                  quantity: number;
+                }[];
+              },
+              index: number,
+>>>>>>> 435101b4f7bc366bb9754b75bfcf26a35604dc6a
             ) => (
               <AvailableReward
                 key={index}
@@ -157,7 +181,11 @@ function Reward({
                 onClick={() => setSelectedItem(item)}
                 isActive={selectedItem?.title === item.title}
               />
+<<<<<<< HEAD
             )
+=======
+            ),
+>>>>>>> 435101b4f7bc366bb9754b75bfcf26a35604dc6a
           )
         ) : (
           <p className="py-20 w-full text-center text-white font-lexend text-lg">
