@@ -14,14 +14,14 @@ interface Params {
 
 export async function POST(
   req: NextRequest,
-  { params: { forumID } }: { params: Params }
+  { params: { forumID } }: { params: Params },
 ) {
   if (!forumID) {
     return new NextResponse(
       JSON.stringify({ message: "Forum Id Not Provided " }),
       {
         status: 400,
-      }
+      },
     );
   }
   if (req.method !== "POST") {
@@ -41,7 +41,7 @@ export async function POST(
   if (!content) {
     return NextResponse.json(
       { message: "Missing required fields" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -103,13 +103,13 @@ export async function POST(
         data: formattedForums,
         message: "success update create comment",
       }),
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("Session Retrieval Error:", error);
     return NextResponse.json(
       { message: "Internal server error", error },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
