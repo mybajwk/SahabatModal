@@ -12,7 +12,8 @@ import { formatRupiah, hitungSelisihHari } from "@/lib/utils";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function InvestorDetail({ params }: { params: { id: string } }) {
   // const { id } = params;
-  const [activeTab, setActiveTab] = useState("Deskripsi");
+  const [activeTab, setActiveTab] = useState("Reward");
+  const [amount, setAmount] = useState(0);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [data, setData] = useState<any | undefined>();
@@ -26,7 +27,7 @@ function InvestorDetail({ params }: { params: { id: string } }) {
       case "Deskripsi":
         return <Deskripsi id={params.id} />;
       case "Reward":
-        return <Reward id={params.id} />;
+        return <Reward id={params.id} amount={amount} setAmount={setAmount} />;
       case "FAQ":
         return <FAQ id={params.id} />;
       default:

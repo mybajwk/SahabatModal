@@ -59,7 +59,17 @@ const FundingRewardPage: React.FC<FundingBasicPageProps> = ({
           variant: "default",
           title: "Submit successfull",
         });
-        setStatus(2);
+        setStatus((prev) => {
+          if (prev) {
+            if (prev <= 2) {
+              return 2;
+            } else {
+              return prev;
+            }
+          } else {
+            return 2;
+          }
+        });
         setCurrentPage("desc");
       }
     } catch (error) {

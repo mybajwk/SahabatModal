@@ -42,7 +42,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ file, setFile }) => {
           formData.append("file_name", file.name);
 
           try {
-            const response = await axios.post("api/media/upload", formData, {
+            const response = await axios.post("/api/media/upload", formData, {
               headers: {
                 "Content-Type": "multipart/form-data",
               },

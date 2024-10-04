@@ -42,7 +42,17 @@ const FundingCategoryPage: React.FC<FundingCategoryPageProps> = ({
     try {
       const resp = await axios.post("/api/crowdfunding", { title: data.title });
       setId(resp.data.data.id);
-      setStatus(0);
+      setStatus((prev) => {
+        if (prev) {
+          if (prev <= 0) {
+            return 0;
+          } else {
+            return prev;
+          }
+        } else {
+          return 0;
+        }
+      });
 
       toast({
         variant: "default",

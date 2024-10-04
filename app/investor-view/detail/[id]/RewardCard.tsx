@@ -1,29 +1,36 @@
 "use client";
 
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import Image, { StaticImageData } from "next/image";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Button } from "@/components/ui/button";
 import useWindowSize from "@/hooks/useWindowSize";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
+
 import { formatRupiah } from "@/lib/utils";
 
 interface RewardCardProps {
   imageSrc: StaticImageData | string;
   title: string;
   min_amount: number;
+  amount: number;
+  setAmount: Dispatch<SetStateAction<number>>;
+  id: string;
+  desc: string;
 }
 const RewardCard: React.FC<RewardCardProps> = ({
   imageSrc,
   title,
   min_amount,
+  desc,
 }) => {
   const { width } = useWindowSize();
+
+  // const onContinue = () => {
+  //   router.push(`/investor-view/order-summary?a=${amount}`);
+  // };
   return (
     <Popover>
       <PopoverTrigger className="flex hover:cursor-pointer flex-row space-x-7 sm:max-w-[900px] items-center shadow-custom-inset p-3 rounded-md">
@@ -48,7 +55,7 @@ const RewardCard: React.FC<RewardCardProps> = ({
       >
         <div className="flex flex-row text-xs w-full justify-between">
           <p className="text-white ">{title}</p>
-          <p className="text-[#18D3A7]">Rp1.000.000,00</p>
+          <p className="text-[#18D3A7]">{formatRupiah(min_amount)}</p>
         </div>
         <div className="flex flex-col justify-between flex-1 space-y-1 text-white mt-8 text-sm">
           <div>
@@ -92,17 +99,24 @@ const RewardCard: React.FC<RewardCardProps> = ({
 
           <div className="flex flex-col flex-1 justify-center space-y-6">
             <div className="flex flex-col space-y-3">
-              <Label className="text-xs">
+              {/* <Label className="text-xs">
                 Total Investasi <span className="text-red-600">*</span>
-              </Label>
-              <Input
+              </Label> */}
+              <h1 className="text-xs font-bold">Deskripsi</h1>
+              <p className="text-[11px]">{desc}</p>
+              {/* <Input
                 className="bg-white text-[#9EA2AD] text-xs"
                 required
                 placeholder="Rp1000.000,00"
+                onChange={(e) => setAmount(parseInt(e.target.value))}
+                value={amount}
               ></Input>
-              <Button className=" bg-green-gradient2 rounded-lg">
-                Continue
-              </Button>
+              <Button
+                className=" bg-green-gradient2 rounded-lg"
+                onClick={onContinue}
+              >
+                Investasikan
+              </Button> */}
             </div>
           </div>
         </div>
