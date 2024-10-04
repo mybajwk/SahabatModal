@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import client from "@/lib/prismadb";
-import { getToken } from "next-auth/jwt";
+import { options } from "../auth/[...nextauth]/options";
+import { getServerSession } from "next-auth";
 
 export async function GET(req: NextRequest) {
   if (req.method !== "GET") {
@@ -8,12 +9,17 @@ export async function GET(req: NextRequest) {
       status: 405,
     });
   }
-  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+  const session = await getServerSession(options);
+  if (!session?.user?.id) {
+    return new NextResponse(JSON.stringify({ message: "Unauthorizedd" }), {
+      status: 401,
+    });
+  }
 
   try {
     const user = await client.userAccount.findUnique({
       where: {
-        id: token?.id?.toString() || "",
+        id: session?.user?.id.toString() || "",
       },
       select: {
         id: true,
@@ -44,13 +50,13 @@ export async function GET(req: NextRequest) {
 
     return new NextResponse(
       JSON.stringify({ data: user, message: "success get profile" }),
-      { status: 200 },
+      { status: 200 }
     );
   } catch (error) {
     console.error("Session Retrieval Error:", error);
     return NextResponse.json(
       { message: "Internal server error", error },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }
@@ -60,7 +66,12 @@ export async function POST(req: NextRequest) {
       status: 405,
     });
   }
-  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+  const session = await getServerSession(options);
+  if (!session?.user?.id) {
+    return new NextResponse(JSON.stringify({ message: "Unauthorizedd" }), {
+      status: 401,
+    });
+  }
 
   const body = await req.json();
   const { name, email, phone_number, image } = body;
@@ -68,14 +79,14 @@ export async function POST(req: NextRequest) {
   if (!name || !email || !phone_number) {
     return NextResponse.json(
       { message: "Missing required fields" },
-      { status: 400 },
+      { status: 400 }
     );
   }
 
   try {
     await client.userAccount.update({
       where: {
-        id: token?.id?.toString() || "",
+        id: session?.user?.id.toString() || "",
       },
       data: {
         name: name,
@@ -86,13 +97,13 @@ export async function POST(req: NextRequest) {
     });
     return new NextResponse(
       JSON.stringify({ data: null, message: "success update profile" }),
-      { status: 200 },
+      { status: 200 }
     );
   } catch (error) {
     console.error("Session Retrieval Error:", error);
     return NextResponse.json(
       { message: "Internal server error", error },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }

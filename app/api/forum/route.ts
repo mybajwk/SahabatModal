@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import client from "@/lib/prismadb";
-import { getToken } from "next-auth/jwt";
 import {
   FormattedForum,
   PostFeedsRequest,
   ForumResponse,
   ForumComment,
 } from "@/app/utils/PostFeeds";
+import { options } from "../auth/[...nextauth]/options";
+import { getServerSession } from "next-auth";
 
 export async function GET(req: NextRequest) {
   if (req.method !== "GET") {
@@ -61,13 +62,13 @@ export async function GET(req: NextRequest) {
 
     return new NextResponse(
       JSON.stringify({ data: formattedForums, message: "success get forum" }),
-      { status: 200 },
+      { status: 200 }
     );
   } catch (error) {
     console.error("Session Retrieval Error:", error);
     return NextResponse.json(
       { message: "Internal server error", error },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }
@@ -78,7 +79,12 @@ export async function POST(req: NextRequest) {
       status: 405,
     });
   }
-  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+  const session = await getServerSession(options);
+  if (!session?.user?.id) {
+    return new NextResponse(JSON.stringify({ message: "Unauthorizedd" }), {
+      status: 401,
+    });
+  }
 
   const body = await req.json();
   const { image, title, description, tags } = body as PostFeedsRequest;
@@ -86,7 +92,7 @@ export async function POST(req: NextRequest) {
   if (!description || !title) {
     return NextResponse.json(
       { message: "Missing required fields" },
-      { status: 400 },
+      { status: 400 }
     );
   }
 
@@ -96,7 +102,7 @@ export async function POST(req: NextRequest) {
         image: image,
         title: title,
         description: description,
-        creator_id: token?.id?.toString() || "",
+        creator_id: session?.user?.id.toString() || "",
         // creator_id: "1",
         tag: tags,
         coin: 0,
@@ -150,13 +156,13 @@ export async function POST(req: NextRequest) {
         data: formattedForums,
         message: "Success create forum",
       }),
-      { status: 200 },
+      { status: 200 }
     );
   } catch (error) {
     console.error("Session Retrieval Error:", error);
     return NextResponse.json(
       { message: "Internal server error", error },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }
