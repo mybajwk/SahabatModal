@@ -62,7 +62,7 @@ const OrderSummaryContent = () => {
   }, [idRew]);
 
   const handlePaymentMethodChange = (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     setPaymentMethod(event.target.value);
   };

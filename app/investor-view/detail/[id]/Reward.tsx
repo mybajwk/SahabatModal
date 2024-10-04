@@ -73,7 +73,7 @@ function Reward({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const r = data?.data?.sort(
       (a: { milestone: number }, b: { milestone: number }) =>
-        b.milestone - a.milestone
+        b.milestone - a.milestone,
     ) as {
       title: string;
       milestone: number;
@@ -118,7 +118,7 @@ function Reward({
   const onContinue: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     router.push(
-      `/investor-view/order-summary?a=${amount}&id=${id}&idr=${select}`
+      `/investor-view/order-summary?a=${amount}&id=${id}&idr=${select}`,
     );
   };
   return (
@@ -147,7 +147,7 @@ function Reward({
                   desc: string;
                 }[];
               },
-              index: number
+              index: number,
             ) => (
               <AvailableReward
                 key={index}
@@ -157,7 +157,7 @@ function Reward({
                 onClick={() => setSelectedItem(item)}
                 isActive={selectedItem?.title === item.title}
               />
-            )
+            ),
           )
         ) : (
           <p className="py-20 w-full text-center text-white font-lexend text-lg">
@@ -183,7 +183,9 @@ function Reward({
           placeholder="Rp1000.000,00"
           onChange={(e) =>
             setAmount((prev) =>
-              !isNaN(parseInt(e.target.value)) ? parseInt(e.target.value) : prev
+              !isNaN(parseInt(e.target.value))
+                ? parseInt(e.target.value)
+                : prev,
             )
           }
           value={amount}

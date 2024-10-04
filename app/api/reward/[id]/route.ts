@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   _req: NextRequest,
-  { params: { id } }: { params: { id: string } }
+  { params: { id } }: { params: { id: string } },
 ) {
   try {
     const session = await getServerSession(options);
@@ -26,7 +26,7 @@ export async function GET(
     if (!reward) {
       return new NextResponse(
         JSON.stringify({ message: "Reward data not found" }),
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -37,13 +37,13 @@ export async function GET(
           amount: parseInt(reward.amount.toString()),
         },
       }),
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.log(error);
     return new NextResponse(
       JSON.stringify({ messsage: "Internal server error" }),
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
