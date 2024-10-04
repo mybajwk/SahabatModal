@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(
   req: NextRequest,
-  { params: { crowdFundingID } }: { params: { crowdFundingID: string } },
+  { params: { crowdFundingID } }: { params: { crowdFundingID: string } }
 ) {
   try {
     const session = await getServerSession(options);
@@ -27,7 +27,7 @@ export async function POST(
     if (!funding) {
       return new NextResponse(
         JSON.stringify({ message: "Funding data not found" }),
-        { status: 404 },
+        { status: 404 }
       );
     }
 
@@ -40,7 +40,7 @@ export async function POST(
     if (!amount || !proof || !idReward) {
       return NextResponse.json(
         { message: "Missing required fields" },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -55,18 +55,26 @@ export async function POST(
       },
     });
 
+    await client.crowdfunding.update({
+      where: {
+        id: crowdFundingID,
+      },
+      data: {
+        amount: parseInt(funding.amount.toString()) + amount,
+      },
+    });
     return new NextResponse(
       JSON.stringify({
         data: null,
         message: "Invest successfull",
       }),
-      { status: 200 },
+      { status: 200 }
     );
   } catch (error) {
     console.log(error);
     return new NextResponse(
       JSON.stringify({ messsage: "Internal server error" }),
-      { status: 500 },
+      { status: 500 }
     );
   }
 }
