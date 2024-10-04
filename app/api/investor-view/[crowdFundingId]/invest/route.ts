@@ -55,6 +55,14 @@ export async function POST(
       },
     });
 
+    await client.crowdfunding.update({
+      where: {
+        id: crowdFundingID,
+      },
+      data: {
+        amount: parseInt(funding.amount.toString()) + amount,
+      },
+    });
     return new NextResponse(
       JSON.stringify({
         data: null,
