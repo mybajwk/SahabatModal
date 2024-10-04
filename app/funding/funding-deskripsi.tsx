@@ -65,7 +65,17 @@ const FundingDescPage: React.FC<FundingDescPageProps> = ({
           title: "Submit successfull",
         });
         setCurrentPage("step");
-        setStatus(3);
+        setStatus((prev) => {
+          if (prev) {
+            if (prev <= 3) {
+              return 3;
+            } else {
+              return prev;
+            }
+          } else {
+            return 3;
+          }
+        });
       }
     } catch (error) {
       console.log(error);

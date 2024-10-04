@@ -83,7 +83,18 @@ const FundingBasicPage: React.FC<FundingBasicPageProps> = ({
           endDate: data.endDate.toISOString(),
           startDate: data.startDate.toISOString(),
         });
-        setStatus(1);
+
+        setStatus((prev) => {
+          if (prev) {
+            if (prev <= 1) {
+              return 1;
+            } else {
+              return prev;
+            }
+          } else {
+            return 1;
+          }
+        });
         toast({
           variant: "default",
           title: "Submit successfull",

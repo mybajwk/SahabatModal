@@ -65,6 +65,7 @@ export async function GET(
             title: funding.CrowdfundingItem[j].name,
             id: funding.CrowdfundingItem[j].id,
             quantity: parseInt(funding.CrowdfundingItem[j].amount.toString()),
+            desc: funding.CrowdfundingItem[j].description,
           });
         }
       }
@@ -72,9 +73,11 @@ export async function GET(
       newData.push(d);
     }
 
+    // console.log(newData.sort((a, b) => a.milestone - b.milestone));
+
     return new NextResponse(
       JSON.stringify({
-        data: newData,
+        data: newData.sort((a, b) => a.milestone - b.milestone),
       }),
       { status: 200 },
     );
