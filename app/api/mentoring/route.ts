@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import client from "@/lib/prismadb";
-import { getToken } from "next-auth/jwt";
+// import { getToken } from "next-auth/jwt";
 import { CreateMentoringRequest } from "@/app/pengajuan-mentoring/page";
+import { getServerSession } from "next-auth";
+import { options } from "../auth/[...nextauth]/options";
 
 export async function POST(req: NextRequest) {
   if (req.method !== "POST") {
@@ -9,7 +11,7 @@ export async function POST(req: NextRequest) {
       status: 405,
     });
   }
-  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+  const token = await getServerSession(options);
 
   const body = await req.json();
 
@@ -26,7 +28,7 @@ export async function POST(req: NextRequest) {
 
     const latestBusiness = await client.business.findFirst({
       where: {
-        owner_id: token?.id?.toString(),
+        owner_id: token?.user?.id,
       },
       orderBy: {
         created_at: "desc",
@@ -35,7 +37,7 @@ export async function POST(req: NextRequest) {
 
     const randomMentorId = mentors[Math.floor(Math.random() * mentors.length)];
 
-    if (token?.role !== 3) {
+    if (token?.user?.role !== 3) {
       throw new Error("Need to be seeker to request");
     }
 
@@ -43,7 +45,7 @@ export async function POST(req: NextRequest) {
       data: {
         Topic: title,
         requested_date: requestDate,
-        mentee_id: token?.id?.toString() || "",
+        mentee_id: token?.user?.id || "",
         Description: description,
         mentoring_status: 0,
         mentor_id: randomMentorId.id,
@@ -56,13 +58,13 @@ export async function POST(req: NextRequest) {
         data: newMentoring,
         message: "Success created mentoring request",
       }),
-      { status: 200 },
+      { status: 200 }
     );
   } catch (error) {
     console.error("Session Retrieval Error:", error);
     return NextResponse.json(
       { message: "Internal server error", error },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }
@@ -73,7 +75,7 @@ export async function GET(req: NextRequest) {
       status: 405,
     });
   }
-  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+  const token = (await getServerSession(options))?.user;
 
   if (token?.role !== 2) {
     throw new Error("Only mentor could access this feature.");
@@ -91,7 +93,7 @@ export async function GET(req: NextRequest) {
         },
       },
       where: {
-        mentor_id: token?.id?.toString(),
+        mentor_id: token?.id,
       },
     });
 
@@ -109,13 +111,13 @@ export async function GET(req: NextRequest) {
         data: formattedData,
         message: "Success get Mentoring Requests",
       }),
-      { status: 200 },
+      { status: 200 }
     );
   } catch (error) {
     console.error("Session Retrieval Error:", error);
     return NextResponse.json(
       { message: "Internal server error", error },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }

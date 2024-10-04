@@ -1,6 +1,8 @@
 import client from "@/lib/prismadb";
-import { getToken } from "next-auth/jwt";
+import { getServerSession } from "next-auth";
+// import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
+import { options } from "../../auth/[...nextauth]/options";
 
 interface Params {
   mentoringId: string;
@@ -8,19 +10,19 @@ interface Params {
 
 export async function GET(
   req: NextRequest,
-  { params: { mentoringId } }: { params: Params },
+  { params: { mentoringId } }: { params: Params }
 ) {
   if (!mentoringId) {
     return new NextResponse(
       JSON.stringify({ message: "Mentoring Id Not Provided " }),
       {
         status: 400,
-      },
+      }
     );
   }
 
   try {
-    const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+    const token = (await getServerSession(options))?.user;
 
     if (token?.role !== 2) {
       throw new Error("Only mentor could access this feature.");
@@ -44,13 +46,13 @@ export async function GET(
         },
         message: "Success",
       }),
-      { status: 200 },
+      { status: 200 }
     );
   } catch (error) {
     console.error("Session Retrieval Error:", error);
     return NextResponse.json(
       { message: "Internal server error", error },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }
